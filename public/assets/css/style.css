@@ -1,0 +1,13 @@
+/*
+Theme Name: PowerUp Child | Shared by VestaThemes.com
+Description: The child theme for PowerUp
+Author: Bonfire Themes
+Author URI: http://bonfirethemes.com/
+Theme URI: http://bonfirethemes.com/powerup/
+Tags: custom-menu, blog, entertainment, news, editor-style, two-columns, footer-widgets, right-sidebar, featured-images, full-width-template, sticky-post, translation-ready
+Template: powerup
+Version: 1.0
+Text Domain: powerup-child
+*/
+
+@import url("../powerup/style.css");
