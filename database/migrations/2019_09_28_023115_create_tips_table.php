@@ -14,7 +14,13 @@ class CreateTipsTable extends Migration
     public function up()
     {
         Schema::create('tips', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+            $table->string('content');
+            $table->unsignedInteger('game_id');
+            $table->foreign('game_id')
+                ->references('id')
+                ->on('games')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

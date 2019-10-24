@@ -14,7 +14,7 @@ class CreateBossesTable extends Migration
     public function up()
     {
         Schema::create('bosses', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->timestamps();
         });
     }

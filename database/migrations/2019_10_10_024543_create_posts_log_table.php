@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostsTable extends Migration
+class CreatePostsLogTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('post_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 100)->nullable();
             $table->string('slug', 100)->nullable();
@@ -22,14 +22,15 @@ class CreatePostsTable extends Migration
             $table->string('thumbnail', 200)->default('/images/thumbnail.jpg');
             $table->string('banner', 200)->default('/images/thumbnail.jpg');
             $table->tinyInteger('public')->default(0);
-            $table->unsignedInteger('author_id')->nullable();
+            $table->smallInteger('author_id')->nullable();
             $table->integer('view_count')->default(0);
             $table->unsignedInteger('game_id');
             $table->foreign('game_id')
                 ->references('id')
                 ->on('games')
                 ->onDelete('cascade');
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -40,6 +41,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('post_logs');
     }
 }

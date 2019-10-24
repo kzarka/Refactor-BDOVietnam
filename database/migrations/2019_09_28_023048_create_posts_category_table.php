@@ -15,8 +15,8 @@ class CreatePostsCategoryTable extends Migration
     {
         Schema::create('posts_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->smallInteger('post_id')->nullable();
-            $table->smallInteger('cat_id')->nullable();
+            $table->unsignedInteger('post_id')->nullable();
+            $table->unsignedInteger('cat_id')->nullable();
             $table->foreign('post_id')
             ->references('id')->on('posts')
             ->onDelete('cascade');

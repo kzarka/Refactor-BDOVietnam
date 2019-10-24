@@ -15,8 +15,8 @@ class CreatePostsTagsTable extends Migration
     {
         Schema::create('posts_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->smallInteger('post_id')->nullable();
-            $table->smallInteger('tag_id')->nullable();
+            $table->unsignedInteger('post_id')->nullable();
+            $table->unsignedInteger('tag_id')->nullable();
             $table->foreign('post_id')
             ->references('id')->on('posts')
             ->onDelete('cascade');

@@ -4,7 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\Models\User;
 
-interface CategoriesRepositoryInterface
+interface GamesRepositoryInterface
 {
 
 }
