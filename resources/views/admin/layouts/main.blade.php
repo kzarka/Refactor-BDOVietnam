@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css" />
-
-    <title>@yield('title')</title>
-
-    @yield('header-css')
+    @include('admin.partials.head')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-    <div id="app">
-        @include('admin.partials.header')
-        <div class="app-body">
-            @include('admin.partials.sidebar')
-            <main class="main">
-                <div class="container-fluid">
-                    <div class="animated fadeIn">
-                        @yield('content')
-                    </div>
+    @include('admin.partials.header')
+    <div class="app-body">
+        @include('admin.partials.sidebar')
+        <main class="main">
+            @include('admin.partials.breadscrumb')
+            <div class="container-fluid">
+                <div class="animated fadeIn">
+                    @yield('content')
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
-
-    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
+    @include('admin.partials.footer')
 </body>
 </html>
