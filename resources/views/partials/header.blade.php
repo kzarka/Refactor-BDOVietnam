@@ -209,11 +209,3 @@
     <!-- END "Trending" MARKER -->
 </div>
 <!-- END TRENDING STORIES -->
-
-<div class="content-wrapper">       
-    @if(Request::is('/'))
-    <!-- BEGIN FEATURED BACKGROUND ELEMENT (only on the front page, hide when paged) -->
-    <div class="index-background-element"></div>
-    <!-- END FEATURED BACKGROUND ELEMENT (only on the front page, hide when paged) -->
-    @endif
-    

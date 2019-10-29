@@ -17,5 +17,6 @@
         </main>
     </div>
     @include('admin.partials.footer')
+    @include('admin.partials.foot')
 </body>
 </html>

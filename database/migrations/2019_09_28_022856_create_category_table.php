@@ -18,11 +18,6 @@ class CreateCategoryTable extends Migration
             $table->string('name', 100)->nullable();
             $table->string('slug', 100)->nullable();
             $table->string('desc', 300)->nullable();
-            $table->unsignedInteger('game_id');
-            $table->foreign('game_id')
-                ->references('id')
-                ->on('games')
-                ->onDelete('cascade');
             $table->smallInteger('parent_id')->default(0);
             $table->tinyInteger('active')->default(1);
             $table->timestamps();

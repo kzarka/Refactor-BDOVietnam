@@ -17,6 +17,11 @@ class CreateCommentTable extends Migration
             $table->increments('id');
             $table->text('comment');
             $table->unsignedInteger('author_id');
+            $table->unsignedInteger('post_id');
+            $table->foreign('post_id')
+                ->references('id')
+                ->on('posts')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

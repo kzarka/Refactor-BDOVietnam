@@ -1,8 +1,8 @@
+<title>@yield('title')</title>
 <!-- Header Meta -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-
-
+@stack('before-style')
 <style type="text/css">
 img.wp-smiley,
 img.emoji {

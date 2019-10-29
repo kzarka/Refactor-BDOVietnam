@@ -2,10 +2,6 @@
 <html lang="en-US">
 <head>
     @include('partials.head')
-
-    <title>@yield('title')</title>
-
-    @yield('header-css')
 </head>
 
 <body class="@yield('body-class', 'home blog')">
@@ -19,13 +15,21 @@
 <!-- END SHOW STYLED SCROLLBAR BACKGROUND -->
 
 <div id="sitewrap" class="sitewrap">
-
     @include('partials.header')
+    <div class="content-wrapper">       
+        @if(Request::is('/'))
+        <!-- BEGIN FEATURED BACKGROUND ELEMENT (only on the front page, hide when paged) -->
+        <div class="index-background-element"></div>
+        <!-- END FEATURED BACKGROUND ELEMENT (only on the front page, hide when paged) -->
+        @endif
     
-    @yield('content')
+        @yield('content')
+        @yield('sidebar')
     </div>
     <!-- End Content Wrap -->
     @include('partials.footer')
-    @yield('footer-scripts')
+</div>
+<!-- END .sitewrap-inner -->
+@include('partials.foot')
 </body>
 </html>

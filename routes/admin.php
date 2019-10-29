@@ -11,4 +11,6 @@
 |
 */
 
-Route::get('/', 'DashboardController@index');
+Route::get('/', 'DashboardController@index')->name('dashboard');
+
+Route::resource('games', 'Games\GamesController');

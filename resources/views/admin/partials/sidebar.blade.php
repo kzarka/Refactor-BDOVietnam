@@ -2,7 +2,7 @@
     <nav class="sidebar-nav">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link active" href="/dashboard">
+                <a class="nav-link active" href="{{ route('admin.dashboard') }}">
                     <i class="nav-icon icon-speedometer"></i> Dashboard
                 </a>
             </li>
@@ -15,6 +15,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="nav-icon icon-lock"></i> Roles
+                </a>
+            </li>
+            <!-- Super Power -->
+            <li class="nav-title">Extras</li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.games.index') }}">
+                    <i class="nav-icon icon-game-controller"></i> Games
                 </a>
             </li>
         </ul>
