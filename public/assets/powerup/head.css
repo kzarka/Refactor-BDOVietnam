@@ -1,0 +1,93 @@
+.logo-wrapper img,
+    .logo-wrapper span {
+        top:30px;
+        left:25px;
+    }
+    .logo-wrapper span {
+        font-size:px;
+        color:;
+    }
+    .logo-wrapper img { max-height:px; }
+
+
+    .powerup-wrapper,
+    .powerup-bg-line {
+        width:px;
+        height:px;
+    }
+
+
+        .header-tabs-wrapper > div > ul > li.marked::before {
+            content:'MUST-READ!';
+        }
+    
+
+    .sitewrap > .scroll-element .scroll-bar { background-color:; }
+    .powerup > .scroll-element .scroll-bar { background-color:; }
+
+
+        .index-main-wrapper { margin-top:0; }
+    
+
+        @media screen and (max-width:780px) {
+            .header-tabs-prefix,
+            .header-tabs-wrapper { display:none; }
+            .menu-button-wrapper { margin-left:5px; margin-top:3px; }
+            .menu-tooltip:before { top:4px; }
+            .menu-active { left:13px; }
+            .main-nav-button-prefix-wrapper { background-image:none; }
+        }
+    
+
+        @media screen and (max-width:1000px) {
+            .header-search-wrapper { display:none; }
+            .menu-search-wrapper { display:block; }
+            .header-quicklink { border-right:none; top:-5px; right:0; }
+            /* if on touch device, lessen dropdown menu padding to account for lack of styled scrollbar */    
+            .powerup-inner { padding-right:7px; }
+            /* fixes footer spacing issue on iOS (when not enough content to scroll) */
+            .sitewrap-inner { min-height:100%; }
+        }
+    
+
+        @media screen and (max-width:400px) {
+            .powerup-wrapper {
+                position:fixed !important;
+                top:0;
+                width:100%;
+                height:100%;
+            }
+            .powerup ul li a {
+                font-size:15px;
+                line-height:22px;
+            }
+            .powerup ul.sub-menu li a {
+                font-size:15px;
+                line-height:22px;
+            }
+            .powerup-inner {
+                padding-top:50px;
+            }
+            .menu-active {
+                left:0;
+                right:0;
+            }
+            .menu-active .close-button { display:inline; }
+            .menu-item-description {
+                font-size:15px;
+                line-height:18px;
+            }
+            .powerup ul.sub-menu li a::after,
+            .powerup ul.sub-menu li.menu-item-has-children > a::after,
+            .powerup ul.sub-menu li.menu-item-has-children ul li a::after,
+            .powerup ul.sub-menu li.menu-item-has-children ul li:last-child a::after {
+                font-size:15px;
+            }
+            .powerup ul.sub-menu li a::after,
+            .powerup ul.sub-menu li.menu-item-has-children ul li:last-child a::after { right:-9px; }
+        }
+    
+
+        .header-tabs-wrapper ul li.marked::before {
+            content:'MUST-READ!';
+        }
