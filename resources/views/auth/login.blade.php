@@ -1,10 +1,15 @@
 @extends('layouts.nosidebar')
 
-@section('title', 'Home Page')
+@section('title', 'Đăng Nhập')
 
 @section('content')
-<form method="get" id="searchform" action="http://bonfirethemes.com/powerup/one/">
-    <input type="text" name="s" id="s" placeholder="Search...">
-    <div class="search-button-wrapper"><input type="submit" id="searchsubmit" value=""></div>
-</form>
+<div class="login-container ">
+	<form method="get" id="searchform" action="http://bonfirethemes.com/powerup/one/">
+		<label for="uname"><b>Username</b></label>
+	    <input type="text" class="test" name="s" id="s" placeholder="Username...">
+	    <label for="password"><b>Password</b></label>
+	    <input type="text" class="test" name="s" id="s" placeholder="Password...">
+	    <button class="btn btn-submit" type="submit">Login</button>
+	</form>
+</div>
 @endsection
