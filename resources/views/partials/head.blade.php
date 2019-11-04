@@ -23,4 +23,5 @@ img.emoji {
 <link rel='stylesheet' href="{{ asset('assets/powerup/swiper.min.css') }}" type="text/css" media="all" />
 <link rel='stylesheet' href="{{ asset('assets/powerup/style.css') }}" type="text/css" media='all' />
 <link rel='stylesheet' href="{{ asset('assets/powerup/head.css') }}" type="text/css" media="all" />
-<link rel='stylesheet' href="{{ asset('assets/admin/css/custom.css') }}" type="text/css" media="all" />
+<link rel='stylesheet' href="{{ asset('assets/css/custom.css') }}" type="text/css" media="all" />
+@stack('after-style')
