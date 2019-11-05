@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware\Role;
-
+use Illuminate\Support\Facades\Auth;
 use Closure;
 
 class Admin
@@ -15,7 +15,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->hasAnyRole([ROLE_ADMIN])) {
+        if (Auth::user() &&  Auth::user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD, ROLE_CTV])) {
             return $next($request);
         }
         return redirect('/');

@@ -43,7 +43,17 @@ class User extends Authenticatable
     {
       return $this->belongsToMany(Role::class);
     }
-
+    
+    /**
+     * @param string|array $roles
+     */
+    public function authorizeRoles($roles)
+    {
+        if (is_array($roles)) {
+            return $this->hasAnyRole($roles);
+        }
+        return $this->hasRole($roles);
+    }
     /**
     * Check multiple roles
     * @param array $roles
