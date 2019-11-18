@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use App\User;
 
-class Role extends Model
+class Role extends BaseModel
 {
 	protected $table = "roles";
 

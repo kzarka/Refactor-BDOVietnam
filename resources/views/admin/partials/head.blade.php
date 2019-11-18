@@ -14,6 +14,7 @@
 <link href="{{ asset('assets/plugins/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
 <!-- Main styles for this application-->
 <link href="{{ asset('assets/admin/css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/admin/css/custom.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/plugins/pace-progress/css/pace.min.css') }}" rel="stylesheet">
 @stack('after_styles')
 

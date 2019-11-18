@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class PostCategory extends Model
+class PostCategory extends BaseModel
 {
 	protected $table = "posts_categories";
 

@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AppRepositoryProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Services\Contracts\GamesServiceInterface::class, \App\Services\GamesService::class);
+        $this->app->bind(\App\Repositories\Contracts\GamesRepositoryInterface::class, \App\Repositories\GamesRepository::class);
     }
 
     /**

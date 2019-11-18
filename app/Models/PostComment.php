@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class PostComment extends Model
+class PostComment extends BaseModel
 {
 	protected $table = "posts_comments";
 
