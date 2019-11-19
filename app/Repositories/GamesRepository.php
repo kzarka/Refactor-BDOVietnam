@@ -18,4 +18,18 @@ class GamesRepository extends BaseRepository implements GamesRepositoryInterface
     public function getGameList($perPage = 10) {
 		return $this->model->select('*')->paginate($perPage);
 	}
+
+	public function update($data, $id) {
+		\DB::beginTransaction();
+		try {
+		    $game = $this->model->findOrFail($id);
+			$game->update($data);
+		    \DB::commit();
+		    return 'true';
+		} catch (\Exception $e) {
+		    \DB::rollback();
+		    throw new \Exception($e->getMessage());
+		    return 'false';
+		}
+	}
 }

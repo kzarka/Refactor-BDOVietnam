@@ -9,6 +9,6 @@ class Game extends BaseModel
 	protected $table = "games";
 
     protected $fillable = [
-        'name'
+        'name', 'thumbnail', 'active', 'slug'
     ];
 }

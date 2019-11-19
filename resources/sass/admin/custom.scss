@@ -1,3 +1,37 @@
 td {
 	vertical-align: middle !important;
 }
+
+.modal.form {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal.form:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.form {
+	.modal-dialog {
+	  display: inline-block;
+	  text-align: left;
+	  vertical-align: middle;
+	}
+
+	@media (min-width: 992px) {
+		.modal-dialog {
+		    width: 900px;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.modal-dialog {
+		    width: 600px;
+		    margin: 30px auto;
+		}
+	}
+}

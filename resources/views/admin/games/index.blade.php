@@ -19,27 +19,27 @@
 			</thead>
 			<tbody>
 				@foreach($games as $game)
-				<tr>
-					<td>
+				<tr data-id="{{ $game->id }}">
+					<td class="thumbnail">
 						@if($game->thumbnail)
 						<img src="{{ $game->thumbnail }}" />
 						@endif
 					</td>
-					<td>{{ $game->name }}</td>
-					<td>{{ $game->slug }}</td>
+					<td class="name">{{ $game->name }}</td>
+					<td class="slug">{{ $game->slug }}</td>
 					<td>{{ $game->created_at }}</td>
-					<td>
+					<td class="active">
 						@if($game->active)
-						<span class="badge badge-success">Active</span>
+						<span class="badge badge-success" data-active="1">Active</span>
 						@else
-						<span class="badge badge-danger">Disabled</span>
+						<span class="badge badge-danger" data-active="0">Disabled</span>
 						@endif
 					</td>
 					<td>
-						<a class="btn btn-success" href="#">
+						<button class="btn btn-success edit" type="button">
 							<i class="fa fa-edit"></i>
-						</a>
-						<button class="btn btn-danger" type="submit">
+						</button>
+						<button class="btn btn-danger delete" type="button">
                             <i class="fa fa-trash-o"></i>
                         </button>
 					</td>
@@ -50,25 +50,79 @@
 		{{ $games->links() }}
 	</div>
 </div>
+@endsection
 
+@push('modals')
 <!-- Modal Form -->
-<div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal form fade" id="g_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       	<div class="modal-content">
         	<div class="modal-header">
-          		<h4 class="modal-title">Modal title</h4>
+          		<h4 class="modal-title">Game Form</h4>
+          		<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            		<span aria-hidden="true">×</span>
+          		</button>
+        	</div>
+        	<form class="validate" action="">
+        		@csrf
+		        <div class="modal-body">
+		          	<div class="form-group">
+						<label for="company">Name</label>
+						<input class="form-control required" id="name" name="name" type="text" placeholder="Enter game name">
+					</div>
+					<div class="form-group">
+						<label for="company">Thumbnail</label>
+						<input class="form-control" id="thumbnail" name="thumbnail" type="text" placeholder="Enter game name">
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-8">
+							<label for="city">Slug</label>
+							<input class="form-control required" id="slug" name="slug" type="text" placeholder="Slug">
+						</div>
+						<div class="form-group col-sm-4">
+							<label for="postal-code">Status</label><br>
+							<label class="switch switch-label switch-pill switch-success">
+								<input class="switch-input" id="status" name="active" type="checkbox">
+								<span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+							</label>
+						</div>
+					</div>
+		        </div>
+		        <div class="modal-footer">
+		          	<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+		          	<button class="btn btn-primary submit" type="button">Save changes</button>
+		        </div>
+		    </form>
+      	</div>
+    </div>
+</div>
+<!-- End Modal Form -->
+
+<!-- Modal Delete -->
+<div class="modal form fade" id="g_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<h4 class="modal-title">Delete?</h4>
           		<button class="close" type="button" data-dismiss="modal" aria-label="Close">
             		<span aria-hidden="true">×</span>
           		</button>
         	</div>
 	        <div class="modal-body">
-	          	<p>One fine body…</p>
+	          	<p>Do you want to delete this record?</p>
 	        </div>
 	        <div class="modal-footer">
 	          	<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-	          	<button class="btn btn-primary" type="button">Save changes</button>
+	          	<button class="btn btn-danger" type="button">Yes</button>
 	        </div>
       	</div>
     </div>
 </div>
-@endsection
+@endpush
+
+@push('scripts')
+<script type="text/javascript">
+	const BASE_API = '{!! route('admin.games.store') !!}';
+</script>
+<script src="{{ asset('assets/admin/js/games/game.js') }}"></script>
+@endpush

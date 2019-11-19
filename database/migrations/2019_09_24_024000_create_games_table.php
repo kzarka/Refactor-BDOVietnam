@@ -17,7 +17,7 @@ class CreateGamesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->string('thumbnail');
+            $table->string('thumbnail')->nullable();
             $table->string('slug');
             $table->integer('active')->default(1);
             $table->timestamps();

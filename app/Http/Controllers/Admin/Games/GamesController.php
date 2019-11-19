@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Games;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Services\Contracts\GamesServiceInterface;
 use App\Repositories\Contracts\GamesRepositoryInterface;
 use Illuminate\Http\Request;
 
-class GamesController extends Controller
+class GamesController extends BaseController
 {
 	protected $gameService, $gameRepos;
 
@@ -23,9 +23,14 @@ class GamesController extends Controller
         return view('admin.games.index', ['games' => $games]);
     }
 
-    public function create(Request $request)
+    public function update(Request $request, $id)
     {
-        return view('admin.games.create');
+        try {
+            $result = $this->gameRepos->update($request->all(), $id);
+            return $this->respondWithSuccess($result);
+        } catch (Exception $e) {
+            return $this->respondWithError(null, $e->getMessage());
+        }
     }
 
     public function edit(Request $request)
