@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Services\Contracts\GamesServiceInterface;
 use App\Repositories\Contracts\GamesRepositoryInterface;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\GameInputRequest;
 
 class GamesController extends BaseController
 {
@@ -19,23 +20,43 @@ class GamesController extends BaseController
 
     public function index(Request $request)
     {
-    	$games = $this->gameService->getGameList();
+    	$games = $this->gameService->getGameList(2);
         return view('admin.games.index', ['games' => $games]);
     }
 
-    public function update(Request $request, $id)
+    public function update(GameInputRequest $request, $id)
     {
         try {
-            $result = $this->gameRepos->update($request->all(), $id);
+            $result = $this->gameRepos->updateByAdmin($request->all(), $id);
             return $this->respondWithSuccess($result);
         } catch (Exception $e) {
-            return $this->respondWithError(null, $e->getMessage());
+            return $this->respondWithError([], $e->getMessage());
         }
     }
 
-    public function edit(Request $request)
+    public function store(GameInputRequest $request)
     {
-        $game = $this->gameRepos->find($request->get('id'));
-        return view('admin.games.edit', ['game' => $game]);
+        try {
+            $result = $this->gameRepos->create($request->all());
+            return $this->respondWithSuccess($result);
+        } catch (Exception $e) {
+            return $this->respondWithError([], $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        $result = $this->gameRepos->deleteByAdmin($id);
+        if($result) {
+            $this->saveSessionSuccessMessage('Item deleted successfully.');
+        } else {
+            $this->saveSessionSuccessMessage('Item cannot be deleted.');
+        }
+        return redirect()->route('admin.games.index');
+    }
+
+    public function load(Request $request) {
+        $games = $this->gameService->getGameList(2);
+        return $this->respondWithSuccess($games);
     }
 }

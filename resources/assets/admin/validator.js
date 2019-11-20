@@ -12,9 +12,14 @@ jQuery.validator.setDefaults({
   		error.insertAfter(element);
   	},
   	success: function(label) {
+        label.closest('.form-group').addClass('is-submitted');
 	    return label;
 	},
 	showErrors: function(errorMap, errorList) {
+        for(var i = 0; i < errorList.length; i++) {
+            var element = $(errorList[i].element);
+            element.closest('.form-group').addClass('is-submitted');
+        }
 		this.defaultShowErrors();
 	}
 });

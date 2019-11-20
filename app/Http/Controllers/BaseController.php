@@ -11,20 +11,20 @@ class BaseController extends Controller
        return [
             'status' => $status,
             'message' => $message,
-            'payload' => $payload
+            'data' => $payload
         ];
     }
 
     public function respondWithError($data = null, $message = null)
     {
-        $data = $this->getResponseStructure(STATUS_ERROR, $message, $data);
+        $data = $this->renderResponseStructure(STATUS_ERROR, $message, $data);
         $response = $this->respond($data);
         return $response;
     }
 
     public function respondWithSuccess($data = null, $message = null)
     {
-        $data = $this->getResponseStructure(STATUS_SUCCESS, $message, $data);
+        $data = $this->renderResponseStructure(STATUS_SUCCESS, $message, $data);
         $response = $this->respond($data);
         return $response;
     }
@@ -38,6 +38,19 @@ class BaseController extends Controller
      */
     public function respond(array $data)
     {
-        return response()->json($data);
+        return response()->json($data, 200);
+    }
+
+    public function saveSessionMessage($message, $type) {
+        session()->flash('message', $message);
+        session()->flash('type_message', $type);
+    }
+
+    public function saveSessionSuccessMessage($message) {
+        $this->saveSessionMessage($message, 'success');
+    }
+
+    public function saveSessionErrorMessage($message) {
+        $this->saveSessionMessage($message, 'error');
     }
 }

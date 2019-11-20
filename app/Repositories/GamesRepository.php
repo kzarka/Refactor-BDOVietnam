@@ -19,17 +19,30 @@ class GamesRepository extends BaseRepository implements GamesRepositoryInterface
 		return $this->model->select('*')->paginate($perPage);
 	}
 
-	public function update($data, $id) {
+	public function updateByAdmin($data, $id) {
 		\DB::beginTransaction();
 		try {
 		    $game = $this->model->findOrFail($id);
 			$game->update($data);
 		    \DB::commit();
-		    return 'true';
+		    return $game;
 		} catch (\Exception $e) {
 		    \DB::rollback();
 		    throw new \Exception($e->getMessage());
 		    return 'false';
+		}
+	}
+
+	public function deleteByAdmin($id) {
+		\DB::beginTransaction();
+		try {
+		    $game = $this->model->findOrFail($id);
+			if($game) $game->delete();
+		    \DB::commit();
+		    return true;
+		} catch (\Exception $e) {
+		    \DB::rollback();
+		    return false;
 		}
 	}
 }

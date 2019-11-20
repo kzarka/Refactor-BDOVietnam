@@ -11,3 +11,50 @@ window.slugGenerate = function (str) {
 	.replace(/-+/g, '-');
 	return str;
 }
+
+window.parseFormError = function(errors) {
+	for(parameter in errors) {
+		$('[name=' + parameter + ']').addClass('is-invalid');
+		$('#' + parameter + '-error').html(errors[parameter]);
+	}
+}
+
+window.getUrlParameter = function() {
+	var parameters = window.location.search.substring(1);
+	if(parameters) return '?' + parameters;
+	return parameters;
+}
+
+$(document).ready(function() {
+	var notify = $('input.notify').val();
+	var type = $('input.notify').data('type');
+	toastr.options = {
+		"closeButton": false,
+		"debug": false,
+		"newestOnTop": false,
+		"progressBar": false,
+		"positionClass": "toast-top-right",
+		"preventDuplicates": false,
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "1000",
+		"timeOut": "5000",
+		"extendedTimeOut": "1000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	}
+	console.log(notify);
+	if(notify) {
+		switch(type) {
+			case 'success':
+				toastr.success(notify, 'Success');
+				break;
+			case 'error':
+				toastr.error(notify, 'Error');
+				break;
+			default:
+		}
+	}
+});

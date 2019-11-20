@@ -16,6 +16,7 @@
             </div>
         </main>
     </div>
+    <input type="hidden" class="notify" value="{{ session()->get('message') }}" data-type="{{ session()->get('type_message') }}">
     @include('admin.partials.footer')
     @include('admin.partials.scripts')
 </body>

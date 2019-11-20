@@ -13,4 +13,6 @@
 
 Route::get('/', 'DashboardController@index')->name('dashboard');
 
+Route::get('games/load', 'Games\GamesController@load');
+
 Route::resource('games', 'Games\GamesController');

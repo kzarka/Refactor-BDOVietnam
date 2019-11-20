@@ -19,6 +19,28 @@
     </div>
 </div>
 <!-- End Modal Notification -->
+
+<!-- Modal Error -->
+<div class="modal form fade" id="error_popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">Error!</h4>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>System error!</p>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Error -->
+
 @stack('modals')
 <footer class="app-footer">
     <div>

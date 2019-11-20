@@ -27,7 +27,7 @@
 					</td>
 					<td class="name">{{ $game->name }}</td>
 					<td class="slug">{{ $game->slug }}</td>
-					<td>{{ $game->created_at }}</td>
+					<td class="register">{{ $game->created_at }}</td>
 					<td class="active">
 						@if($game->active)
 						<span class="badge badge-success" data-active="1">Active</span>
@@ -36,6 +36,10 @@
 						@endif
 					</td>
 					<td>
+						<form action="{{ route('admin.games.destroy', $game->id) }}" method="POST">
+							@csrf
+							@method('DELETE')
+						</form>
 						<button class="btn btn-success edit" type="button">
 							<i class="fa fa-edit"></i>
 						</button>
@@ -47,7 +51,8 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{ $games->links() }}
+		{{ $games->links('partials.paginate') }}
+		<button class="btn btn-primary m-1 pull-right create" type="button">Create</button>
 	</div>
 </div>
 @endsection
@@ -63,21 +68,25 @@
             		<span aria-hidden="true">×</span>
           		</button>
         	</div>
-        	<form class="validate" action="">
+        	<form class="validate" action="" method="POST">
         		@csrf
 		        <div class="modal-body">
+		        	<label class="server-error"></label>
 		          	<div class="form-group">
 						<label for="company">Name</label>
 						<input class="form-control required" id="name" name="name" type="text" placeholder="Enter game name">
+						<label id="name-error" class="is-invalid" for="name" style=""></label>
 					</div>
 					<div class="form-group">
 						<label for="company">Thumbnail</label>
-						<input class="form-control" id="thumbnail" name="thumbnail" type="text" placeholder="Enter game name">
+						<input class="form-control" id="thumbnail" name="thumbnail" type="text" placeholder="Thumbnail">
+						<label id="thumbnail-error" class="is-invalid" for="thumbnail" style=""></label>
 					</div>
 					<div class="row">
 						<div class="form-group col-sm-8">
 							<label for="city">Slug</label>
 							<input class="form-control required" id="slug" name="slug" type="text" placeholder="Slug">
+							<label id="slug-error" class="is-invalid" for="slug" style=""></label>
 						</div>
 						<div class="form-group col-sm-4">
 							<label for="postal-code">Status</label><br>
@@ -113,7 +122,7 @@
 	        </div>
 	        <div class="modal-footer">
 	          	<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-	          	<button class="btn btn-danger" type="button">Yes</button>
+	          	<button class="btn btn-danger" id="confirm_delete" type="button">Yes</button>
 	        </div>
       	</div>
     </div>

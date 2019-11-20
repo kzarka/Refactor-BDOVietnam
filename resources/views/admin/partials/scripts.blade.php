@@ -3,6 +3,7 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/jquery/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/validator.js') }}"></script>
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/common.js') }}"></script>
 <script src="{{ asset('assets/plugins/popper.js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>

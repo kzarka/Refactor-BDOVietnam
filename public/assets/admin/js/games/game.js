@@ -97,6 +97,7 @@
 
 
 var form = null;
+var selectedRow = null;
 $(document).ready(function () {
   initEditModal();
   initDeleteModal();
@@ -105,9 +106,9 @@ $(document).ready(function () {
   initSlug();
   $('#g_form').on('hidden.bs.modal', function () {
     form.resetForm();
-    $(this).find('input').val('').removeClass("is-invalid");
+    $(this).find('input').val('').removeClass("is-invalid").removeClass("is-valid");
     $(this).find('input').find('input[name=status]').prop('checked', true);
-    $(this).find('div.form-group').removeClass("is-invalid");
+    $(this).find('div.form-group').removeClass("is-submitted");
   });
   $('button.submit').on('click', function (e) {
     e.preventDefault();
@@ -116,7 +117,7 @@ $(document).ready(function () {
 });
 
 function initEditModal() {
-  $('button.edit').on('click', function () {
+  $('table tbody').on('click', 'button.edit', function () {
     var row = $(this).closest('tr');
     $('form.validate').attr('action', BASE_API + '/' + row.data('id')).attr('method', 'PUT');
     $('form.validate').find('input[name=name]').val(row.find('td.name').html());
@@ -129,8 +130,12 @@ function initEditModal() {
 }
 
 function initDeleteModal() {
-  $('button.delete').on('click', function () {
+  $('table tbody').on('click', 'button.delete', function () {
+    selectedRow = $(this).closest('tr');
     $('#g_delete').modal('show');
+  });
+  $('#confirm_delete').on('click', function () {
+    selectedRow.find('form').submit();
   });
 }
 
@@ -161,9 +166,21 @@ function initSaveForm() {
         type: $(form).attr('method'),
         data: values,
         success: function success(response) {
-          console.log('Success');
+          if (response.status === 'SUCCESS') {
+            $('#g_form').modal('hide');
+            reloadItems();
+          } else if (response.status === 'ERROR') {
+            $('#g_form').find('label.server-error').html(response.message);
+          }
+        },
+        error: function error(xhr, status, _error) {
+          var response = JSON.parse(xhr.responseText);
 
-          if (response.success === true) {} else {}
+          if (response.errors) {
+            parseFormError(response.errors);
+          } else {
+            $('#g_form').find('label.server-error').html('System error');
+          }
         }
       });
       return false;
@@ -175,6 +192,51 @@ function initSlug() {
   $('form.validate').on('keyup', 'input[name=name]', function () {
     $('form.validate').find('input[name=slug]').val(slugGenerate($(this).val()));
   });
+}
+
+function reloadItems() {
+  $.ajax({
+    url: BASE_API + '/load' + getUrlParameter(),
+    success: function success(response) {
+      if (response.status === 'SUCCESS') {
+        parseTableRow(response.data.data);
+      } else if (response.status === 'ERROR') {
+        $('#error_popup').modal('show');
+      }
+    },
+    error: function error(xhr, status, _error2) {
+      var response = JSON.parse(xhr.responseText);
+      $('#error_popup').modal('show');
+    }
+  });
+}
+
+function parseTableRow(data) {
+  var row = $('table tbody').find('tr').first().clone();
+  row.removeClass('hidden');
+  $('table').find('tbody').empty();
+
+  for (var key in data) {
+    var item = data[key];
+    row.data('id', item.id);
+    row.find('.thumbnail').html('');
+
+    if (item.thumbnail) {
+      row.find('.thumbnail').html('<img class="image" src="' + item.thumbnail + '" />');
+    }
+
+    row.find('.name').html(item.name);
+    row.find('.slug').html(item.slug);
+    row.find('.register').html(item.created_at);
+
+    if (item.active) {
+      row.find('.active').html('<span class="badge badge-success" data-active="1">Active</span>');
+    } else {
+      row.find('.active').html('<span class="badge badge-danger" data-active="0">Disabled</span>');
+    }
+
+    $('table').find('tbody').append(row.clone());
+  }
 }
 
 /***/ }),
