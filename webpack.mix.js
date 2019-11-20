@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/assets/js')
 	.js('resources/assets/admin/games/game.js', 'public/assets/admin/js/games')
+	.js('resources/assets/admin/category/category.js', 'public/assets/admin/js/category')
 	.js('resources/assets/admin/validator.js', 'public/assets/admin/js/')
 	.js('resources/assets/admin/common.js', 'public/assets/admin/js/')
     .sass('resources/sass/admin/custom.scss', 'public/assets/admin/css')

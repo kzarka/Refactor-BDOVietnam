@@ -1,33 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Games;
+namespace App\Http\Controllers\Admin\Category;
 
 use App\Http\Controllers\BaseController;
-use App\Services\Contracts\GamesServiceInterface;
-use App\Repositories\Contracts\GamesRepositoryInterface;
+use App\Services\Contracts\CategoryServiceInterface;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\GameInputRequest;
 
-class GamesController extends BaseController
+class CategoryController extends BaseController
 {
-	protected $gameService, $gameRepos;
+	protected $catService, $catRepos;
 
-	public function __construct(GamesServiceInterface $gameService, GamesRepositoryInterface $gameRepos)
+	public function __construct(CategoryServiceInterface $catService, CategoryRepositoryInterface $catRepos)
     {
-        $this->gameService = $gameService;
-        $this->gameRepos = $gameRepos;
+        $this->catService = $catService;
+        $this->catRepos = $catRepos;
     }
 
     public function index(Request $request)
     {
-    	$games = $this->gameService->getGameList(2);
-        return view('admin.games.index', ['games' => $games]);
+    	$categories = $this->catService->getCategoryList();
+        return view('admin.category.index', ['categories' => $categories]);
     }
 
     public function update(GameInputRequest $request, $id)
     {
         try {
-            $result = $this->gameRepos->updateByAdmin($request->all(), $id);
+            $result = $this->cateRepos->updateByAdmin($request->all(), $id);
             return $this->respondWithSuccess($result);
         } catch (Exception $e) {
             return $this->respondWithError([], $e->getMessage());
@@ -37,7 +37,7 @@ class GamesController extends BaseController
     public function store(GameInputRequest $request)
     {
         try {
-            $result = $this->gameRepos->create($request->all());
+            $result = $this->cateRepos->create($request->all());
             return $this->respondWithSuccess($result);
         } catch (Exception $e) {
             return $this->respondWithError([], $e->getMessage());
@@ -46,17 +46,17 @@ class GamesController extends BaseController
 
     public function destroy($id)
     {
-        $result = $this->gameRepos->deleteByAdmin($id);
+        $result = $this->cateRepos->deleteByAdmin($id);
         if($result) {
             $this->saveSessionSuccessMessage('Item deleted successfully.');
         } else {
             $this->saveSessionSuccessMessage('Item cannot be deleted.');
         }
-        return redirect()->route('admin.games.index');
+        return redirect()->route('admin.category.index');
     }
 
     public function load(Request $request) {
-        $games = $this->gameService->getGameList(2);
-        return $this->respondWithSuccess($games);
+        $categories = $this->catService->getCategoryList();
+        return $this->respondWithSuccess($categories);
     }
 }

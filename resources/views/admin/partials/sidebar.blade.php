@@ -13,6 +13,11 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.category.index') }}">
+                    <i class="nav-icon icon-game-controller"></i> Category
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="nav-icon icon-lock"></i> Roles
                 </a>
@@ -20,7 +25,7 @@
             <!-- Super Power -->
             <li class="nav-title">Extras</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.games.index') }}">
+                <a class="nav-link" href="{{ route('admin.game.index') }}">
                     <i class="nav-icon icon-game-controller"></i> Games
                 </a>
             </li>

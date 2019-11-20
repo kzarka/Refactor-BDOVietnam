@@ -3,12 +3,12 @@
 namespace App\Repositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Repositories\Contracts\PostsRepositoryInterface;
+use App\Repositories\Contracts\PostRepositoryInterface;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Eloquent\BaseRepository;
 use App\Models\Post;
 
-class PostRepository extends BaseRepository implements PostsRepositoryInterface
+class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
 	public function model()
     {

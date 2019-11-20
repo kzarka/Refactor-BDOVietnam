@@ -1,10 +1,10 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Home Page 1')
+@section('title', 'Category')
 
 @section('content')
 <div class="card">
-	<div class="card-header"><i class="fa fa-align-justify"></i> Games</div>
+	<div class="card-header"><i class="fa fa-align-justify"></i> Categories</div>
 	<div class="card-body">
 		<table class="table table-responsive-sm table-striped">
 			<thead>
@@ -18,25 +18,25 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($games as $game)
-				<tr data-id="{{ $game->id }}">
+				@foreach($categories as $category)
+				<tr data-id="{{ $category->id }}">
 					<td class="thumbnail">
-						@if($game->thumbnail)
-						<img src="{{ $game->thumbnail }}" />
+						@if($category->thumbnail)
+						<img src="{{ $category->thumbnail }}" />
 						@endif
 					</td>
-					<td class="name">{{ $game->name }}</td>
-					<td class="slug">{{ $game->slug }}</td>
-					<td class="register">{{ $game->created_at }}</td>
+					<td class="name">{{ $category->name }}</td>
+					<td class="slug">{{ $category->slug }}</td>
+					<td class="register">{{ $category->created_at }}</td>
 					<td class="active">
-						@if($game->active)
+						@if($category->active)
 						<span class="badge badge-success" data-active="1">Active</span>
 						@else
 						<span class="badge badge-danger" data-active="0">Disabled</span>
 						@endif
 					</td>
 					<td>
-						<form action="{{ route('admin.game.destroy', $game->id) }}" method="POST">
+						<form action="{{ route('admin.category.destroy', $category->id) }}" method="POST">
 							@csrf
 							@method('DELETE')
 						</form>
@@ -51,7 +51,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{ $games->links('partials.paginate') }}
+		{{ $categories->links('partials.paginate') }}
 		<button class="btn btn-primary m-1 pull-right create" type="button">Create</button>
 	</div>
 </div>
@@ -131,7 +131,7 @@
 
 @push('scripts')
 <script type="text/javascript">
-	const BASE_API = '{!! route('admin.game.store') !!}';
+	const BASE_API = '{!! route('admin.category.store') !!}';
 </script>
-<script src="{{ asset('assets/admin/js/games/game.js') }}"></script>
+<script src="{{ asset('assets/admin/js/category/category.js') }}"></script>
 @endpush

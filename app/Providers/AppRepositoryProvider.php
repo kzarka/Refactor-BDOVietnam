@@ -13,7 +13,8 @@ class AppRepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Repositories\Contracts\GamesRepositoryInterface::class, \App\Repositories\GamesRepository::class);
+        $this->app->bind(\App\Repositories\Contracts\GameRepositoryInterface::class, \App\Repositories\GameRepository::class);
+        $this->app->bind(\App\Repositories\Contracts\CategoryRepositoryInterface::class, \App\Repositories\CategoryRepository::class);
     }
 
     /**

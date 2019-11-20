@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Game;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Services\Contracts\GamesServiceInterface;
+use App\Services\Contracts\GameServiceInterface;
 use Illuminate\Support\Collection;
-use App\Repositories\Contracts\GamesRepositoryInterface;
+use App\Repositories\Contracts\GameRepositoryInterface;
 use App\Models\Category;
 
-class GamesService implements GamesServiceInterface
+class GameService implements GameServiceInterface
 {
 	protected $gameRepos;
 
-	public function __construct(GamesRepositoryInterface $gameRepos) {
+	public function __construct(GameRepositoryInterface $gameRepos) {
 		$this->gameRepos = $gameRepos;
 	}
 
