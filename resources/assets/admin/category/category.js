@@ -10,7 +10,9 @@ $(document).ready( function() {
 	initSlug();
 	$('#g_form').on('hidden.bs.modal', function() {
 		form.resetForm();
-		$(this).find('input').val('').removeClass("is-invalid").removeClass("is-valid");
+		var token = $(this).find('input[name=_token]').val();
+		$(this).find('input, select').val('').removeClass("is-invalid").removeClass("is-valid");
+		$(this).find('input[name=_token]').val(token);
 		$(this).find('input').find('input[name=status]').prop('checked', true);
 		$(this).find('div.form-group').removeClass("is-submitted");
 	});
@@ -26,9 +28,10 @@ function initEditModal() {
 		var row = $(this).closest('tr');
 		$('form.validate').attr('action', BASE_API + '/' + row.data('id')).attr('method', 'PUT');
 		$('form.validate').find('input[name=name]').val(row.find('td.name').html());
-		$('form.validate').find('input[name=thumbnail]').val(row.find('td.thumbnail').find('img').attr('src'));
+		$('form.validate').find('input[name=banner]').val(row.find('td.banner').find('img').attr('src'));
 		$('form.validate').find('input[name=slug]').val(row.find('td.slug').html());
 		var active = row.find('td.active').find('span').data('active');
+		loadParentCategory(row.data('id'), row.find('.parent').data('parent-id'));
 		$('form.validate').find('input[name=active]').prop('checked', !!active);
 		$('#g_form').modal('show');
 	});
@@ -48,6 +51,7 @@ function initDeleteModal() {
 function initCreateModal() {
 	$('button.create').on('click', function() {
 		$('form.validate').attr('action', BASE_API).attr('method', 'POST');
+		loadParentCategory(0);
 		$('#g_form').modal('show');
 	});
 }
@@ -62,7 +66,7 @@ function initSaveForm() {
 		    ).concat(
 	            $('form.validate input[type=checkbox]:checked')
 	            .map(function() {return {"name": this.name, "value": 1}}).get()
-		    );
+		    )
 			$.ajax({
 	            url: $(form).attr('action'),
 	            type: $(form).attr('method'),
@@ -115,14 +119,17 @@ function reloadItems() {
 function parseTableRow(data) {
 	let row = $('table tbody').find('tr').first().clone();
 	row.removeClass('hidden');
+	var token = row.find('input[name=_token]').val();
 	$('table').find('tbody').empty();
 	for(var key in data) {
 		var item = data[key];
-		row.data('id', item.id);
-		row.find('.thumbnail').html('');
-		if(item.thumbnail) {
-			row.find('.thumbnail').html('<img class="image" src="' + item.thumbnail + '" />');
+		row.attr('data-id', item.id);
+		row.find('.banner').html('');
+		if(item.banner) {
+			row.find('.banner').html('<img class="image" src="' + item.banner + '" />');
 		}
+		row.find('.parent').attr('data-parent-id', item.parent_id).html(item.parent_name);
+
 		row.find('.name').html(item.name);
 		row.find('.slug').html(item.slug);
 		row.find('.register').html(item.created_at);
@@ -131,6 +138,41 @@ function parseTableRow(data) {
 		} else {
 			row.find('.active').html('<span class="badge badge-danger" data-active="0">Disabled</span>')
 		}
+		row.find('form').attr('action', BASE_API + '/' + item.id);
 		$('table').find('tbody').append(row.clone());
 	}
+}
+
+function loadParentCategory(id = null, parentId) {
+	var parameters = '';
+	if(id != null) parameters = '?id=' + id;
+	$.ajax({
+        url: BASE_API + '/load' + parameters,
+        success: function(response) {
+        	console.log(response);
+            if (response.status === 'SUCCESS') {
+            	$('form.validate').find('select[name=parent_id]').html(parseOptionSelect(response.data, parentId));
+            } else if(response.status === 'ERROR') {
+            	$('.modal').modal('hide');
+                $('#error_popup').modal('show');
+            }
+        },
+        error: function (xhr, status, error) {
+	        var response = JSON.parse(xhr.responseText);
+	        $('.modal').modal('hide');
+	        $('#error_popup').modal('show');
+	    }
+    });
+}
+
+function parseOptionSelect(data, parentId = null) {
+	console.log(parentId);
+	var html = '<option value="">Select parent category</option>';
+	for(var i = 0; i < data.length; i++) {
+		var selected = '';
+		if(parentId != null && parentId == data[i].id) selected = 'selected';
+		html += '<option value="' + data[i].id + '" ' + selected + '>' + data[i].name + '</option>';
+	}
+	console.log(html);
+	return html;
 }

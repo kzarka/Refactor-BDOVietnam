@@ -1,10 +1,14 @@
 <ol class="breadcrumb">
-    <li class="breadcrumb-item">Home</li>
-    <li class="breadcrumb-item">
-        <a href="#">Admin</a>
-    </li>
-    <li class="breadcrumb-item active">Dashboard</li>
+@if (count($breadcrumbs))
     <!-- Breadcrumb Menu-->
+    @foreach ($breadcrumbs as $breadcrumb)
+        @if ($breadcrumb->url && !$loop->last)
+            <li class="breadcrumb-item"><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
+        @else
+            <li class="breadcrumb-item active">{{ $breadcrumb->title }}</li>
+        @endif
+    @endforeach
+@endif
     <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group">
             <a class="btn" href="#">

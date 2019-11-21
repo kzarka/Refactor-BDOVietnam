@@ -9,6 +9,6 @@ class Category extends BaseModel
 	protected $table = "categories";
 
     protected $fillable = [
-        'name'
+        'name', 'slug', 'banner', 'active', 'parent_id'
     ];
 }

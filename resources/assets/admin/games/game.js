@@ -10,7 +10,9 @@ $(document).ready( function() {
 	initSlug();
 	$('#g_form').on('hidden.bs.modal', function() {
 		form.resetForm();
-		$(this).find('input').val('').removeClass("is-invalid").removeClass("is-valid");
+		var token = $(this).find('input[name=_token]').val();
+		$(this).find('input, select').val('').removeClass("is-invalid").removeClass("is-valid");
+		$(this).find('input[name=_token]').val(token);
 		$(this).find('input').find('input[name=status]').prop('checked', true);
 		$(this).find('div.form-group').removeClass("is-submitted");
 	});
@@ -118,7 +120,7 @@ function parseTableRow(data) {
 	$('table').find('tbody').empty();
 	for(var key in data) {
 		var item = data[key];
-		row.data('id', item.id);
+		row.attr('data-id', item.id);
 		row.find('.thumbnail').html('');
 		if(item.thumbnail) {
 			row.find('.thumbnail').html('<img class="image" src="' + item.thumbnail + '" />');
@@ -131,6 +133,7 @@ function parseTableRow(data) {
 		} else {
 			row.find('.active').html('<span class="badge badge-danger" data-active="0">Disabled</span>')
 		}
+		row.find('form').attr('action', BASE_API + '/' + item.id);
 		$('table').find('tbody').append(row.clone());
 	}
 }

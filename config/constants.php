@@ -5,3 +5,6 @@
 
 	define('STATUS_SUCCESS', 'SUCCESS');
 	define('STATUS_ERROR', 'ERROR');
+
+	define('STATUS_ACTIVE', 1);
+	define('STATUS_DISABLE', 0);

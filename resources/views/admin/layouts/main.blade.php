@@ -8,7 +8,7 @@
     <div class="app-body">
         @include('admin.partials.sidebar')
         <main class="main">
-            @include('admin.partials.breadscrumb')
+            {{ Breadcrumbs::render() }}
             <div class="container-fluid">
                 <div class="animated fadeIn">
                     @yield('content')

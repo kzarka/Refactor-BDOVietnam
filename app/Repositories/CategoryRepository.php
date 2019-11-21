@@ -16,16 +16,34 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     }
 
     public function getCategoryList($perPage = 10) {
-		return $this->model->select('*')->paginate($perPage);
+		$records = $this->model->select(
+			'categories.*',
+			'sub.name as parent_name'
+		)->leftJoin('categories as sub', 'categories.parent_id', 'sub.id');
+		return $records->paginate($perPage);
+	}
+
+	public function loadCategorySelect($exceptId) {
+		$records = $this->model->select('*');
+		if($exceptId) {
+			$records->whereNotIn('id', function($query) use ($exceptId) {				
+				$query->select('id')
+              	->from('categories')
+              	->where('parent_id', $exceptId); /* Take child ids of this category to exclude */
+			});
+			$records->whereNotIn('id', [$exceptId])->where('active', STATUS_ACTIVE);
+
+		}
+		return $records->get();
 	}
 
 	public function updateByAdmin($data, $id) {
 		\DB::beginTransaction();
 		try {
-		    $game = $this->model->findOrFail($id);
-			$game->update($data);
+		    $record = $this->model->findOrFail($id);
+			$record->update($data);
 		    \DB::commit();
-		    return $game;
+		    return $record;
 		} catch (\Exception $e) {
 		    \DB::rollback();
 		    throw new \Exception($e->getMessage());
@@ -36,8 +54,8 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 	public function deleteByAdmin($id) {
 		\DB::beginTransaction();
 		try {
-		    $game = $this->model->findOrFail($id);
-			if($game) $game->delete();
+		    $record = $this->model->findOrFail($id);
+			if($record) $record->delete();
 		    \DB::commit();
 		    return true;
 		} catch (\Exception $e) {

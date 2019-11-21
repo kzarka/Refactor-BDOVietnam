@@ -19,4 +19,8 @@ class CategoryService implements CategoryServiceInterface
 	public function getCategoryList($perPage = 10) {
 		return $this->catRepos->getCategoryList($perPage);
 	}
+
+	public function loadCategorySelect($exceptId) {
+		return $this->catRepos->loadCategorySelect($exceptId);
+	}
 }

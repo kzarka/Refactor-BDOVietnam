@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Services\Contracts\CategoryServiceInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\GameInputRequest;
+use App\Http\Requests\Admin\CategoryInputRequest;
 
 class CategoryController extends BaseController
 {
@@ -24,20 +24,20 @@ class CategoryController extends BaseController
         return view('admin.category.index', ['categories' => $categories]);
     }
 
-    public function update(GameInputRequest $request, $id)
+    public function update(CategoryInputRequest $request, $id)
     {
         try {
-            $result = $this->cateRepos->updateByAdmin($request->all(), $id);
+            $result = $this->catRepos->updateByAdmin($request->all(), $id);
             return $this->respondWithSuccess($result);
         } catch (Exception $e) {
             return $this->respondWithError([], $e->getMessage());
         }
     }
 
-    public function store(GameInputRequest $request)
+    public function store(CategoryInputRequest $request)
     {
         try {
-            $result = $this->cateRepos->create($request->all());
+            $result = $this->catRepos->create($request->all());
             return $this->respondWithSuccess($result);
         } catch (Exception $e) {
             return $this->respondWithError([], $e->getMessage());
@@ -46,7 +46,7 @@ class CategoryController extends BaseController
 
     public function destroy($id)
     {
-        $result = $this->cateRepos->deleteByAdmin($id);
+        $result = $this->catRepos->deleteByAdmin($id);
         if($result) {
             $this->saveSessionSuccessMessage('Item deleted successfully.');
         } else {
@@ -56,7 +56,14 @@ class CategoryController extends BaseController
     }
 
     public function load(Request $request) {
-        $categories = $this->catService->getCategoryList();
+        $categories = null;
+        $exceptId = $request->get('id');
+        \Log::info($exceptId);
+        if($exceptId != null) {
+            $categories = $this->catService->loadCategorySelect($exceptId);
+        } else {
+            $categories = $this->catService->getCategoryList();
+        }
         return $this->respondWithSuccess($categories);
     }
 }

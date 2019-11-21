@@ -20,3 +20,5 @@ Route::resource('game', 'Game\GameController');
 Route::get('category/load', 'Category\CategoryController@load');
 
 Route::resource('category', 'Category\CategoryController');
+
+Route::resource('post', 'Post\PostController');

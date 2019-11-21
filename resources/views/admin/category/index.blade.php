@@ -12,21 +12,23 @@
 					<th></th>
 					<th>Name</th>
 					<th>Slug</th>
+					<th>Parent</th>
 					<th>Date registered</th>
 					<th>Status</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($categories as $category)
+				@forelse ($categories as $category)
 				<tr data-id="{{ $category->id }}">
-					<td class="thumbnail">
+					<td class="banner">
 						@if($category->thumbnail)
-						<img src="{{ $category->thumbnail }}" />
+						<img src="{{ $category->banner }}" />
 						@endif
 					</td>
 					<td class="name">{{ $category->name }}</td>
 					<td class="slug">{{ $category->slug }}</td>
+					<td class="parent" data-parent-id="{{ $category->parent_id }}">{{ $category->parent_name }}</td>
 					<td class="register">{{ $category->created_at }}</td>
 					<td class="active">
 						@if($category->active)
@@ -48,7 +50,28 @@
                         </button>
 					</td>
 				</tr>
-				@endforeach
+				@empty
+				<tr data-id="">
+					<td class="banner"></td>
+					<td class="name"></td>
+					<td class="slug"></td>
+					<td class="parent" data-parent-id=""></td>
+					<td class="register"></td>
+					<td class="active"></td>
+					<td>
+						<form action="" method="POST">
+							@csrf
+							@method('DELETE')
+						</form>
+						<button class="btn btn-success edit" type="button">
+							<i class="fa fa-edit"></i>
+						</button>
+						<button class="btn btn-danger delete" type="button">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+					</td>
+				</tr>
+				@endforelse
 			</tbody>
 		</table>
 		{{ $categories->links('partials.paginate') }}
@@ -63,7 +86,7 @@
     <div class="modal-dialog modal-lg" role="document">
       	<div class="modal-content">
         	<div class="modal-header">
-          		<h4 class="modal-title">Game Form</h4>
+          		<h4 class="modal-title">Category Form</h4>
           		<button class="close" type="button" data-dismiss="modal" aria-label="Close">
             		<span aria-hidden="true">×</span>
           		</button>
@@ -74,13 +97,19 @@
 		        	<label class="server-error"></label>
 		          	<div class="form-group">
 						<label for="company">Name</label>
-						<input class="form-control required" id="name" name="name" type="text" placeholder="Enter game name">
+						<input class="form-control required" id="name" name="name" type="text" placeholder="Enter category name">
 						<label id="name-error" class="is-invalid" for="name" style=""></label>
 					</div>
 					<div class="form-group">
-						<label for="company">Thumbnail</label>
-						<input class="form-control" id="thumbnail" name="thumbnail" type="text" placeholder="Thumbnail">
-						<label id="thumbnail-error" class="is-invalid" for="thumbnail" style=""></label>
+						<label for="company">Banner</label>
+						<input class="form-control" id="banner" name="banner" type="text" placeholder="Banner">
+						<label id="banner-error" class="is-invalid" for="banner" style=""></label>
+					</div>
+					<div class="form-group">
+						<label for="company">Parent</label>
+						<select class="form-control" id="parent" name="parent_id" placeholder="Parent">
+						</select>
+						<label id="parent_id-error" class="is-invalid" for="parent" style=""></label>
 					</div>
 					<div class="row">
 						<div class="form-group col-sm-8">
