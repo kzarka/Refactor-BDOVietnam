@@ -42,3 +42,11 @@ span.page-link {
   cursor: pointer;
 }
 
+.form-control {
+  border: solid 1px #999 !important;
+}
+
+label.is-invalid {
+  color: #bd2a2a;
+}
+

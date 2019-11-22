@@ -7,32 +7,35 @@ use App\Services\Contracts\PostServiceInterface;
 use App\Repositories\Contracts\PostRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\PostInputRequest;
+use App\Services\Contracts\GameServiceInterface;
 
 class PostController extends BaseController
 {
-	protected $postService, $postRepos;
+	protected $postService, $postRepos, $gameService;
 
-	public function __construct(PostServiceInterface $postService, PostRepositoryInterface $postRepos)
+	public function __construct(PostServiceInterface $postService, PostRepositoryInterface $postRepos, GameServiceInterface $gameService)
     {
         $this->postService = $postService;
         $this->postRepos = $postRepos;
+        $this->gameService = $gameService;
     }
 
     public function index(Request $request)
     {
-    	$records = $this->postService->getCategoryList();
+    	$records = $this->postService->getPostList();
         return view('admin.post.index', ['posts' => $records]);
     }
 
     public function create(Request $request) {
-        return view('admin.post.create');
+        $games = $this->gameService->getGameList();
+        return view('admin.post.create', ['games' => $games]);
     }
 
     public function edit(Request $request, $id) {
         $post = $this->postRepos->find($id);
         if(!$post) {
             $this->saveSessionErrorMessage('Post not found!');
-            return view('admin.post.index');
+            return view('admin.post.edit', ['games' => $games]);
         }
         return view('admin.post.edit');
     }

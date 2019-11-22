@@ -20,7 +20,7 @@ class GameController extends BaseController
 
     public function index(Request $request)
     {
-    	$games = $this->gameService->getGameList();
+    	$games = $this->gameService->getGameListPagination(true);
         return view('admin.games.index', ['games' => $games]);
     }
 
@@ -56,7 +56,7 @@ class GameController extends BaseController
     }
 
     public function load(Request $request) {
-        $games = $this->gameService->getGameList();
+        $games = $this->gameService->getGameListPagination(true);
         return $this->respondWithSuccess($games);
     }
 }

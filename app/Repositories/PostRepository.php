@@ -15,12 +15,15 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return Post::class;
     }
 
+    public function getPostList($perPage = 10) {
+        return $this->getPostsBuilder()->paginate($perPage);
+    }
     public function getPostsBuilder($catId = null, $userId = null) {
     	$builder = $this->model->select(
     		'posts.id',
     		'posts.title',
     		'posts.excert',
-    		'users.name as author_name'
+    		'users.name as author_name',
     		'categories.id as cat_id',
     		'categories.name as cat_name'
     	)
@@ -28,8 +31,8 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     	->join('posts_categories as post_cat', function($join) use ($catId) {
 			$join->on('post_cat.post_id', '=', 'posts.id');
     	})
-    	->join('categories', function($join) use ($catId) {
-    		$join->whereRaw('categories.id', '=', 'posts_categories.cat_id');
+    	->join('categories', function($join) {
+    		$join->where('categories.id', '=', 'posts_categories.cat_id');
     	});
 
     	if(isset($catId)) {

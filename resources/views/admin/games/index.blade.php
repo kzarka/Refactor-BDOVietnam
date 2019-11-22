@@ -72,23 +72,23 @@
         		@csrf
 		        <div class="modal-body">
 		        	<label class="server-error"></label>
-		          	<div class="form-group">
+		          	<div class="form-group is-submitted">
 						<label for="company">Name</label>
 						<input class="form-control required" id="name" name="name" type="text" placeholder="Enter game name">
 						<label id="name-error" class="is-invalid" for="name" style=""></label>
-					</div>
-					<div class="form-group">
+					</div> 
+					<div class="form-group is-submitted">
 						<label for="company">Thumbnail</label>
 						<input class="form-control" id="thumbnail" name="thumbnail" type="text" placeholder="Thumbnail">
 						<label id="thumbnail-error" class="is-invalid" for="thumbnail" style=""></label>
 					</div>
 					<div class="row">
-						<div class="form-group col-sm-8">
+						<div class="form-group col-sm-8 is-submitted">
 							<label for="city">Slug</label>
 							<input class="form-control required" id="slug" name="slug" type="text" placeholder="Slug">
 							<label id="slug-error" class="is-invalid" for="slug" style=""></label>
 						</div>
-						<div class="form-group col-sm-4">
+						<div class="form-group col-sm-4 is-submitted">
 							<label for="postal-code">Status</label><br>
 							<label class="switch switch-label switch-pill switch-success">
 								<input class="switch-input" id="status" name="active" type="checkbox">

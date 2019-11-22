@@ -15,8 +15,21 @@ class GameRepository extends BaseRepository implements GameRepositoryInterface
         return Game::class;
     }
 
-    public function getGameList($perPage = 10) {
-		return $this->model->select('*')->paginate($perPage);
+	public function gameBuilder($all = false) {
+		$builder = $this->model->select('*');
+    	if(!$all) {
+    		$builder->active();
+    	}
+    	return $builder;
+	}
+
+    public function getGameListPagination($all = false, $perPage = 10) {
+    	
+		return $this->gameBuilder($all)->paginate($perPage);
+	}
+
+	public function getGameList($all = false) {
+		return $this->gameBuilder($all)->get();
 	}
 
 	public function updateByAdmin($data, $id) {

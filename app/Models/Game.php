@@ -11,4 +11,15 @@ class Game extends BaseModel
     protected $fillable = [
         'name', 'thumbnail', 'active', 'slug'
     ];
+
+    /**
+     * Scope a query to only include active item.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', STATUS_ACTIVE);
+    }
 }
