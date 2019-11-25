@@ -1,5 +1,8 @@
 $(document).ready(function() {
 	CKEDITOR.replace('content');
+	$('select[name=game]').select2({
+  		theme: 'bootstrap'
+	});
 	initSlug();
 });
 
