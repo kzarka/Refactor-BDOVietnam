@@ -16,11 +16,11 @@ class CategoryService implements CategoryServiceInterface
 		$this->catRepos = $catRepos;
 	}
 
-	public function getCategoryList($perPage = 10) {
-		return $this->catRepos->getCategoryList($perPage);
+	public function getCategoryListPagination($all = false, $exceptId = null, $perPage = 10) {
+		return $this->catRepos->getCategoryListPagination($all, $perPage);
 	}
 
-	public function loadCategorySelect($exceptId) {
-		return $this->catRepos->loadCategorySelect($exceptId);
+	public function getCategoryList($all = false, $exceptId = null) {
+		return $this->catRepos->getCategoryList($all, $exceptId);
 	}
 }

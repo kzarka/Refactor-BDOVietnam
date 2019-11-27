@@ -25,8 +25,8 @@ class PostInputRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'slug' => 'unique:games,slug,' . request()->route()->parameter('game')
+            'title' => 'required|unique:posts,title,' . request()->route()->parameter('post'),
+            'slug' => 'required|unique:posts,slug,' . request()->route()->parameter('post')
         ];
     }
 }

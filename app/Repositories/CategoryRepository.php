@@ -15,26 +15,29 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return Category::class;
     }
 
-    public function getCategoryList($perPage = 10) {
-		$records = $this->model->select(
-			'categories.*',
-			'sub.name as parent_name'
-		)->leftJoin('categories as sub', 'categories.parent_id', 'sub.id');
-		return $records->paginate($perPage);
-	}
-
-	public function loadCategorySelect($exceptId) {
-		$records = $this->model->select('*');
-		if($exceptId) {
-			$records->whereNotIn('id', function($query) use ($exceptId) {				
+    public function categoryBuilder($all = false, $exceptId = null) {
+		$builder = $this->model->select('*');
+    	if(!$all) {
+    		$builder->active();
+    	}
+    	if($exceptId) {
+    		$builder->whereNotIn('id', function($query) use ($exceptId) {				
 				$query->select('id')
               	->from('categories')
               	->where('parent_id', $exceptId); /* Take child ids of this category to exclude */
 			});
-			$records->whereNotIn('id', [$exceptId])->where('active', STATUS_ACTIVE);
+			$builder->whereNotIn('id', [$exceptId]);
+    	}
+    	return $builder;
+	}
 
-		}
-		return $records->get();
+    public function getCategoryListPagination($all = false, $exceptId = null, $perPage = 10) {
+    	
+		return $this->categoryBuilder($all, $exceptId)->paginate($perPage);
+	}
+
+	public function getCategoryList($all = false, $exceptId = null) {
+		return $this->categoryBuilder($all, $exceptId)->get();
 	}
 
 	public function updateByAdmin($data, $id) {

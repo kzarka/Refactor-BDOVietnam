@@ -8,16 +8,18 @@ use App\Repositories\Contracts\PostRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\PostInputRequest;
 use App\Services\Contracts\GameServiceInterface;
+use App\Services\Contracts\CategoryServiceInterface;
 
 class PostController extends BaseController
 {
-	protected $postService, $postRepos, $gameService;
+	protected $postService, $postRepos, $gameService, $catService;
 
-	public function __construct(PostServiceInterface $postService, PostRepositoryInterface $postRepos, GameServiceInterface $gameService)
+	public function __construct(PostServiceInterface $postService, PostRepositoryInterface $postRepos, GameServiceInterface $gameService, CategoryServiceInterface $catService)
     {
         $this->postService = $postService;
         $this->postRepos = $postRepos;
         $this->gameService = $gameService;
+        $this->catService = $catService;
     }
 
     public function index(Request $request)
@@ -28,7 +30,8 @@ class PostController extends BaseController
 
     public function create(Request $request) {
         $games = $this->gameService->getGameList();
-        return view('admin.post.create', ['games' => $games]);
+        $categories = $this->catService->getCategoryList();
+        return view('admin.post.create', ['games' => $games, 'categories' => $categories]);
     }
 
     public function edit(Request $request, $id) {
@@ -52,11 +55,13 @@ class PostController extends BaseController
 
     public function store(PostInputRequest $request)
     {
+        \Log::info($request->all());
         try {
             $result = $this->postRepos->create($request->all());
-            return $this->respondWithSuccess($result);
+            return redirect()->route('admin.post.index');
         } catch (Exception $e) {
-            return $this->respondWithError([], $e->getMessage());
+            $this->saveSessionErrorMessage($e->getMessage());
+            return redirect()->route('admin.post.create');
         }
     }
 

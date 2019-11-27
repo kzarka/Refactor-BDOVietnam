@@ -1,11 +1,17 @@
 <form action="{{ route('admin.post.store') }}@if(isset($post)) '/' . $post->id @endif" method="POST" class="validate">
 	@csrf
 	<div class="form-group">
-		<input class="form-control" id="title" name="title" type="text" placeholder="Enter title name">
+		<input class="form-control" id="title" name="title" type="text" placeholder="Enter title name" value="{{ old('title') ?? (isset($post->title) ? $post->title : '') }}">
+		@if ($errors->has('title'))
+            <label id="name-error" class="error" for="title">{{ $errors->first('title') }}</label>
+        @endif
 	</div>
 	<div class="form-group">
 		<label for="content">Content</label>
-		<textarea class="form-control" name="content"></textarea>
+		<textarea class="form-control" name="content">{{ old('content') ?? (isset($post->content) ? $post->content : '') }}</textarea>
+		@if ($errors->has('content'))
+            <label id="name-error" class="error" for="comment">{{ $errors->first('content') }}</label>
+        @endif
 	</div>
 	<div class="form-group">
 		<label for="excert">Excert</label>
@@ -15,11 +21,18 @@
 		<div class="col-sm-6">
 			<div class="form-group ">
 				<label for="postal-code">Slug</label>
-				<input class="form-control" id="" name="slug" type="text" placeholder="Slug Code">
+				<input class="form-control" id="" name="slug" type="text" placeholder="Slug Code" value="{{ old('slug') ?? (isset($post->slug) ? $post->slug : '') }}">
+				@if ($errors->has('slug'))
+		            <label id="name-error" class="error" for="slug">{{ $errors->first('slug') }}</label>
+		        @endif
 			</div>
 			<div class="form-group">
 				<label for="street">Category</label>
-				<input class="form-control" id="category" name="category" type="text" placeholder="Enter category name">
+				<select multiple="" name="category" id="category" class="form-control">
+					@foreach($categories as $category)
+					<option value="{{ $category->id }}">{{ $category->name }}</option>
+					@endforeach
+              	</select>
 			</div>
 			<div class="form-group">
 				<label for="postal-code">Banner</label>
@@ -39,6 +52,13 @@
 			<div class="form-group">
 				<label for="city">Thumbnail</label>
 				<input class="form-control" id="thumbnail" type="text" name="thumbnail" placeholder="Enter Thumbnail">
+			</div>
+			<div class="form-group col-sm-4 is-submitted">
+				<label for="postal-code">Status</label><br>
+				<label class="switch switch-label switch-pill switch-success">
+					<input class="switch-input" id="status" name="active" type="checkbox">
+					<span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+				</label>
 			</div>
 		</div>
 	</div>

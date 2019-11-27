@@ -13,7 +13,7 @@
 			<div class="card-header">
 				<strong>Company</strong>
 				<small>Form</small>
-				<div class="pull-right"><button class="btn btn-primary">Save</button></div>
+				<div class="pull-right"><button class="btn btn-primary save">Save</button></div>
 			</div>
 			<div class="card-body">
 				@include('admin.post.form')

@@ -3,6 +3,14 @@ $(document).ready(function() {
 	$('select[name=game]').select2({
   		theme: 'bootstrap'
 	});
+
+	$('select[name=category]').select2({
+  		theme: 'bootstrap'
+	});
+
+	$('button.save').on('click', function() {
+		$('form.validate').submit();
+	})
 	initSlug();
 });
 

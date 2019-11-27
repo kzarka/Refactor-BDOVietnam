@@ -20,7 +20,7 @@ class CategoryController extends BaseController
 
     public function index(Request $request)
     {
-    	$categories = $this->catService->getCategoryList();
+    	$categories = $this->catService->getCategoryListPagination(true);
         return view('admin.category.index', ['categories' => $categories]);
     }
 
@@ -60,9 +60,9 @@ class CategoryController extends BaseController
         $exceptId = $request->get('id');
         \Log::info($exceptId);
         if($exceptId != null) {
-            $categories = $this->catService->loadCategorySelect($exceptId);
+            $categories = $this->catService->getCategoryList(false, $exceptId);
         } else {
-            $categories = $this->catService->getCategoryList();
+            $categories = $this->catService->getCategoryListPagination(true);
         }
         return $this->respondWithSuccess($categories);
     }
