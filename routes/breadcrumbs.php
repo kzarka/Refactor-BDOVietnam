@@ -26,5 +26,10 @@ Breadcrumbs::for('admin.post.create', function ($trail) {
 
 Breadcrumbs::for('admin.post.edit', function ($trail, $post) {
     $trail->parent('admin.post.index');
-    $trail->push('Edit Post: ' . $post->name, route('admin.post.edit', $post->id));
+    $trail->push('Edit Post: ' . $post->title, route('admin.post.edit', $post->id));
+});
+
+Breadcrumbs::for('admin.post.approve', function ($trail) {
+    $trail->parent('admin.post.index');
+    $trail->push('Approve Posts', route('admin.post.approve'));
 });

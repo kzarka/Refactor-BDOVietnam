@@ -3,7 +3,7 @@
 <!-- BEGIN LOGO -->
 <div class="logo-wrapper">
     <a href="" title="" rel="home">
-        <img src="http://bonfirethemes.com/powerup/one/wp-content/uploads/sites/2/2017/05/powerup-logo.png" alt="PowerUp">
+        <img src="/images/logo.png" alt="PowerUp">
     </a>
 </div>
 <!-- END LOGO -->

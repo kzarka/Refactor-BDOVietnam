@@ -30,6 +30,12 @@
                         <a class="nav-link" href="{{ route('admin.post.create') }}">
                         <i class="nav-icon icon-note"></i> Create Post</a>
                     </li>
+                    @if(Auth::user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD]))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.post.approve') }}">
+                        <i class="nav-icon icon-note"></i> Waiting Approve</a>
+                    </li>
+                    @endif
                 </ul>
             </li>
             @if(Auth::user()->authorizeRoles([ROLE_ADMIN]))

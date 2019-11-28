@@ -8,3 +8,11 @@
 
 	define('STATUS_ACTIVE', 1);
 	define('STATUS_DISABLE', 0);
+
+	define('STATUS_APPROVED', 1);
+	define('STATUS_UNAPPROVED', 0);
+
+	define('WITH_UNPUBLIC_POST', false);
+	define('WITH_PUBLIC_POST', true);
+	define('ONLY_APPROVED_POST', true);
+	define('ONLY_UNAPPROVED_POST', false);

@@ -1,5 +1,8 @@
-<form action="{{ route('admin.post.store') }}@if(isset($post)) '/' . $post->id @endif" method="POST" class="validate">
+<form action="{{ isset($post) ? route('admin.post.update', $post->id) : route('admin.post.store') }}" method="POST" class="validate">
 	@csrf
+	@if(isset($post))
+	@method('PUT')
+	@endif
 	<div class="form-group">
 		<input class="form-control" id="title" name="title" type="text" placeholder="Enter title name" value="{{ old('title') ?? (isset($post->title) ? $post->title : '') }}">
 		@if ($errors->has('title'))
@@ -54,9 +57,9 @@
 				<input class="form-control" id="thumbnail" type="text" name="thumbnail" placeholder="Enter Thumbnail">
 			</div>
 			<div class="form-group col-sm-4 is-submitted">
-				<label for="postal-code">Status</label><br>
+				<label for="postal-code">Public</label><br>
 				<label class="switch switch-label switch-pill switch-success">
-					<input class="switch-input" id="status" name="active" type="checkbox">
+					<input class="switch-input public" id="status" name="public" type="checkbox">
 					<span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
 				</label>
 			</div>

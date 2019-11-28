@@ -3,6 +3,7 @@
     "/assets/admin/js/common.js": "/assets/admin/js/common.js",
     "/assets/admin/js/games/game.js": "/assets/admin/js/games/game.js",
     "/assets/admin/js/post/create.js": "/assets/admin/js/post/create.js",
+    "/assets/admin/js/post/post.js": "/assets/admin/js/post/post.js",
     "/assets/admin/js/validator.js": "/assets/admin/js/validator.js",
     "/assets/js/app.js": "/assets/js/app.js",
     "/assets/admin/css/custom.css": "/assets/admin/css/custom.css",

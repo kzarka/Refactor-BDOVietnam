@@ -19,12 +19,13 @@ class CreatePostsTable extends Migration
             $table->string('slug', 100)->nullable();
             $table->text('content')->nullable();
             $table->text('excert')->nullable();
-            $table->string('thumbnail', 200)->default('/images/thumbnail.jpg');
-            $table->string('banner', 200)->default('/images/thumbnail.jpg');
+            $table->string('thumbnail', 200)->nullable();;
+            $table->string('banner', 200)->nullable();;
             $table->tinyInteger('public')->default(0);
             $table->unsignedInteger('author_id')->nullable();
             $table->integer('view_count')->default(0);
-            $table->unsignedInteger('game_id');
+            $table->unsignedInteger('approved')->default(0);
+            $table->unsignedInteger('game_id')->nullable();
             $table->foreign('game_id')
                 ->references('id')
                 ->on('games')

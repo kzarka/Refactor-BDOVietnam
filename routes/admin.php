@@ -21,4 +21,6 @@ Route::get('category/load', 'Category\CategoryController@load');
 
 Route::resource('category', 'Category\CategoryController');
 
+Route::match(['get', 'post'], 'post/approve/', 'Post\PostController@approve')->name('post.approve');
+
 Route::resource('post', 'Post\PostController');

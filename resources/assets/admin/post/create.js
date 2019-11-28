@@ -12,10 +12,21 @@ $(document).ready(function() {
 		$('form.validate').submit();
 	})
 	initSlug();
+	initToggleState();
 });
 
 function initSlug() {
 	$('form.validate').on('keyup', 'input[name=title]', function() {
 		$('form.validate').find('input[name=slug]').val(slugGenerate($(this).val()));
+	});
+}
+
+function initToggleState() {
+	$('form.validate input.public').on('click', function () {
+		if($(this).prop('checked')) {
+			$(this).val(1);
+		} else {
+			$(this).val(0);
+		}
 	});
 }

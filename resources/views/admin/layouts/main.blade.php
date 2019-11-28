@@ -8,7 +8,11 @@
     <div class="app-body">
         @include('admin.partials.sidebar')
         <main class="main">
+            @if(isset($route) && $route == 'post.edit')
+            {{ Breadcrumbs::render('admin.post.edit', $post) }}
+            @else
             {{ Breadcrumbs::render() }}
+            @endif
             <div class="container-fluid">
                 <div class="animated fadeIn">
                     @yield('content')

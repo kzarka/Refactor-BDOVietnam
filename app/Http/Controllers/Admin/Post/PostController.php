@@ -24,7 +24,7 @@ class PostController extends BaseController
 
     public function index(Request $request)
     {
-    	$records = $this->postService->getPostList();
+    	$records = $this->postService->getPostListPagination(WITH_UNPUBLIC_POST, ONLY_APPROVED_POST);
         return view('admin.post.index', ['posts' => $records]);
     }
 
@@ -36,47 +36,69 @@ class PostController extends BaseController
 
     public function edit(Request $request, $id) {
         $post = $this->postRepos->find($id);
-        if(!$post) {
-            $this->saveSessionErrorMessage('Post not found!');
-            return view('admin.post.edit', ['games' => $games]);
+        if(!$post || !$post->canModify()) {
+            $this->saveSessionErrorMessage('You cant edit this post');
+            return redirect()->route('admin.post.index');
         }
-        return view('admin.post.edit');
+        $games = $this->gameService->getGameList();
+        $categories = $this->catService->getCategoryList();
+        return view('admin.post.edit', [
+            'post' => $post, 
+            'categories' => $categories, 
+            'games' => $games,
+            'route' => 'post.edit'
+        ]);
     }
 
     public function update(PostInputRequest $request, $id)
     {
-        try {
-            $result = $this->postRepos->updateByAdmin($request->all(), $id);
-            return $this->respondWithSuccess($result);
-        } catch (Exception $e) {
-            return $this->respondWithError([], $e->getMessage());
+        $result = $this->postRepos->updateByAdmin($request->all(), $id);
+        if($result) {
+            $this->saveSessionSuccessMessage('Updated!');
+            return redirect()->route('admin.post.index');
         }
+        $this->saveSessionErrorMessage('You cant be deleted!');
+        return redirect()->route('admin.post.index');
     }
 
     public function store(PostInputRequest $request)
     {
-        \Log::info($request->all());
-        try {
-            $result = $this->postRepos->create($request->all());
+        $result = $this->postRepos->createByAdmin($request->all());
+        if($result){
+            $this->saveSessionSuccessMessage('Updated!');
             return redirect()->route('admin.post.index');
-        } catch (Exception $e) {
-            $this->saveSessionErrorMessage($e->getMessage());
-            return redirect()->route('admin.post.create');
         }
+        $this->saveSessionErrorMessage('Error!');
+        return redirect()->route('admin.post.index');
     }
 
     public function destroy($id)
     {
         $result = $this->postRepos->deleteByAdmin($id);
-        if($result) {
-            $this->saveSessionSuccessMessage('Item deleted successfully.');
-        } else {
-            $this->saveSessionSuccessMessage('Item cannot be deleted.');
+        if($result){
+            $this->saveSessionSuccessMessage('Deleted!');
+            return redirect()->route('admin.post.index');
         }
-        return redirect()->route('admin.category.index');
+        $this->saveSessionErrorMessage('You cant delete this post!');
+        return redirect()->route('admin.post.index');
     }
 
     public function load(Request $request) {
         return $this->postService->getPostList();
+    }
+
+    public function approve(Request $request) {
+        if($request->method() == 'GET') {
+            $records = $this->postService->getPostListPagination(WITH_UNPUBLIC_POST, ONLY_UNAPPROVED_POST);
+            return view('admin.post.approve', ['posts' => $records]);
+        }
+        $id = $request->get('id');
+        $result = $this->postRepos->approveByAdmin($id);
+        if($result){
+            $this->saveSessionSuccessMessage('Approve!');
+            return redirect()->route('admin.post.approve');
+        }
+        $this->saveSessionErrorMessage('You cant approve this post!');
+        return redirect()->route('admin.post.approve');
     }
 }

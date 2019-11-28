@@ -81,59 +81,57 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/assets/admin/post/create.js":
-/*!***********************************************!*\
-  !*** ./resources/assets/admin/post/create.js ***!
-  \***********************************************/
+/***/ "./resources/assets/admin/post/post.js":
+/*!*********************************************!*\
+  !*** ./resources/assets/admin/post/post.js ***!
+  \*********************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var selectedRow = null;
 $(document).ready(function () {
-  CKEDITOR.replace('content');
-  $('select[name=game]').select2({
-    theme: 'bootstrap'
-  });
-  $('select[name=category]').select2({
-    theme: 'bootstrap'
-  });
-  $('button.save').on('click', function () {
-    $('form.validate').submit();
-  });
-  initSlug();
-  initToggleState();
+  initDeleteModal();
+  initApproveModal();
 });
 
-function initSlug() {
-  $('form.validate').on('keyup', 'input[name=title]', function () {
-    $('form.validate').find('input[name=slug]').val(slugGenerate($(this).val()));
+function initDeleteModal() {
+  $('table tbody').on('click', 'button.delete', function () {
+    selectedRow = $(this).closest('tr');
+    $('#p_delete').modal('show');
+  });
+  $('#confirm_delete').on('click', function () {
+    selectedRow.find('form.delete').submit();
   });
 }
 
-function initToggleState() {
-  $('form.validate input.public').on('click', function () {
-    if ($(this).prop('checked')) {
-      $(this).val(1);
-    } else {
-      $(this).val(0);
-    }
+function initApproveModal() {
+  $('table tbody').on('click', 'button.approve', function () {
+    selectedRow = $(this).closest('tr');
+    $('#p_approve').modal('show');
+  });
+  $('#confirm_approve').on('click', function () {
+    selectedRow.find('form.approve').submit();
   });
 }
 
 /***/ }),
 
-/***/ 3:
-/*!*****************************************************!*\
-  !*** multi ./resources/assets/admin/post/create.js ***!
-  \*****************************************************/
+/***/ 4:
+/*!***************************************************!*\
+  !*** multi ./resources/assets/admin/post/post.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\post\create.js */"./resources/assets/admin/post/create.js");
+module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\post\post.js */"./resources/assets/admin/post/post.js");
 
 
 /***/ })

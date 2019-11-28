@@ -46,16 +46,20 @@
 					</td>
 					<td class="register">{{ $post->created_at }}</td>
 					<td>
-						@if($post->canModify())
-						<a class="btn btn-success edit" href="{{ route('admin.post.edit', $post->id) }}" alt="Edit this post">
-							<i class="fa fa-edit"></i>
-						</a>
+						@if($post->canApprove())
+						<form class="approve" action="{{ route('admin.post.approve') }}" method="POST">
+							@csrf
+							<input type="hidden" name="id" value="{{ $post->id }}">
+						</form>
+						<button class="btn btn-success approve" href="" title="Approve this post">
+							<i class="fa fa-check"></i>
+						</button>
 						@endif
 						@if($post->canDelete())
-						<button class="btn btn-danger delete" type="button">
+						<button class="btn btn-danger delete" type="button" title="Delete this post">
                             <i class="fa fa-trash-o"></i>
                         </button>
-                        <form action="{{ route('admin.post.destroy', $post->id) }}" method="POST"  alt="Delete this post">
+                        <form class="delete" action="{{ route('admin.post.destroy', $post->id) }}" method="POST">
 							@csrf
 							@method('DELETE')
 						</form>
@@ -74,7 +78,7 @@
 @push('modals')
 
 <!-- Modal Delete -->
-<div class="modal form fade" id="g_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal form fade" id="p_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
       	<div class="modal-content">
         	<div class="modal-header">
@@ -89,6 +93,27 @@
 	        <div class="modal-footer">
 	          	<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
 	          	<button class="btn btn-danger" id="confirm_delete" type="button">Yes</button>
+	        </div>
+      	</div>
+    </div>
+</div>
+<!-- End Modal Delete -->
+<!-- Modal Approve -->
+<div class="modal form fade" id="p_approve" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<h4 class="modal-title">Approve?</h4>
+          		<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            		<span aria-hidden="true">×</span>
+          		</button>
+        	</div>
+	        <div class="modal-body">
+	          	<p>Do you want approve record?</p>
+	        </div>
+	        <div class="modal-footer">
+	          	<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+	          	<button class="btn btn-secondary" id="confirm_approve" type="button">Yes</button>
 	        </div>
       	</div>
     </div>

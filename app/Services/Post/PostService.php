@@ -16,7 +16,11 @@ class PostService implements PostServiceInterface
 		$this->postRepos = $postRepos;
 	}
 
-	public function getPostList($perPage = 10) {
-		return $this->postRepos->getPostList($perPage);
+	public function getPostListPagination($public = true, $approved = true,  $perPage = 10) {
+		return $this->postRepos->getPostListPagination($public, $approved,  $perPage);
+	}
+
+	public function getPostList($public = true, $approved = true) {
+		return $this->postRepos->getPostList($public, $approved);
 	}
 }
