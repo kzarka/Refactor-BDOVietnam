@@ -81,19 +81,24 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/assets/admin/post/create.js":
-/*!***********************************************!*\
-  !*** ./resources/assets/admin/post/create.js ***!
-  \***********************************************/
+/***/ "./resources/assets/admin/post/edit.js":
+/*!*********************************************!*\
+  !*** ./resources/assets/admin/post/edit.js ***!
+  \*********************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var validator = null;
 $(document).ready(function () {
+  validator = $('form.validate').validate();
   CKEDITOR.replace('content');
   $('select[name=game]').select2({
     theme: 'bootstrap'
@@ -101,11 +106,13 @@ $(document).ready(function () {
   $('select[name=category]').select2({
     theme: 'bootstrap'
   });
-  $('button.save').on('click', function () {
-    $('form.validate').submit();
+  $('button.save').on('click', function (e) {
+    e.preventDefault();
+    callAjaxSave();
   });
   initSlug();
   initToggleState();
+  setTimeout(autoSave, 60000); // Start auto save after 1 minute
 });
 
 function initSlug() {
@@ -124,16 +131,49 @@ function initToggleState() {
   });
 }
 
+function callAjaxSave() {
+  validator.form();
+  console.log(validator.valid());
+  if (!validator.valid()) return;
+  return;
+  $.ajax({
+    url: $('form.validate').attr('action'),
+    type: $('form.validate').attr('method'),
+    data: $("form.validate").serializeArray(),
+    success: function success(response) {
+      if (response.status === 'SUCCESS') {
+        notifySuccess('Saved!');
+      } else if (response.status === 'ERROR') {
+        notifyError(response.message);
+      }
+    },
+    error: function error(xhr, status, _error) {
+      var response = JSON.parse(xhr.responseText);
+
+      if (response.errors) {
+        notifyError('Some fields is not valid');
+        parseFormError(response.errors);
+      } else {
+        $notifyError('System error.');
+      }
+    }
+  });
+}
+
+function autoSave() {
+  setInterval(callAjaxSave, 30000); // auto save every 5 minutes
+}
+
 /***/ }),
 
-/***/ 3:
-/*!*****************************************************!*\
-  !*** multi ./resources/assets/admin/post/create.js ***!
-  \*****************************************************/
+/***/ 5:
+/*!***************************************************!*\
+  !*** multi ./resources/assets/admin/post/edit.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\post\create.js */"./resources/assets/admin/post/create.js");
+module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\post\edit.js */"./resources/assets/admin/post/edit.js");
 
 
 /***/ })

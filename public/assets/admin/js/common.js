@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -128,6 +128,13 @@ window.getUrlParameter = function () {
 $(document).ready(function () {
   var notify = $('input.notify').val();
   var type = $('input.notify').data('type');
+  window.notify(null, notify, type);
+});
+
+window.notify = function () {
+  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var notify = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   toastr.options = {
     "closeButton": false,
     "debug": false,
@@ -145,33 +152,44 @@ $(document).ready(function () {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
   };
-  console.log(notify);
 
   if (notify) {
     switch (type) {
       case 'success':
-        toastr.success(notify, 'Success');
+        toastr.success(notify, title || 'Success');
         break;
 
       case 'error':
-        toastr.error(notify, 'Error');
+        toastr.error(notify, title || 'Error');
         break;
 
       default:
     }
   }
-});
+};
+
+window.notifySuccess = function () {
+  var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Success';
+  window.notify(title, content, 'success');
+};
+
+window.notifyError = function () {
+  var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Error';
+  window.notify(title, content, 'error');
+};
 
 /***/ }),
 
-/***/ 6:
+/***/ 7:
 /*!************************************************!*\
   !*** multi ./resources/assets/admin/common.js ***!
   \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\common.js */"./resources/assets/admin/common.js");
+module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\common.js */"./resources/assets/admin/common.js");
 
 
 /***/ })

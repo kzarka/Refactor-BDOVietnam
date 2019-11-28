@@ -89,8 +89,8 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             \DB::commit();
             return $record;
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
             \DB::rollback();
+            throw new \Exception($e->getMessage());
             return false;
         }
     }

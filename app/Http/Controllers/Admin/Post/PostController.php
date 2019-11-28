@@ -52,13 +52,12 @@ class PostController extends BaseController
 
     public function update(PostInputRequest $request, $id)
     {
-        $result = $this->postRepos->updateByAdmin($request->all(), $id);
-        if($result) {
-            $this->saveSessionSuccessMessage('Updated!');
-            return redirect()->route('admin.post.index');
+        try {
+            $result = $this->postRepos->updateByAdmin($request->all(), $id);
+            return $this->respondWithSuccess($result);
+        } catch (Exception $e) {
+            return $this->respondWithError([], $e->getMessage());
         }
-        $this->saveSessionErrorMessage('You cant be deleted!');
-        return redirect()->route('admin.post.index');
     }
 
     public function store(PostInputRequest $request)

@@ -33,6 +33,11 @@ window.getUrlParameter = function() {
 $(document).ready(function() {
 	var notify = $('input.notify').val();
 	var type = $('input.notify').data('type');
+	window.notify(null, notify, type);
+	
+});
+
+window.notify = function(title = null, notify = null, type = null) {
 	toastr.options = {
 		"closeButton": false,
 		"debug": false,
@@ -50,16 +55,26 @@ $(document).ready(function() {
 		"showMethod": "fadeIn",
 		"hideMethod": "fadeOut"
 	}
-	console.log(notify);
 	if(notify) {
 		switch(type) {
 			case 'success':
-				toastr.success(notify, 'Success');
+				toastr.success(notify, title || 'Success');
 				break;
 			case 'error':
-				toastr.error(notify, 'Error');
+				toastr.error(notify, title || 'Error');
 				break;
 			default:
 		}
 	}
-});
+}
+
+window.notifySuccess = function(content = null, title = 'Success') {
+	window.notify(title, content, 'success');
+}
+
+window.notifyError = function(content = null, title = 'Error') {
+	window.notify(title, content, 'error');
+}
+
+
+
