@@ -97,8 +97,9 @@
 
 
 var validator = null;
+var form = null;
 $(document).ready(function () {
-  validator = $('form.validate').validate();
+  initFormSave();
   CKEDITOR.replace('content');
   $('select[name=game]').select2({
     theme: 'bootstrap'
@@ -108,7 +109,7 @@ $(document).ready(function () {
   });
   $('button.save').on('click', function (e) {
     e.preventDefault();
-    callAjaxSave();
+    $('form.validate').submit();
   });
   initSlug();
   initToggleState();
@@ -131,37 +132,43 @@ function initToggleState() {
   });
 }
 
-function callAjaxSave() {
-  validator.form();
-  console.log(validator.valid());
-  if (!validator.valid()) return;
-  return;
-  $.ajax({
-    url: $('form.validate').attr('action'),
-    type: $('form.validate').attr('method'),
-    data: $("form.validate").serializeArray(),
-    success: function success(response) {
-      if (response.status === 'SUCCESS') {
-        notifySuccess('Saved!');
-      } else if (response.status === 'ERROR') {
-        notifyError(response.message);
-      }
-    },
-    error: function error(xhr, status, _error) {
-      var response = JSON.parse(xhr.responseText);
+function triggerSave() {
+  $('form.validate').submit();
+}
 
-      if (response.errors) {
-        notifyError('Some fields is not valid');
-        parseFormError(response.errors);
-      } else {
-        $notifyError('System error.');
-      }
+function initFormSave() {
+  form = $('form.validate').validate({
+    submitHandler: function submitHandler(form, event) {
+      event.preventDefault();
+      $.ajax({
+        url: $(form).attr('action'),
+        type: $(form).attr('method'),
+        data: $(form).serializeArray(),
+        success: function success(response) {
+          if (response.status === 'SUCCESS') {
+            notifySuccess('Saved!');
+          } else if (response.status === 'ERROR') {
+            notifyError(response.message);
+          }
+        },
+        error: function error(xhr, status, _error) {
+          var response = JSON.parse(xhr.responseText);
+
+          if (response.errors) {
+            notifyError('Some fields is not valid');
+            parseFormError(response.errors);
+          } else {
+            $notifyError('System error.');
+          }
+        }
+      });
+      return false;
     }
   });
 }
 
 function autoSave() {
-  setInterval(callAjaxSave, 30000); // auto save every 5 minutes
+  setInterval(triggerSave, 30000); // auto save every 5 minutes
 }
 
 /***/ }),

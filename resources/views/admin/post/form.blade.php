@@ -4,14 +4,14 @@
 	@method('PUT')
 	@endif
 	<div class="form-group">
-		<input class="form-control" id="title" name="title" type="text" placeholder="Enter title name" value="{{ old('title') ?? (isset($post->title) ? $post->title : '') }}">
+		<input class="form-control required" id="title" name="title" type="text" placeholder="Enter title name" value="{{ old('title') ?? (isset($post->title) ? $post->title : '') }}">
 		@if ($errors->has('title'))
             <label id="name-error" class="error" for="title">{{ $errors->first('title') }}</label>
         @endif
 	</div>
 	<div class="form-group">
 		<label for="content">Content</label>
-		<textarea class="form-control" name="content">{{ old('content') ?? (isset($post->content) ? $post->content : '') }}</textarea>
+		<textarea class="form-control required" name="content">{{ old('content') ?? (isset($post->content) ? $post->content : '') }}</textarea>
 		@if ($errors->has('content'))
             <label id="name-error" class="error" for="comment">{{ $errors->first('content') }}</label>
         @endif
@@ -24,7 +24,7 @@
 		<div class="col-sm-6">
 			<div class="form-group ">
 				<label for="postal-code">Slug</label>
-				<input class="form-control" id="" name="slug" type="text" placeholder="Slug Code" value="{{ old('slug') ?? (isset($post->slug) ? $post->slug : '') }}">
+				<input class="form-control required" id="" name="slug" type="text" placeholder="Slug Code" value="{{ old('slug') ?? (isset($post->slug) ? $post->slug : '') }}">
 				@if ($errors->has('slug'))
 		            <label id="name-error" class="error" for="slug">{{ $errors->first('slug') }}</label>
 		        @endif
