@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $postService = new \App\Services\Post\PostService;
+        $unapprovedPostCount = \App\Services\Post\PostService;::getPostList(WITH_UNPUBLIC_POST, ONLY_UNAPPROVED_POST)->count();
+        view()->share('unapproved_post_count', $unapprovedPostCount);
     }
 }

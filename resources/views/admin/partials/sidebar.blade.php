@@ -30,17 +30,17 @@
                         <a class="nav-link" href="{{ route('admin.post.create') }}">
                         <i class="nav-icon icon-note"></i> Create Post</a>
                     </li>
-                    @if(Auth::user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD]))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.post.approve') }}">
-                        <i class="nav-icon icon-note"></i> Waiting Approve</a>
-                    </li>
-                    @endif
                 </ul>
             </li>
+            @if(Auth::user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD]))
+            <li class="nav-title">Extras</li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.post.approve') }}">
+                <i class="nav-icon icon-note"></i> Approve Post <span class="badge badge-danger">PRO</span></a>
+            </li>
+            @endif
             @if(Auth::user()->authorizeRoles([ROLE_ADMIN]))
             <!-- Super Power -->
-            <li class="nav-title">Extras</li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.game.index') }}">
                     <i class="nav-icon icon-game-controller"></i> Games
