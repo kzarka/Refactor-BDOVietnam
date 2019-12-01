@@ -45,6 +45,16 @@ Breadcrumbs::for('admin.user.index', function ($trail) {
 });
 
 Breadcrumbs::for('admin.user.edit', function ($trail) {
-    $trail->parent('admin.dashboard');
+    $trail->parent('admin.user.index');
     $trail->push('Update User', route('admin.user.index'));
+});
+
+Breadcrumbs::for('admin.user.profile', function ($trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Profile', route('admin.user.profile'));
+});
+
+Breadcrumbs::for('admin.user.self_update', function ($trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Update Profile', route('admin.user.self_update'));
 });

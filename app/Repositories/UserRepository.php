@@ -104,4 +104,24 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 		    return false;
 		}
 	}
+
+	public function selfUpdate($request, $user)
+	{
+		\DB::beginTransaction();
+		try {
+		    $record = $user;
+		    $data = $request->all();
+		    if($request->get('banned_until') || $request->get('status'))
+		    {
+		    	$data['banned_until'] = null;
+		    	$data['status'] = $record->status;
+		    }
+			$record->update($data);
+		    \DB::commit();
+		    return true;
+		} catch (\Exception $e) {
+		    \DB::rollback();
+		    return false;
+		}
+	}
 }

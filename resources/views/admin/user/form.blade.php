@@ -30,7 +30,7 @@
 				<label for="street">Last Name</label>
 				<input class="form-control required" id="" name="last_name" type="text" placeholder="last name" value="{{ old('last_name') ?? (isset($user->last_name) ? $user->last_name : '') }}">
 			</div>
-			@if(!$user->authorizeRoles(ROLE_ADMIN))
+			@if(!$user->authorizeRoles(ROLE_ADMIN) && auth()->user()->authorizeRoles(ROLE_ADMIN))
 			<div class="form-group col-sm-4 is-submitted">
 				<label for="postal-code">Active</label><br>
 				<label class="switch switch-label switch-pill switch-success">

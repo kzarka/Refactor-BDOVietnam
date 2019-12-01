@@ -36,9 +36,7 @@ class UserController extends BaseController
 
     public function edit(Request $request, $id) {
         $user = $this->userService->findGetAvatar($id);
-        return view('admin.user.edit', [
-            'user' => $user
-        ]);
+        return view('admin.user.edit', ['user' => $user]);
     }
 
     public function update(UserRequest $request, $id)
@@ -116,5 +114,40 @@ class UserController extends BaseController
         }
         $this->saveSessionErrorMessage('You cant ban this user!');
         return redirect()->route('admin.post.index');
+    }
+
+    public function selfUpdate(Request $request)
+    {
+        $user = $this->userService->findGetAvatar($request->user()->id);
+        if($request->method() == 'GET') {
+            return view('admin.user.edit', [
+                'user' => $user
+            ]); 
+        }
+        $result = $this->userRepos->selfUpdate($request, $user);
+        if($result){
+            $this->saveSessionSuccessMessage('Updated!');
+            return redirect()->route('admin.user.self_update');
+        }
+        $this->saveSessionErrorMessage('You update this user!');
+        return redirect()->route('admin.user.self_update');
+    }
+
+    public function profile($id = null)
+    {
+        if($id == null) {
+            return view('admin.user.profile', [
+                'user' => auth()->user()
+            ]); 
+        }
+
+        $user = $this->userService->findGetAvatar($id);
+        if(!$user) {
+            $this->saveSessionErrorMessage('Profile not found.');
+            return redirect()->route('admin.dashboard');
+        }
+        return view('admin.user.profile', [
+            'user' => $user
+        ]); 
     }
 }

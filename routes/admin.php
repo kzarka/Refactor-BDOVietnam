@@ -32,6 +32,10 @@ Route::namespace('Post')->group(function () {
 });
 
 Route::namespace('User')->group(function () {
+	Route::match(['get', 'post'], 'user/profile/update', 'UserController@lift')->name('user.self_update');
+
+	Route::get('user/profile/{id?}', 'UserController@profile')->name('user.profile');
+
 	Route::post('user/ban', 'UserController@ban')->name('user.ban')->middleware('admin');
 
 	Route::post('user/lift/{id}', 'UserController@lift')->name('user.lift')->middleware('admin');
