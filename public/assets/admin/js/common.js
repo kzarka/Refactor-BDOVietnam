@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -182,14 +182,14 @@ window.notifyError = function () {
 
 /***/ }),
 
-/***/ 6:
+/***/ 9:
 /*!************************************************!*\
   !*** multi ./resources/assets/admin/common.js ***!
   \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\common.js */"./resources/assets/admin/common.js");
+module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\common.js */"./resources/assets/admin/common.js");
 
 
 /***/ })

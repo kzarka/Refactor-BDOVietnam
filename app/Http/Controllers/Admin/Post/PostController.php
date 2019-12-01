@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Post;
 
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Admin\BaseController;
 use App\Services\Contracts\PostServiceInterface;
 use App\Repositories\Contracts\PostRepositoryInterface;
 use Illuminate\Http\Request;
@@ -20,17 +20,18 @@ class PostController extends BaseController
         $this->postRepos = $postRepos;
         $this->gameService = $gameService;
         $this->catService = $catService;
+        parent::__construct();
     }
 
     public function index(Request $request)
     {
-    	$records = $this->postService->getPostListPagination(WITH_UNPUBLIC_POST, ONLY_APPROVED_POST);
+        $records = $this->postService->getListPagination(WITH_UNPUBLIC_POST, WITH_UNAPPROVED_POST, $request->user()->id);
         return view('admin.post.index', ['posts' => $records]);
     }
 
     public function create(Request $request) {
-        $games = $this->gameService->getGameList();
-        $categories = $this->catService->getCategoryList();
+        $games = $this->gameService->getList();
+        $categories = $this->catService->getParentListWithChild();
         return view('admin.post.create', ['games' => $games, 'categories' => $categories]);
     }
 
@@ -40,8 +41,8 @@ class PostController extends BaseController
             $this->saveSessionErrorMessage('You cant edit this post');
             return redirect()->route('admin.post.index');
         }
-        $games = $this->gameService->getGameList();
-        $categories = $this->catService->getCategoryList();
+        $games = $this->gameService->getList();
+        $categories = $this->catService->getParentListWithChild();
         return view('admin.post.edit', [
             'post' => $post, 
             'categories' => $categories, 
@@ -88,7 +89,7 @@ class PostController extends BaseController
 
     public function approve(Request $request) {
         if($request->method() == 'GET') {
-            $records = $this->postService->getPostListPagination(WITH_UNPUBLIC_POST, ONLY_UNAPPROVED_POST);
+            $records = $this->postService->getListPagination(WITH_UNPUBLIC_POST, ONLY_UNAPPROVED_POST);
             return view('admin.post.approve', ['posts' => $records]);
         }
         $id = $request->get('id');
@@ -99,5 +100,29 @@ class PostController extends BaseController
         }
         $this->saveSessionErrorMessage('You cant approve this post!');
         return redirect()->route('admin.post.approve');
+    }
+
+    public function manage(Request $request)
+    {
+        $records = $this->postService->getListPagination(WITH_UNPUBLIC_POST, ONLY_APPROVED_POST);
+        return view('admin.post.manage', ['posts' => $records]);
+    }
+
+    public function preview($postId = null)
+    {
+        if($postId) {
+            $post = $this->postRepos->find($postId);
+            if($post) {
+                return view('admin.post.view', ['post' => $post]);
+            }
+            $this->saveSessionErrorMessage('Bài viết này không thể xem trước');
+            return redirect()->back();
+        }
+
+        $post = [
+            'content' => request()->get('content'),
+            'title' => request()->get('title')
+        ];
+        return view('admin.post.view', ['post' => $post]);
     }
 }

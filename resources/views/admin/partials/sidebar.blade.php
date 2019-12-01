@@ -7,11 +7,7 @@
                 </a>
             </li>
             <li class="nav-title">Settings</li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="nav-icon icon-user"></i> Users
-                </a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="nav-icon icon-lock"></i> Roles
@@ -24,7 +20,7 @@
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.index') }}">
-                        <i class="nav-icon icon-note"></i> Posts</a>
+                        <i class="nav-icon icon-note"></i> My Posts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.create') }}">
@@ -34,9 +30,22 @@
             </li>
             @if(Auth::user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD]))
             <li class="nav-title">Extras</li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.post.approve') }}">
-                <i class="nav-icon icon-note"></i> Approve Post <span class="badge badge-danger">PRO</span></a>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon icon-note"></i> Manager Post
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.post.approve') }}">
+                            <i class="nav-icon icon-note"></i> Approve Post @if($unapproved_post_count)<span class="badge badge-danger" title="{{ $unapproved_post_count }} post(s) need to be approve">{{ $unapproved_post_count }}</span>@endif
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.post.manage') }}">
+                            <i class="nav-icon icon-note"></i> Manage
+                        </a>
+                    </li>
+                </ul>
             </li>
             @endif
             @if(Auth::user()->authorizeRoles([ROLE_ADMIN]))
@@ -49,6 +58,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.category.index') }}">
                     <i class="nav-icon icon-game-controller"></i> Category
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.user.index') }}">
+                    <i class="nav-icon icon-user"></i> Users
                 </a>
             </li>
             @endif

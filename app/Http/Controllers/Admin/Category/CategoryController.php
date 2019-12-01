@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Category;
 
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Admin\BaseController;
 use App\Services\Contracts\CategoryServiceInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
@@ -16,11 +16,12 @@ class CategoryController extends BaseController
     {
         $this->catService = $catService;
         $this->catRepos = $catRepos;
+        parent::__construct();
     }
 
     public function index(Request $request)
     {
-    	$categories = $this->catService->getCategoryListPagination(true);
+    	$categories = $this->catService->getListPagination(true);
         return view('admin.category.index', ['categories' => $categories]);
     }
 
@@ -60,9 +61,9 @@ class CategoryController extends BaseController
         $exceptId = $request->get('id');
         \Log::info($exceptId);
         if($exceptId != null) {
-            $categories = $this->catService->getCategoryList(false, $exceptId);
+            $categories = $this->catService->getList(false, $exceptId);
         } else {
-            $categories = $this->catService->getCategoryListPagination(true);
+            $categories = $this->catService->getListPagination(true);
         }
         return $this->respondWithSuccess($categories);
     }

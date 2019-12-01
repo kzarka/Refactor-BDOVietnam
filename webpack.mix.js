@@ -17,7 +17,14 @@ mix.js('resources/assets/js/app.js', 'public/assets/js')
 	.js('resources/assets/admin/post/create.js', 'public/assets/admin/js/post')
 	.js('resources/assets/admin/post/post.js', 'public/assets/admin/js/post')
 	.js('resources/assets/admin/post/edit.js', 'public/assets/admin/js/post')
+
+	.js('resources/assets/admin/user/user.js', 'public/assets/admin/js/user')
+	.js('resources/assets/admin/user/form.js', 'public/assets/admin/js/user')
+
 	.js('resources/assets/admin/validator.js', 'public/assets/admin/js/')
 	.js('resources/assets/admin/common.js', 'public/assets/admin/js/')
+
+	.js('resources/assets/post/post.js', 'public/assets/js/post/')
+
     .sass('resources/sass/admin/custom.scss', 'public/assets/admin/css')
     .sass('resources/sass/custom.scss', 'public/assets/css');

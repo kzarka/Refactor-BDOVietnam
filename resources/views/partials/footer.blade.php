@@ -24,16 +24,16 @@
             <div class="menu-tabs-container">
                 <ul id="menu-tabs-1" class="menu">
                     <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-649">
-                        <a href="http://bonfirethemes.com/powerup/one/">Front page</a>
+                        <a href="/">Trang Chủ</a>
                     </li>
                     <li class="marked menu-item menu-item-type-custom menu-item-object-custom menu-item-623">
-                        <a href="http://bonfirethemes.com/powerup/one/2017/03/31/welcome-to-the-wordpress-theme-for-gamers/">About PowerUp</a>
+                        <a href="#">Liên Hệ</a>
                     </li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-622">
-                        <a>Misc features</a>
+                        <a href="#">Danh Mục</a>
                     </li>
                     <li class="highlighted menu-item menu-item-type-custom menu-item-object-custom menu-item-624">
-                        <a href="http://bonfirethemes.com/powerup/one/category/highlighted/">Highlighted</a>
+                        <a href="#">Highlighted</a>
                     </li>
                 </ul>
             </div>                

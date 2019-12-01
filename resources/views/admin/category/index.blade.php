@@ -74,7 +74,7 @@
 				@endforelse
 			</tbody>
 		</table>
-		{{ $categories->links('partials.paginate') }}
+		{{ $categories->links('admin.partials.paginator') }}
 		<button class="btn btn-primary m-1 pull-right create" type="button">Create</button>
 	</div>
 </div>

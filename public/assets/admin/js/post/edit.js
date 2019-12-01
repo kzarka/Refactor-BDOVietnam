@@ -104,12 +104,18 @@ $(document).ready(function () {
   $('select[name=game]').select2({
     theme: 'bootstrap'
   });
-  $('select[name=category]').select2({
+  $('select[name="category[]"]').select2({
     theme: 'bootstrap'
-  });
+  }).val(selected_categories).trigger('change');
   $('button.save').on('click', function (e) {
     e.preventDefault();
     $('form.validate').submit();
+  });
+  $('button.preview').on('click', function (e) {
+    e.preventDefault();
+    $('form.preview').find('[name=content]').val(CKEDITOR.instances.content.getData());
+    $('form.preview').find('[name=title]').val($('form.validate').find('[name=title]').val());
+    $('form.preview').submit();
   });
   initSlug();
   initToggleState();

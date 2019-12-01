@@ -4,15 +4,16 @@
 
 @section('content')
 <div class="card">
-	<div class="card-header"><i class="fa fa-align-justify"></i> Posts</div>
+	<div class="card-header"><i class="fa fa-align-justify"></i> My Posts</div>
 	<div class="card-body">
 		<table class="table table-responsive-sm table-striped">
 			<thead>
 				<tr>
 					<th></th>
 					<th>Name</th>
-					<th>Slug</th>
+					<th>Category</th>
 					<th>Author</th>
+					<th>Comments</th>
 					<th>Public</th>
 					<th>Approved</th>
 					<th>Created</th>
@@ -27,9 +28,16 @@
 						<img src="{{ $post->thumbnail }}" />
 						@endif
 					</td>
-					<td class="name">{{ $post->title }}</td>
-					<td class="slug">{{ $post->slug }}</td>
+					<td class="name"><a href="{{ route('admin.post.preview', $post->id) }}" target="_blank" title="Preview this post">{{ $post->title }} <i class="fa fa-external-link"></i></a></td>
+					<td class="category">
+						@php $categories = $post->categories; @endphp
+						@forelse($categories as $cat)
+						<span class="badge badge-danger">{{ $cat->name }}</span>
+						@empty
+						@endforelse
+					</td>
 					<td class="author">{{ $post->author_name }}</td>
+					<td class="author"><span class="badge badge-danger">{{ $post->comments()->count() }}</span></td>
 					<td class="public">
 						@if($post->public)
 						<span class="badge badge-success" data-active="1">Yes</span>
@@ -55,7 +63,7 @@
 						<button class="btn btn-danger delete" type="button">
                             <i class="fa fa-trash-o"></i>
                         </button>
-                        <form action="{{ route('admin.post.destroy', $post->id) }}" method="POST"  alt="Delete this post">
+                        <form class="delete" action="{{ route('admin.post.destroy', $post->id) }}" method="POST"  alt="Delete this post">
 							@csrf
 							@method('DELETE')
 						</form>
@@ -65,7 +73,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{ $posts->links('partials.paginate') }}
+		{{ $posts->links('admin.partials.paginator') }}
 		<button class="btn btn-primary m-1 pull-right create" type="button">Create</button>
 	</div>
 </div>
@@ -74,7 +82,7 @@
 @push('modals')
 
 <!-- Modal Delete -->
-<div class="modal form fade" id="g_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal form fade" id="p_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
       	<div class="modal-content">
         	<div class="modal-header">

@@ -51,7 +51,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{ $games->links('partials.paginate') }}
+		{{ $games->links('admin.partials.paginator') }}
 		<button class="btn btn-primary m-1 pull-right create" type="button">Create</button>
 	</div>
 </div>

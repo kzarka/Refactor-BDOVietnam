@@ -12,6 +12,7 @@
 					<th></th>
 					<th>Name</th>
 					<th>Slug</th>
+					<th>Category</th>
 					<th>Author</th>
 					<th>Public</th>
 					<th>Approved</th>
@@ -29,6 +30,13 @@
 					</td>
 					<td class="name">{{ $post->title }}</td>
 					<td class="slug">{{ $post->slug }}</td>
+					<td class="category">
+						@php $categories = $post->categories; @endphp
+						@forelse($categories as $cat)
+						<span class="badge badge-danger">{{ $cat->name }}</span>
+						@empty
+						@endforelse
+					</td>
 					<td class="author">{{ $post->author_name }}</td>
 					<td class="public">
 						@if($post->public)
@@ -69,8 +77,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{ $posts->links('partials.paginate') }}
-		<button class="btn btn-primary m-1 pull-right create" type="button">Create</button>
+		{{ $posts->links('admin.partials.paginator') }}
 	</div>
 </div>
 @endsection

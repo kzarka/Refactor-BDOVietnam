@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Game;
 
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Admin\BaseController;
 use App\Services\Contracts\GameServiceInterface;
 use App\Repositories\Contracts\GameRepositoryInterface;
 use Illuminate\Http\Request;
@@ -16,11 +16,12 @@ class GameController extends BaseController
     {
         $this->gameService = $gameService;
         $this->gameRepos = $gameRepos;
+        parent::__construct();
     }
 
     public function index(Request $request)
     {
-    	$games = $this->gameService->getGameListPagination(true);
+    	$games = $this->gameService->getListPagination(true);
         return view('admin.games.index', ['games' => $games]);
     }
 
@@ -56,7 +57,7 @@ class GameController extends BaseController
     }
 
     public function load(Request $request) {
-        $games = $this->gameService->getGameListPagination(true);
+        $games = $this->gameService->getListPagination(true);
         return $this->respondWithSuccess($games);
     }
 }

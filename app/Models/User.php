@@ -1,24 +1,32 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use App\Models\Role;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use Notifiable;
+    use Notifiable, HasMediaTrait;
 
+    public function scopeActive($query)
+    {
+        return $query->where('active', STATUS_ACTIVE);
+    }
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'username', 'email', 'password', 'description', 'active', 'banned_until'
     ];
 
     /**
@@ -28,6 +36,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $dates = [
+        'banned_until'
     ];
 
     /**
@@ -76,5 +88,33 @@ class User extends Authenticatable
 
     public function posts() {
         return $this->haveMany('App\Models\Post');
+    }
+
+    public function getCreatedAtAttribute($value) {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function getUpdateAtAttribute($value) {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function canDelete() {
+        if(!auth()->user()->authorizeRoles('ROLE_ADMIN')) return false;
+        if($this->authorizeRoles('ROLE_ADMIN')) return false;
+        return true;
+    }
+
+    public function getFullnameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion(THUMB_CONVERSION)
+              ->width(THUMBNAIL_WIDTH)
+              ->height(THUMBNAIL_HEIGHT)
+              ->sharpen(10)
+              ->performOnCollections(USER_MEDIA_COLLECTION);
     }
 }

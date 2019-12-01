@@ -22,4 +22,9 @@ class Game extends BaseModel
     {
         return $query->where('active', STATUS_ACTIVE);
     }
+
+    public function scopeCommon($query)
+    {
+        return $query->where('pinned', '<>', STATUS_PINNED);
+    }
 }

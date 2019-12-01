@@ -6,6 +6,12 @@ use App\Http\Controllers\Controller;
 
 class BaseController extends Controller
 {
+
+    public function __construct()
+    {
+        
+    }
+
     public function renderResponseStructure($status = false, $message = '', $payload = null)
     {
        return [

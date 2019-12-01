@@ -16,28 +16,36 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     }
 
     public function categoryBuilder($all = false, $exceptId = null) {
-		$builder = $this->model->select('*');
+		$builder = $this->model->select('categories.*', 'c2.name as parent_name');
     	if(!$all) {
-    		$builder->active();
+    		$builder->where('categories.active', STATUS_ACTIVE);
     	}
+    	$builder->leftJoin('categories as c2', 'c2.id', '=', 'categories.parent_id');
     	if($exceptId) {
-    		$builder->whereNotIn('id', function($query) use ($exceptId) {				
-				$query->select('id')
-              	->from('categories')
-              	->where('parent_id', $exceptId); /* Take child ids of this category to exclude */
+    		$builder->whereNotIn('categories.id', function($query) use ($exceptId) {				
+				$query->select('c3.id')
+              	->from('categories as c3')
+              	->where('c3.parent_id', $exceptId); /* Take child ids of this category to exclude */
 			});
-			$builder->whereNotIn('id', [$exceptId]);
+			$builder->whereNotIn('categories.id', [$exceptId]);
     	}
     	return $builder;
 	}
 
-    public function getCategoryListPagination($all = false, $exceptId = null, $perPage = 10) {
+    public function getListPagination($all = false, $exceptId = null, $perPage = 10) {
     	
 		return $this->categoryBuilder($all, $exceptId)->paginate($perPage);
 	}
 
-	public function getCategoryList($all = false, $exceptId = null) {
+	public function getList($all = false, $exceptId = null) {
 		return $this->categoryBuilder($all, $exceptId)->get();
+	}
+
+	public function getParentListWithChild($all = false, $exceptId = null) {
+		return $this->categoryBuilder($all, $exceptId)
+			->whereNull('categories.parent_id')
+			->orWhere('categories.parent_id', 0)
+			->with('children')->get();
 	}
 
 	public function updateByAdmin($data, $id) {
@@ -66,4 +74,17 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 		    return false;
 		}
 	}
+
+	public function findBySlugOrId($slug)
+    {
+        try {
+            if(is_numeric($slug)) {
+                return $this->model->findOrFail($slug);
+            }
+            return $this->model->where('slug', $slug)->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+        
+    }
 }

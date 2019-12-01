@@ -25,6 +25,8 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('author_id')->nullable();
             $table->integer('view_count')->default(0);
             $table->unsignedInteger('approved')->default(0);
+            $table->unsignedInteger('hightlight')->default(0);
+            $table->unsignedInteger('pinned')->default(0);
             $table->unsignedInteger('game_id')->nullable();
             $table->foreign('game_id')
                 ->references('id')

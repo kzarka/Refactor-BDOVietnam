@@ -17,9 +17,9 @@ class CreateCategoryTable extends Migration
             $table->increments('id');
             $table->string('name', 100)->nullable();
             $table->string('slug', 100)->nullable();
-            $table->string('desc', 300)->nullable();
+            $table->string('description', 300)->nullable();
             $table->string('banner', 300)->nullable();
-            $table->smallInteger('parent_id')->nullable();
+            $table->smallInteger('parent_id')->nullable()->default(0);
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });

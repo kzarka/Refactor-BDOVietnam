@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\BaseModel;
-use App\User;
+use App\Models\User;
 
 class Role extends BaseModel
 {

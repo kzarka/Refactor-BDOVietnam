@@ -68,3 +68,54 @@ label.error {
   display: flex;
 }
 
+/* post grouping dates */
+
+.blog-index-section {
+  position: relative;
+  height: 79px;
+  display: inline-block;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+  padding: 52px 0 10px 15px;
+  background-repeat: repeat-y;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.blog-index-section {
+  background-size: 4px 10px !important;
+}
+
+.blog-index-section {
+  padding-top: 49px;
+  background: none;
+}
+
+.blog-index-section:before {
+  content: "Section:";
+  position: absolute;
+  bottom: 30px;
+  left: 15px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #878788;
+  text-transform: none;
+}
+
+.form-submit.logged {
+  position: inherit !important;
+}
+
+.comment-form .btn-submit {
+  margin: 0;
+}
+
+.logged #cancel-comment-reply-link {
+  bottom: 45px !important;
+}
+

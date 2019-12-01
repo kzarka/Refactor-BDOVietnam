@@ -13,6 +13,10 @@
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'MainController@index')->name('home');
+
+Route::get('/view/{category}/{post}', 'Post\PostController@view');
+
+Route::get('/category/{category?}', 'Category\CategoryController@index');
+
+Route::resource('comment', 'Comment\CommentController');

@@ -21,6 +21,20 @@ Route::get('category/load', 'Category\CategoryController@load');
 
 Route::resource('category', 'Category\CategoryController');
 
-Route::match(['get', 'post'], 'post/approve/', 'Post\PostController@approve')->name('post.approve');
+Route::namespace('Post')->group(function () {
+    Route::get('post/manage', 'PostController@manage')->name('post.manage');
 
-Route::resource('post', 'Post\PostController');
+	Route::match(['get', 'post'], 'post/approve/', 'PostController@approve')->name('post.approve');
+
+	Route::match(['get', 'post'], 'post/preview/{postId?}', 'PostController@preview')->name('post.preview');
+
+	Route::resource('post', 'PostController');
+});
+
+Route::namespace('User')->group(function () {
+	Route::post('user/ban', 'UserController@ban')->name('user.ban')->middleware('admin');
+
+	Route::post('user/lift/{id}', 'UserController@lift')->name('user.lift')->middleware('admin');
+
+	Route::resource('user', 'UserController');
+});

@@ -16,11 +16,11 @@ class GameService implements GameServiceInterface
 		$this->gameRepos = $gameRepos;
 	}
 
-	public function getGameListPagination($all = false, $perPage = 10) {
-		return $this->gameRepos->getGameListPagination($all, $perPage);
+	public function getListPagination($all = false, $perPage = 10) {
+		return $this->gameRepos->getListPagination($all, $perPage);
 	}
 
-	public function getGameList($all = false) {
-		return $this->gameRepos->getGameList($all);
+	public function getList($all = false) {
+		return $this->gameRepos->getList($all);
 	}
 }

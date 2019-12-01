@@ -3745,7 +3745,7 @@ a.post-edit-link:hover {
     text-decoration:underline;
 }
 #respond #cancel-comment-reply-link:before {
-    content:'Cancel reply';
+    content:'Hủy bỏ';
     font-weight:400;
     color:#6B6E72;
     text-decoration:underline;
@@ -4082,7 +4082,7 @@ a.post-edit-link:hover {
 }
 /* comment by post author */
 .bypostauthor .comment-author::after {
-    content:' (post author)';
+    content:' (tác giả)';
     color:#848486;
     font-weight:400;
 }

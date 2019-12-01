@@ -13,7 +13,7 @@
 			<div class="card-header">
 				<strong>Company</strong>
 				<small>Form</small>
-				<div class="pull-right"><button class="btn btn-primary save" type="button">Save</button></div>
+				<div class="pull-right"><button class="btn btn-success preview mr-2" type="button">Preview</button><button class="btn btn-primary save" type="button">Save</button></div>
 			</div>
 			<div class="card-body">
 				@include('admin.post.form')
@@ -24,6 +24,9 @@
 @endsection
 
 @push('scripts')
+<script type="text/javascript">
+	const selected_categories = {!! $post->categories()->pluck('categories.id') !!};
+</script>
 <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/post/edit.js') }}"></script>

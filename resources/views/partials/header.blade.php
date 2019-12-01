@@ -2,8 +2,8 @@
 <div class="header-background"></div>
 <!-- BEGIN LOGO -->
 <div class="logo-wrapper">
-    <a href="" title="" rel="home">
-        <img src="/images/logo.png" alt="PowerUp">
+    <a href="{{ url('') }}" title="" rel="home">
+        <img src="/images/logo.png" alt="BDOVietnam">
     </a>
 </div>
 <!-- END LOGO -->
@@ -27,38 +27,34 @@
         <div class="header-tabs-wrapper">
             <div class="menu-tabs-container">
                 <ul id="menu-tabs" class="menu">
-                    <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">
-                        <a href="">Front page</a>
+                    <li class="menu-item menu-item-type-custom menu-item-object-custom @if((Route::current()) && Route::current()->getName() == 'home') current-menu-item @endif current_page_item menu-item-home">
+                        <a href="{{ url('') }}">Trang Chủ</a>
                     </li>
                     <li class="marked menu-item menu-item-type-custom menu-item-object-custom menu-item-623">
-                        <a href="">About PowerUp</a>
+                        <a href="">About Us</a>
                     </li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-622">
-                        <a>Misc features</a>
+                        <a>Danh Mục</a>
                         <ul class="sub-menu">
-                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-664">
-                                <a href="">Unique navigation</a>
-                            </li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-665">
-                                <a href="">Highlight great content</a>
-                            </li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-667">
-                                <a href="">Beautiful gallery</a>
-                            </li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-666">
-                                <a href="">Display Twitch status</a>
-                            </li>
+                            @forelse($header_categories as $header_cat)
+                            @if($cat_children = $header_cat->children)
                             <li id="menu-item-653" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-653">
-                                <a href="#">More</a>
+                                <a href="javascript:void(0)">{{ $header_cat->name }}</a>
                                 <ul class="sub-menu">
+                                    @foreach($cat_children as $cat_child)
                                     <li id="menu-item-654" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-654">
-                                        <a href="">BonfireThemes.com</a>
+                                        <a href="{{ $cat_child->url }}">{{ $cat_child->name }}</a>
                                     </li>
-                                    <li id="menu-item-655" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-655">
-                                        <a href="">Buy PowerUp!</a>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </li>
+                            @else
+                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-664">
+                                <a href="{{ $cat_child->url }}">{{ $header_cat->name }}</a>
+                            </li>
+                            @endif
+                            @empty
+                            @endforelse
                         </ul>
                     </li>
                     <li lass="highlighted menu-item menu-item-type-custom menu-item-object-custom menu-item-624">
@@ -74,11 +70,11 @@
     <!-- BEGIN QUICKLINK + SEARCH -->
     <div class="header-search-quicklink-wrapper">
         <div class="header-quicklink">
-            <a href="">PowerUp details!</a>
+            <a href="">Cái gì đây!</a>
         </div>
         <div class="header-search-wrapper">
             <div class="search-wrapper">
-                <form method="get" id="searchform" action="http://bonfirethemes.com/powerup/one/">
+                <form method="get" id="searchform" action="">
                     <input type="text" name="s" id="s" placeholder="Search...">
                     <div class="search-button-wrapper"><input type="submit" id="searchsubmit" value="" /></div>
                 </form>

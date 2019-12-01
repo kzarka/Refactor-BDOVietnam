@@ -16,20 +16,21 @@
 
 <div id="sitewrap" class="sitewrap">
     @include('partials.header')
-    <div class="content-wrapper">       
+    <div class="content-wrapper">
         @if(Request::is('/'))
         <!-- BEGIN FEATURED BACKGROUND ELEMENT (only on the front page, hide when paged) -->
         <div class="index-background-element"></div>
         <!-- END FEATURED BACKGROUND ELEMENT (only on the front page, hide when paged) -->
         @endif
-    
-        @yield('content')
-        @yield('sidebar')
+        <div class="index-main-wrapper">
+            @yield('content')
+            @yield('sidebar')
+        </div>
     </div>
     <!-- End Content Wrap -->
     @include('partials.footer')
 </div>
 <!-- END .sitewrap-inner -->
-@include('partials.foot')
+@include('partials.script')
 </body>
 </html>

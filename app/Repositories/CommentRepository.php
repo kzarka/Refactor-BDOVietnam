@@ -14,4 +14,33 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
     {
         return Comment::class;
     }
+
+    public function getBuilder($postId, $parentOnly = false)
+    {
+    	$builder = $this->model->select('*');
+    	if($postId) {
+    		$builder->where('post_id', $postId);
+    	}
+    	if($parentOnly) {
+    		$builder->whereNull('parent_id');
+    	}
+    	return $builder;
+    }
+
+    public function create($data)
+    {
+    	try {
+    		\Log::info($data);
+    		$this->model->create($data);
+    		return true;
+    	} catch(\Exception $e) {
+    		\Log::info($e);
+    		return false;
+    	}
+    }
+
+    public function getCommentsByPost($postId)
+    {
+    	return $this->getBuilder($postId, 1)->with('children')->get();
+    }
 }

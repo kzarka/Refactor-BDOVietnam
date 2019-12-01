@@ -18,48 +18,46 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     public function postsBuilder($catId = null, $userId = null) {
     	$builder = $this->model->select(
             'posts.*',
-    		'users.username as author_name'
+    		'users.username as username',
+            \DB::raw('CONCAT_WS(" ", users.first_name, users.last_name) as author_name')
     	)
     	->leftJoin('users', 'users.id', '=', 'posts.author_id');
     	
-    	if(isset($catId)) {
+    	if($catId) {
     		$builder->join('posts_categories as post_cat', function($join) {
                 $join->on('post_cat.post_id', '=', 'posts.id');
             })
-            ->join('categories', function($join) {
-                $join->where('categories.id', '=', 'posts_categories.cat_id');
-            })
-            ->whereRaw('categories.id = ' . $catId);
+            ->whereRaw('post_cat.cat_id = ' . $catId);
     	}
-    	if(isset($userId)) {
+    	if($userId) {
     		$builder->whereRaw('posts.author_id = ' . $userId);
     	}
 
     	return $builder;
     }
 
-    public function publicApproveFiler($builder, $public = true, $approved = true) {
-        if($public) {
+    public function publicApproveFiler($builder, $public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST) {
+        if($public == WITH_PUBLIC_POST) {
             $builder->public();
         }
-        if($approved) {
+        if($approved == ONLY_APPROVED_POST) {
             $builder->approved();
-        } else {
+        } elseif($approved == ONLY_UNAPPROVED_POST) {
             $builder->where('approved', STATUS_UNAPPROVED);
         }
         return $builder;
     }
 
-    public function getPostListPagination($public = true, $approved = true,  $perPage = 10) {
-        $builder = $this->postsBuilder();
+    public function getListPagination($public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST,  $userId = null, $catId = null, $perPage = 10) {
+        $builder = $this->postsBuilder($catId, $userId);
         $builder = $this->publicApproveFiler($builder, $public, $approved);
-        return $builder->paginate($perPage);
+        return $builder->with('comments', 'categories')->paginate($perPage);
     }
 
-    public function getPostList($public = true, $approved = true) {
+    public function getList($public = true, $approved = true) {
         $builder = $this->postsBuilder();
         $builder = $this->publicApproveFiler($builder, $public, $approved);
-        return $builder->get();
+        return $builder->with('comments', 'categories')->get();
     }
 
     public function createByAdmin($data) {
@@ -72,6 +70,9 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         }
 
         $record = $this->model->create($data);
+        if(isset($data['category']) && is_array($data['category'])) {
+            $record->categories()->attach($data['category']);
+        }
         return $record;
     }
 
@@ -86,6 +87,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
                 $data['approved'] = STATUS_UNAPPROVED;
             }
             $record->update($data);
+
+            $record->categories()->detach();
+            if(isset($data['category']) && is_array($data['category'])) {
+                $record->categories()->attach($data['category']);
+            }
+            \Log::info($record);
             \DB::commit();
             return $record;
         } catch (\Exception $e) {
@@ -122,5 +129,33 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             \DB::rollback();
             return false;
         }
+    }
+
+    public function getNewestPost($catId = null, $perPage = 10)
+    {
+        return $this->postsBuilder($catId)->with('categories')->with('comments')->orderBy('updated_at', 'DESC')->paginate($perPage);
+    }
+
+    public function getTopPost($catId = null, $perPage = 10)
+    {
+        return $this->postsBuilder($catId)->with('categories')->with('comments')->orderBy('view_count', 'DESC')->paginate($perPage);
+    }
+
+    public function findBySlugOrId($slug)
+    {
+        try {
+            if(is_numeric($slug)) {
+                return $this->postsBuilder()->where('id', $slug);
+            }
+            return $this->postsBuilder()->where('slug', $slug)->with('comments')->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+        
+    }
+
+    public function getRelatePost($postId, $catId)
+    {
+        return $this->postsBuilder($catId)->where('post_id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
     }
 }

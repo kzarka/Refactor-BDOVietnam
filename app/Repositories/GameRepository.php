@@ -23,12 +23,12 @@ class GameRepository extends BaseRepository implements GameRepositoryInterface
     	return $builder;
 	}
 
-    public function getGameListPagination($all = false, $perPage = 10) {
+    public function getListPagination($all = false, $perPage = 10) {
     	
 		return $this->gameBuilder($all)->paginate($perPage);
 	}
 
-	public function getGameList($all = false) {
+	public function getList($all = false) {
 		return $this->gameBuilder($all)->get();
 	}
 
