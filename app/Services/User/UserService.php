@@ -26,7 +26,7 @@ class UserService implements UserServiceInterface
 
 	public function findGetAvatar($id)
 	{
-		$record = $this->userRepos->find($id);
+		$record = $this->userRepos->findGetAvatar($id);
 		$record->avatar = $record->getFirstMediaUrl(USER_MEDIA_COLLECTION);
         $record->thumbnail = $record->getFirstMediaUrl(USER_MEDIA_COLLECTION, THUMB_CONVERSION);
         return $record;

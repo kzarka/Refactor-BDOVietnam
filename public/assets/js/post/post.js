@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/assets/admin/user/form.js":
-/*!*********************************************!*\
-  !*** ./resources/assets/admin/user/form.js ***!
-  \*********************************************/
+/***/ "./resources/assets/post/post.js":
+/*!***************************************!*\
+  !*** ./resources/assets/post/post.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -98,70 +98,52 @@
 
 var selectedRow = null;
 $(document).ready(function () {
-  $('button.save').on('click', function (e) {
-    e.preventDefault();
-    $('form.validate').submit();
+  $('button.submit').on('click', function () {
+    $(this).closest('form').submit();
   });
-  $('form.validate').validate({
-    rules: {
-      avatar: {
-        extension: "jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF",
-        maxsize: 2097152
-      }
-    }
-  });
-  $('input[name=avatar]').change(function () {
-    readURL(this);
-  });
-  $('select[name="roles[]"]').select2({
-    theme: 'bootstrap'
-  });
-  initToggleState();
-  selectAvatar();
+
+  if ($(window.location.hash).length > 0) {
+    $('#sitewrap').animate({
+      scrollTop: $(window.location.hash).offset().top
+    }, 1000);
+  }
+
+  initReplyAction();
 });
 
-function initToggleState() {
-  $('form.validate input.active').on('click', function () {
-    if ($(this).prop('checked')) {
-      $(this).val(1);
-    } else {
-      $(this).val(0);
-    }
+function initReplyAction() {
+  $('.comment-reply-link').on('click', function (e) {
+    e.preventDefault();
+    var parent_id = $(this).closest('li').data('id');
+    var insertAfter = $(this).closest('li.depth-1');
+    var form = $('#respond').detach();
+    var author = $(this).closest('div.comment-author-inner').find('span.comment-author').html();
+    $(form).find('input[name=parent_id]').val(parent_id);
+    $(form).insertAfter(insertAfter);
+    $(form).find('textarea').attr('placeholder', 'Đang trả lời ' + author + ' ..*');
+    $(form).find('textarea').focus();
+    $('#cancel-comment-reply-link').show();
   });
-}
-
-function selectAvatar() {
-  $('button.select').on('click', function () {
-    $('input[name=avatar]').trigger('click');
+  $('#cancel-comment-reply-link').on('click', function () {
+    $(this).hide();
+    var form = $('#respond').detach();
+    var insertAfter = $('ol.commentlist');
+    $(form).find('input[name=parent_id]').val('');
+    $(form).find('textarea').attr('placeholder', 'Bạn nghĩ gì về bài viết này..*');
+    $(form).insertAfter(insertAfter);
   });
-  $('.photo-frame').on('click', function () {
-    $('img.preview').attr('src', $(this).find('img').attr('src'));
-    $('#u_preview').modal('show');
-  });
-}
-
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-      $('img.select_photo').attr('src', e.target.result);
-    };
-
-    reader.readAsDataURL(input.files[0]);
-  }
 }
 
 /***/ }),
 
-/***/ 7:
-/*!***************************************************!*\
-  !*** multi ./resources/assets/admin/user/form.js ***!
-  \***************************************************/
+/***/ 10:
+/*!*********************************************!*\
+  !*** multi ./resources/assets/post/post.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\user\form.js */"./resources/assets/admin/user/form.js");
+module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\post\post.js */"./resources/assets/post/post.js");
 
 
 /***/ })

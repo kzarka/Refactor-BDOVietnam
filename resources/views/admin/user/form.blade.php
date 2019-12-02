@@ -1,20 +1,31 @@
-<form action="{{ isset($user) ? route('admin.user.update', $user->id) : route('admin.user.store') }}" method="POST" class="validate" enctype="multipart/form-data">
+@php 
+$current_route = null;
+if(isset($user)) {
+	$current_route = route('admin.user.update', $user->id);
+} elseif(isset($self)) {
+	$current_route = route('admin.user.self_update');
+} else {
+	$current_route = route('admin.user.store');
+}
+@endphp
+<form action="{{ $current_route  }}" method="POST" class="validate" enctype="multipart/form-data">
 	@csrf
 	@if(isset($user))
 	@method('PUT')
 	@endif
+	@php if(isset($self)) $user = $self; @endphp
 	<div class="form-group">
 		<label for="city">Avatar</label><br>
 		<div class="photo-frame">
-			<img class="select_photo" src="{{ $user->avatar ?? asset('assets/images/default_user.png') }}" />
+			<img class="select_photo" src="{{ $user->avatar }}" />
 		</div>
 		<input class="file_image hidden" name="avatar" type="file">
-		<button class="btn btn-primary select mt-1" type="button">Select</button>
+		<button class="btn btn-primary select mt-1" type="button">Chọn</button>
 	</div>
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group ">
-				<label for="postal-code">First Name</label>
+				<label for="postal-code">Tên</label>
 				<input class="form-control required" id="" name="first_name" type="text" placeholder="Slug Code" value="{{ old('first_name') ?? (isset($user->first_name) ? $user->first_name : '') }}">
 				@if ($errors->has('first_name'))
 		            <label id="name-error" class="error" for="slug">{{ $errors->first('first_name') }}</label>
@@ -24,10 +35,22 @@
 				<label for="postal-code">Username</label>
 				<input class="form-control" id="username" name="username" type="text" placeholder="Banner" value="{{ old('username') ?? (isset($user->username) ? $user->username : '') }}" readonly>
 			</div>
+			@if(!$user->authorizeRoles(ROLE_ADMIN) && auth()->user()->authorizeRoles(ROLE_ADMIN))
+			<div class="form-group">
+				<label for="postal-code">Roles</label><br>
+				<select multiple="" name="roles[]" id="category" class="form-control">
+					@if(isset($roles))
+					@foreach($roles as $role)
+					<option value="{{ $role->id }}">{{ $role->display_name }}</option>
+					@endforeach
+					@endif
+              	</select>
+			</div>
+			@endif
 		</div>
 		<div class="col-sm-6">
 			<div class="form-group">
-				<label for="street">Last Name</label>
+				<label for="street">Họ</label>
 				<input class="form-control required" id="" name="last_name" type="text" placeholder="last name" value="{{ old('last_name') ?? (isset($user->last_name) ? $user->last_name : '') }}">
 			</div>
 			@if(!$user->authorizeRoles(ROLE_ADMIN) && auth()->user()->authorizeRoles(ROLE_ADMIN))
@@ -47,8 +70,8 @@
 		<input class="form-control required" id="" name="email" type="text" placeholder="Email Code" value="{{ old('email') ?? (isset($user->email) ? $user->email : '') }}">
 	</div>
 	<div class="form-group">
-		<label for="description">Description</label>
-		<textarea name="description" class="form-control">{{ $user->description }}</textarea>
+		<label for="biography">Về Bạn</label>
+		<textarea name="biography" class="form-control">{{ $user->biography }}</textarea>
 	</div>
-	<button class="btn btn-primary save" type="button">Save</button>
+	<button class="btn btn-primary save" type="button">Lưu</button>
 </form>

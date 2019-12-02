@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Home Page 1')
+@section('title', 'Tạo Bài Viết')
 
 @push('after_styles')
 <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
@@ -11,9 +11,8 @@
 	<div class="col-xl-10 col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<strong>Company</strong>
-				<small>Form</small>
-				<div class="pull-right"><button class="btn btn-primary save">Save</button></div>
+				<strong>Form</strong>
+				<div class="pull-right"><button class="btn btn-success preview mr-2" type="button">Preview</button><button class="btn btn-primary save">Lưu</button></div>
 			</div>
 			<div class="card-body">
 				@include('admin.post.form')

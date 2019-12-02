@@ -21,6 +21,10 @@ $(document).ready(function() {
 	  	readURL(this);
 	});
 
+	$('select[name="roles[]"]').select2({
+  		theme: 'bootstrap'
+	})
+
 	initToggleState();
 	selectAvatar();
 });

@@ -4,9 +4,44 @@
 
 @section('content')
 <div class="card">
-	<div class="card-header"><i class="fa fa-align-justify"></i> Profile</div>
 	<div class="card-body">
-		
+		<div class="container">
+		    <div class="profile-body">
+                <center>
+                	<div class="profile-avatar">
+                		<img src="{{ $user->avatar != '' ? $user->avatar : asset('assets/images/default_user.png') }}" name="aboutme" width="140" height="140" border="0" class="img-circle">
+                		<span class="avatar-status badge-success" title="{{ $user->username }} đang hoạt động"></span>
+                	</div>
+                	<h3 class="media-heading">{{ $user->full_name }} <small>{{ $user->roles()->first()->display_name }}</small></h3>
+                	<span class="badge badge-danger">{{ $user->posts()->count() }} Bài Viết</span>
+                    <span class="badge badge-warning">{{ $user->comments()->count() }} Bình Luận</span>
+                    <span class="badge badge-info">Rank 5</span>
+                    <span class="badge badge-success">Game Master</span>
+                </center>
+                <hr>
+                <center>
+                <p class="text-left"><strong>Tiểu Sử: </strong><br>{{ $user->biography }}</p>
+                <br>
+                </center>
+                @if(auth()->user()->id === $user->id)
+                <a href="{{ route('admin.user.self_update') }}" class="btn btn-danger btn-block"><i class="icon-settings"></i> Cập Nhật</a>
+                @endif
+                <hr>
+                <div class="recent-post">
+                	<div class="list-group-item list-group-item-accent-danger list-group-item-divider">
+						<div>New UI Project -<strong>deadline</strong></div>
+						<small class="text-muted mr-3">
+						<i class="icon-calendar"></i>&nbsp; 10 - 11pm</small>
+						<small class="text-muted">
+							<i class="icon-home"></i>&nbsp; creativeLabs HQ
+						</small>
+						<div class="avatars-stack mt-2">
+							<div class="avatar avatar-xs"></div>
+						</div>
+					</div>
+                </div>
+            </div>
+		</div> <!-- /container -->  
 	</div>
 </div>
 @endsection

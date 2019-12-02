@@ -15,7 +15,8 @@ class AddActiveColumnToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedInteger('active')->default(1);
-            $table->text('description')->nullable();
+            $table->text('status')->nullable();
+            $table->text('biography')->nullable();
         });
     }
 

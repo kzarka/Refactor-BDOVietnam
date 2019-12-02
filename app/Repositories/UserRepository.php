@@ -56,12 +56,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 				$fileName = 'user_' . md5($record->id) . time() . '.' . $request->file('avatar')->extension();
 	            $record->addMediaFromRequest('avatar')->setFileName($fileName)->toMediaCollection(USER_MEDIA_COLLECTION);
 	        }
+            if(isset($data['roles']) && is_array($data['roles'])) {
+            	$record->roles()->detach();
+                $record->roles()->attach($data['roles']);
+            }
 		    \DB::commit();
 		    return $record;
 		} catch (\Exception $e) {
 		    \DB::rollback();
-		    throw new \Exception($e->getMessage());
-		    return 'false';
+		    \Log::info($e->getMessage());
+		    return false;
 		}
 	}
 
@@ -105,23 +109,34 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 		}
 	}
 
-	public function selfUpdate($request, $user)
+	public function selfUpdate($request, $userId)
 	{
 		\DB::beginTransaction();
 		try {
-		    $record = $user;
+		    $record = $this->model->findOrFail($userId);
 		    $data = $request->all();
-		    if($request->get('banned_until') || $request->get('status'))
+		    if($request->get('banned_until') || $request->get('active'))
 		    {
 		    	$data['banned_until'] = null;
-		    	$data['status'] = $record->status;
+		    	$data['active'] = $record->active;
 		    }
 			$record->update($data);
+			if($request->hasFile('avatar') && $request->file('avatar')->isValid()){
+				$record->clearMediaCollection(USER_MEDIA_COLLECTION);
+				$fileName = 'user_' . md5($record->id) . time() . '.' . $request->file('avatar')->extension();
+	            $record->addMediaFromRequest('avatar')->setFileName($fileName)->toMediaCollection(USER_MEDIA_COLLECTION);
+	        }
 		    \DB::commit();
 		    return true;
 		} catch (\Exception $e) {
 		    \DB::rollback();
+		    \Log::info($e->getMessage());
 		    return false;
 		}
+	}
+
+	public function findGetAvatar($id)
+	{
+		return $this->model->with('comments')->where('id', $id)->first();
 	}
 }

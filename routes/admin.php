@@ -32,7 +32,7 @@ Route::namespace('Post')->group(function () {
 });
 
 Route::namespace('User')->group(function () {
-	Route::match(['get', 'post'], 'user/profile/update', 'UserController@lift')->name('user.self_update');
+	Route::match(['get', 'post'], 'user/profile/update', 'UserController@selfUpdate')->name('user.self_update');
 
 	Route::get('user/profile/{id?}', 'UserController@profile')->name('user.profile');
 

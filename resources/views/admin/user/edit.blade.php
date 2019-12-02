@@ -11,7 +11,7 @@
 	<div class="col-xl-10 col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<strong>Form</strong>
+				<strong>Cập Nhật Hồ Sơ</strong>
 			</div>
 			<div class="card-body">
 				@include('admin.user.form')
@@ -44,6 +44,12 @@
 @endpush
 
 @push('scripts')
+@if(auth()->user()->authorizeRoles(ROLE_ADMIN) && isset($user))
+<script type="text/javascript">
+	const roles = {!! $user->roles()->pluck('roles.id'); !!}
+	$('select[name="roles[]"]').val(roles).trigger('change');
+</script>
+@endif
 <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/user/form.js') }}"></script>

@@ -83,3 +83,41 @@ img.preview {
   margin-right: auto;
 }
 
+.profile-avatar {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-avatar .avatar-status {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fff;
+  border-radius: 50em;
+}
+
+.notification {
+  width: 370px;
+}
+
+.cover-image-button {
+  border: 1px solid #e4e7ea;
+  border-radius: 10px;
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.cover-image-button.add-image {
+  border: 1px #5c6873 solid;
+  background: url(/images/plus.png?069f53c4905bf439e361a1b16cc88b92);
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.2;
+}
+

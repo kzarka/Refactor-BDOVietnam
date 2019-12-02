@@ -26,7 +26,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'username', 'email', 'password', 'description', 'active', 'banned_until'
+        'first_name', 'last_name', 'username', 'email', 'password', 'status', 'biography', 'active', 'banned_until'
     ];
 
     /**
@@ -87,7 +87,11 @@ class User extends Authenticatable implements HasMedia
     }
 
     public function posts() {
-        return $this->haveMany('App\Models\Post');
+        return $this->hasMany(Post::class, 'author_id');
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class, 'author_id');
     }
 
     public function getCreatedAtAttribute($value) {
@@ -116,5 +120,12 @@ class User extends Authenticatable implements HasMedia
               ->height(THUMBNAIL_HEIGHT)
               ->sharpen(10)
               ->performOnCollections(USER_MEDIA_COLLECTION);
+    }
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection(USER_MEDIA_COLLECTION)
+            ->useFallbackUrl('/assets/images/default_user.png')
+            ->useFallbackPath(public_path('/assets/images/default_user.png'));
     }
 }

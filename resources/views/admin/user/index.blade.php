@@ -6,29 +6,34 @@
 <div class="card">
 	<div class="card-header"><i class="fa fa-align-justify"></i> Users</div>
 	<div class="card-body">
-		<table class="table table-responsive-sm table-striped">
-			<thead>
+		<table class="table table-responsive-sm table-hover table-outline mb-0">
+			<thead class="thead-light">
 				<tr>
 					<th></th>
-					<th>Username</th>
+					<th>User</th>
 					<th>Email</th>
 					<th>Roles</th>
 					<th>Status</th>
 					<th>Posts</th>
 					<th>Comments</th>
-					<th>Created</th>
+					<th>Activity</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				@foreach($users as $user)
 				<tr data-id="{{ $user->id }}">
-					<td class="photo">
-						@if($user->thumbnail)
-						<img src="{{ $user->thumbnail }}" />
-						@endif
+					<td class="text-center">
+						<div class="avatar">
+							<img class="img-avatar" src="{{ $user->thumbnail !== '' ? $user->thumbnail : asset('assets/images/default_user.png')  }}" alt="admin@bootstrapmaster.com">
+							<span class="avatar-status badge-success"></span>
+						</div>
 					</td>
-					<td class="username">{{ $user->username }}</td>
+					<td>
+						<div>{{ $user->fullname }}</div>
+						<div class="small text-muted">
+						<span>New</span> | Registered: {{ $user->created_at }}</div>
+					</td>
 					<td class="email">{{ $user->email }}</td>
 					<td class="role">
 						@php $roles = $user->roles ?? []; @endphp
@@ -47,7 +52,10 @@
 					</td>
 					<td class="post"><span class="badge badge-danger" data-active="0">{{ $user->posts }}</span></td>
 					<td class="comment"><span class="badge badge-danger" data-active="0">{{ $user->comments }}</span></td>
-					<td class="register">{{ $user->created_at }}</td>
+					<td>
+						<div class="small text-muted">Last login</div>
+						<strong>10 sec ago</strong>
+					</td>
 					<td>
 						<a class="btn btn-success edit" href="{{ route('admin.user.edit', $user->id) }}" title="Edit this user">
 							<i class="fa fa-edit"></i>

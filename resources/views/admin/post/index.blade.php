@@ -10,13 +10,13 @@
 			<thead>
 				<tr>
 					<th></th>
-					<th>Name</th>
-					<th>Category</th>
-					<th>Author</th>
-					<th>Comments</th>
+					<th>Tên</th>
+					<th>Chuyên Mục</th>
+					<th>Tác Giả</th>
+					<th>Bình Luận</th>
 					<th>Public</th>
-					<th>Approved</th>
-					<th>Created</th>
+					<th>Phê Duyệt</th>
+					<th>Ngày Tạo</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -28,7 +28,7 @@
 						<img src="{{ $post->thumbnail }}" />
 						@endif
 					</td>
-					<td class="name"><a href="{{ route('admin.post.preview', $post->id) }}" target="_blank" title="Preview this post">{{ $post->title }} <i class="fa fa-external-link"></i></a></td>
+					<td class="name"><a href="{{ route('admin.post.preview', $post->id) }}" target="_blank" title="Xem trước">{{ $post->title }} <i class="fa fa-external-link"></i></a></td>
 					<td class="category">
 						@php $categories = $post->categories; @endphp
 						@forelse($categories as $cat)
@@ -74,7 +74,7 @@
 			</tbody>
 		</table>
 		{{ $posts->links('admin.partials.paginator') }}
-		<button class="btn btn-primary m-1 pull-right create" type="button">Create</button>
+		<a class="btn btn-primary m-1 pull-right create" href="{{ route('admin.post.create') }}">Tạo</a>
 	</div>
 </div>
 @endsection
@@ -86,17 +86,17 @@
     <div class="modal-dialog modal-danger" role="document">
       	<div class="modal-content">
         	<div class="modal-header">
-          		<h4 class="modal-title">Delete?</h4>
+          		<h4 class="modal-title">Xóa?</h4>
           		<button class="close" type="button" data-dismiss="modal" aria-label="Close">
             		<span aria-hidden="true">×</span>
           		</button>
         	</div>
 	        <div class="modal-body">
-	          	<p>Do you want to delete this record?</p>
+	          	<p>Bạn có muốn xóa bài viết này?</p>
 	        </div>
 	        <div class="modal-footer">
-	          	<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-	          	<button class="btn btn-danger" id="confirm_delete" type="button">Yes</button>
+	          	<button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
+	          	<button class="btn btn-danger" id="confirm_delete" type="button">Có</button>
 	        </div>
       	</div>
     </div>

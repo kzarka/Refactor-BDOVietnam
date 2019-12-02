@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Role;
-use App\User;
+use App\Models\User;
 
 class AdminSeeder extends Seeder
 {

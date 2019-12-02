@@ -7,6 +7,7 @@ use App\Services\Contracts\UserServiceInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\UserRequest;
+use App\Models\Role;
 
 class UserController extends BaseController
 {
@@ -31,12 +32,14 @@ class UserController extends BaseController
     }
 
     public function create(Request $request) {
-        return view('admin.post.create');
+        $roles = Role::all();
+        return view('admin.post.create', ['roles' => $roles]);
     }
 
     public function edit(Request $request, $id) {
         $user = $this->userService->findGetAvatar($id);
-        return view('admin.user.edit', ['user' => $user]);
+        $roles = Role::all();
+        return view('admin.user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     public function update(UserRequest $request, $id)
@@ -53,12 +56,13 @@ class UserController extends BaseController
     public function store(UserRequest $request)
     {
         $result = $this->postRepos->createByAdmin($request->all());
+        $roles = Role::all();
         if($result){
             $this->saveSessionSuccessMessage('Updated!');
             return redirect()->route('admin.post.index');
         }
         $this->saveSessionErrorMessage('Error!');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('admin.post.index', ['roles' => $roles]);
     }
 
     public function destroy($id)
@@ -70,10 +74,6 @@ class UserController extends BaseController
         }
         $this->saveSessionErrorMessage('You cant delete this user!');
         return redirect()->route('admin.user.index');
-    }
-
-    public function load(Request $request) {
-        return $this->postService->getPostList();
     }
 
     public function approve(Request $request) {
@@ -99,10 +99,10 @@ class UserController extends BaseController
         $result = $this->userRepos->banByAdmin($userId, $date);
         if($result){
             $this->saveSessionSuccessMessage('Banned!');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('admin.user.index');
         }
         $this->saveSessionErrorMessage('You cant ban this user!');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('admin.user.index');
     }
 
     public function lift($id)
@@ -110,10 +110,10 @@ class UserController extends BaseController
         $result = $this->userRepos->banByAdmin($id);
         if($result){
             $this->saveSessionSuccessMessage('Banned!');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('admin.user.index');
         }
         $this->saveSessionErrorMessage('You cant ban this user!');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('admin.user.index');
     }
 
     public function selfUpdate(Request $request)
@@ -121,26 +121,21 @@ class UserController extends BaseController
         $user = $this->userService->findGetAvatar($request->user()->id);
         if($request->method() == 'GET') {
             return view('admin.user.edit', [
-                'user' => $user
+                'self' => $user
             ]); 
         }
-        $result = $this->userRepos->selfUpdate($request, $user);
+        $result = $this->userRepos->selfUpdate($request, $user->id);
         if($result){
-            $this->saveSessionSuccessMessage('Updated!');
-            return redirect()->route('admin.user.self_update');
+            $this->saveSessionSuccessMessage('Đã cập nhật hồ sơ');
+            return redirect()->route('admin.user.profile');
         }
-        $this->saveSessionErrorMessage('You update this user!');
+        $this->saveSessionErrorMessage('Không thể cập nhật hồ sơ của bạn.');
         return redirect()->route('admin.user.self_update');
     }
 
     public function profile($id = null)
     {
-        if($id == null) {
-            return view('admin.user.profile', [
-                'user' => auth()->user()
-            ]); 
-        }
-
+        $id = $id ?? auth()->user()->id;
         $user = $this->userService->findGetAvatar($id);
         if(!$user) {
             $this->saveSessionErrorMessage('Profile not found.');
