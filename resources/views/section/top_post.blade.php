@@ -85,7 +85,7 @@
                             @endif
                             <!-- END COMMENT COUNT (if post has comments) -->
                             <h2>{{ $top_posts[1]->title }}</h2>
-                            <div class="featured-author-time">By {{ $top_posts[1]->author_name }} // {{ $top_posts[0]->created_from }}/div>
+                            <div class="featured-author-time">By {{ $top_posts[1]->author_name }} // {{ $top_posts[0]->created_from }}</div>
                         </div>
                     </a>
                 </div>
