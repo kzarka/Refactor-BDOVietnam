@@ -52,6 +52,10 @@ class PostController extends BaseController
             return;
         }
         $post = $this->postRepos->findBySlugOrId($postSlug);
+        if($post) {
+            $post->banner_image = $post->getFirstMediaUrl(POST_BANNER_COLLECTION);
+            $post->thumbnail = $post->getFirstThumbnailUrl(POST_BANNER_COLLECTION);
+        }
         if(!$post) {
             abort(404);
             return;
@@ -68,7 +72,8 @@ class PostController extends BaseController
                 return;
             }
         }
-        $related_posts = $this->postService->getRelatePost($post->id, $category->id);
+        $catId = isset($category->id) ? $category->id : null;
+        $related_posts = $this->postService->getRelatePost($post->id, $catId);
         $comments = $this->commentService->getCommentsByPost($post->id);
         Event::dispatch('posts.view', $post);
         return view('post.view', ['post' => $post, 'comments' => $comments, 'related_posts' => $related_posts]);

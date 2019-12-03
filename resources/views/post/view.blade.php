@@ -10,7 +10,7 @@
         <div class="featured-image">
             <!-- BEGIN FEATURED IMAGE -->
             <a href="{{ $post->url }}">
-                <img width="720" height="405" src="{{ $post->banner }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" sizes="(max-width: 720px) 100vw, 720px">
+                <img width="720" height="405" src="{{ $post->banner_image }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" sizes="(max-width: 720px) 100vw, 720px">
             </a>
             <!-- END FEATURED IMAGE -->
         </div>
