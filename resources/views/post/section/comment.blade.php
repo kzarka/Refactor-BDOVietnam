@@ -8,10 +8,10 @@
                 <!-- END COMMENT COUNT -->
                 <ol class="commentlist">
                     @forelse($comments as $comment)
+                    @php $author = $comment->author; 
+                    $author_name = ($author) ? ($author->fullname ?? $author->username) : $comment->name;
+                    @endphp
                     @if($children = $comment->children)
-                        @php $author = $comment->author; 
-                        $author_name = ($author) ? ($author->fullname ?? $author->username) : $comment->name;
-                        @endphp
                     <li id="comment-{{ $comment->id }}" data-id="{{ $comment->id }}" class="comment byuser comment-author-wohoo @if($author && $author->id == $post->author_id) bypostauthor @endif odd alt thread-odd thread-alt depth-1">
         
                     <!-- begin comment entry -->
@@ -21,9 +21,10 @@
                                 <img alt="" src="{{ asset('assets/images/default_user.png') }}" class="avatar avatar-60 photo" height="60" width="60">                        
                                 <div class="comment-author-inner">
                                     <span class="comment-author">{{ ($author) ? ($author->fullname ?? $author->username) : $comment->name }}</span>
-                                    <span class="comment-time">lúc {{ $comment->created_at }}</span>
                                     <span class="comm-divider">|</span>
-                                    <a rel="nofollow" class="comment-reply-link" href="javascript:void(0)"  aria-label="Reply to PowerUp">Trả lời</a>
+                                    <span class="comment-time">{{ $comment->created_from }}</span>
+                                    <span class="comm-divider">|</span>
+                                    <a rel="nofollow" class="comment-reply-link" href="javascript:void(0)"  aria-label="Reply to {{ ($author) ? ($author->fullname ?? $author->username) : $comment->name }}">Trả lời</a>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +43,8 @@
                                         <img alt="" src="{{ asset('assets/images/default_user.png') }}" class="avatar avatar-60 photo" height="60" width="60">
                                         <div class="comment-author-inner">
                                             <span class="comment-author">{{ $child_author_name }}</span>
-                                            <span class="comment-time">lúc {{ $child->created_at }}</span>
+                                            <span class="comm-divider">|</span>
+                                            <span class="comment-time">{{ $child->created_from }}</span>
                                             <span class="comm-divider">|</span>
                                         </div>
                                     </div>
@@ -56,15 +58,15 @@
                     <li id="comment-{{ $comment->id }}" data-id="{{ $comment->id }}" class="comment byuser comment-author-wohoo bypostauthor even thread-even depth-1">
                     <!-- begin comment entry -->
                         <div class="comment-entry">
-                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                
+                            <p>{{ $comment->comment }}</p>
                             <div class="comment-author-wrapper">
                                 <img alt="" src="{{ asset('assets/images/default_user.png') }}" class="avatar avatar-60 photo" height="60" width="60">                        
                                 <div class="comment-author-inner">
-                                    <span class="comment-author">PowerUp</span>
-                                    <span class="comment-time">on March 22</span>
+                                    <span class="comment-author">{{ ($author) ? ($author->fullname ?? $author->username) : $comment->name }}</span>
                                     <span class="comm-divider">|</span>
-                                    <a rel="nofollow" class="comment-reply-link" href="javascript:void(0)"  aria-label="Reply to PowerUp">Reply</a>
+                                    <span class="comment-time">{{ $comment->created_from }}</span>
+                                    <span class="comm-divider">|</span>
+                                    <a rel="nofollow" class="comment-reply-link" href="javascript:void(0)"  aria-label="Reply to {{ ($author) ? ($author->fullname ?? $author->username) : $comment->name }}">Trả lời</a>
                                 </div>
                             </div>
                         </div>

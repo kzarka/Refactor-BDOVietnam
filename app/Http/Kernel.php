@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'admin'     => \App\Http\Middleware\Role\Admin::class,
         'mod'     => \App\Http\Middleware\Role\Mod::class,
         'ctv'     => \App\Http\Middleware\Role\CTV::class,
+        'view.post.filter' => \App\Http\Middleware\ViewPostFilter::class
     ];
 
     /**

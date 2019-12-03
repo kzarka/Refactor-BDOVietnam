@@ -13,6 +13,23 @@ class Post extends BaseModel implements HasMedia
 
 	protected $table = "posts";
 
+    public static $mediaConfigs = [
+        'table' => 'review_imgs',
+        'path_prefix' => 'reviews/images',
+        'owner_key' => 'id',
+        'foreign_key' => 'review_id',
+        'conversions' => [
+            'MEDIA_REVIEW_COLLECTION_DEFAULT' => [
+                'MEDIA_REVIEW_COLLECTION_THUMB' => [
+                    'width' => 500,
+                ],
+                'MEDIA_REVIEW_COLLECTION_THUMB_SMALL' => [
+                    'width' => 200,
+                ],
+            ]
+        ]
+    ];
+
     protected $fillable = [
         'title', 'content', 'slug', 'excert', 'author_id', 'thumbnail', 'banner', 'public', 'approved'
     ];
@@ -43,7 +60,7 @@ class Post extends BaseModel implements HasMedia
     }
 
     public function author() {
-        return $this->belongsTo('App\User', 'author_id')->withDefault([
+        return $this->belongsTo('App\Models\User', 'author_id')->withDefault([
             'name' => 'Guest'
         ]);
     }
@@ -96,4 +113,24 @@ class Post extends BaseModel implements HasMedia
         return url('') . '/' . DEFAULT_URL_PREFIX . '/' . ($category ? $category->slug : DEFAULT_CATEGORY) . '/' . $this->slug . '.html';
     }
     
+    /**
+     * get dish media url by review and dish
+     * @param Review $review
+     * @return mixed|null
+     */
+    public function getDishMediaUrl()
+    {
+        $dishMediaUrl = $this->getFirstMediaUrl('MEDIA_REVIEW_COLLECTION_DEFAULT');
+        $dishMediaThumbUrl = $this->getFirstMediaUrl('MEDIA_REVIEW_COLLECTION_THUMB');
+        $dishMediaThumbSmallUrl = $this->getFirstMediaUrl('MEDIA_REVIEW_COLLECTION_THUMB_SMALL');
+        if ($dishMediaUrl || $dishMediaThumbUrl || $dishMediaThumbSmallUrl) {
+            return [
+                'collection' => 'MEDIA_DISH_COLLECTION_REVIEW',
+                'default' => $dishMediaUrl,
+                'thumb' => $dishMediaThumbUrl,
+                'thumb_small' => $dishMediaThumbSmallUrl,
+            ];
+        }
+        return $this->dishMediaService->getDishMediaUrl($dish);
+    }
 }

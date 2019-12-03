@@ -11,6 +11,7 @@ use App\Services\Contracts\GameServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Services\Contracts\CommentServiceInterface;
+use Illuminate\Support\Facades\Event;
 
 class PostController extends BaseController
 {
@@ -69,6 +70,7 @@ class PostController extends BaseController
         }
         $related_posts = $this->postService->getRelatePost($post->id, $category->id);
         $comments = $this->commentService->getCommentsByPost($post->id);
+        Event::dispatch('posts.view', $post);
         return view('post.view', ['post' => $post, 'comments' => $comments, 'related_posts' => $related_posts]);
     }
 }

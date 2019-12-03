@@ -58,9 +58,9 @@
                             <!-- BEGIN CONTENT -->
                             <div class="post-excerpt">
                                 <!-- BEGIN TIME + DATE -->
-                                <span class="post-date">3:39 pm, 31st March 2017:</span>
+                                <span class="post-date">{{ $top_post->created_at_text_full }}:</span>
                                 {{ $top_post->excert }} ... 
-                                <span class="read-more">Read more</span>
+                                <span class="read-more">{{ trans('commons.read_more') }}</span>
                                 <!-- END READ MORE -->
                             </div>
                             <!-- END CONTENT -->

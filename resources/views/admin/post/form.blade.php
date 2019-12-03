@@ -11,7 +11,15 @@
 	</div>
 	<div class="form-group">
 		<label for="excert">Ảnh</label><br>
-		<div class="cover-image-button add-image"></div>
+			<div class="images-upload">
+				<div class="cover-image-button images hidden">
+					<span class="close-icon"></span>
+					<div class="photo-frame">
+						<img src="">
+					</div>
+				</div>
+				<button class="btn btn-success add-image" type="button">Thêm</button>
+			</div>
 		<input type="file" name="images" class="hidden">
 	</div>
 	<div class="form-group">

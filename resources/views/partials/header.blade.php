@@ -37,7 +37,8 @@
                         <a>Danh Mục</a>
                         <ul class="sub-menu">
                             @forelse($header_categories as $header_cat)
-                            @if($cat_children = $header_cat->children)
+                            @php $cat_children = $header_cat->children; @endphp
+                            @if($cat_children && $cat_children->count() !== 0)
                             <li id="menu-item-653" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-653">
                                 <a href="javascript:void(0)">{{ $header_cat->name }}</a>
                                 <ul class="sub-menu">
@@ -50,7 +51,7 @@
                             </li>
                             @else
                             <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-664">
-                                <a href="{{ $cat_child->url }}">{{ $header_cat->name }}</a>
+                                <a href="{{ $header_cat->url }}">{{ $header_cat->name }}</a>
                             </li>
                             @endif
                             @empty

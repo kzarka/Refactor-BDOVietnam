@@ -85,7 +85,7 @@
 		                    {{ $post->excert }} ...
 		                    <!-- END EXCERPT -->
 		                    <!-- BEGIN READ MORE -->
-		                    <span class="read-more">Đọc tiếp</span>
+		                    <span class="read-more">{{ trans('commons.read_more') }}</span>
 		                    <!-- END READ MORE -->
 		                </div>
 		                <!-- END CONTENT -->

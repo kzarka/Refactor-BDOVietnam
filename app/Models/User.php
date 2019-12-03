@@ -10,6 +10,7 @@ use App\Models\Role;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use Carbon\Carbon;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -26,7 +27,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'username', 'email', 'password', 'status', 'biography', 'active', 'banned_until'
+        'first_name', 'last_name', 'username', 'email', 'password', 'status', 'biography', 'active', 'banned_until', 'last_login'
     ];
 
     /**
@@ -127,5 +128,10 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaCollection(USER_MEDIA_COLLECTION)
             ->useFallbackUrl('/assets/images/default_user.png')
             ->useFallbackPath(public_path('/assets/images/default_user.png'));
+    }
+
+    public function getLastLoginFromAttribute($value) 
+    {
+        return Carbon::parse($this->last_login)->diffForHumans();
     }
 }

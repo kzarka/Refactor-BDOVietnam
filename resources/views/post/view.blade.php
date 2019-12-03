@@ -29,7 +29,7 @@
             <div class="entry-content">
                 <!-- BEGIN DATE -->
                 <div class="post-date">
-                    {{ $post->created_at }}<span>|</span>
+                    {{ $post->created_at_text }}<span>|</span><i class="fa fa-eye"></i> {{ $post->view_count }} lượt xem<span>|</span>
                 </div>
                 <!-- END DATE -->
 
@@ -83,10 +83,10 @@
                     <!-- BEGIN AUTHOR DESCRIPTION -->
                     <div class="author-desc-wrapper">
                         <span class="author-name">
-                            <a href="" rel="author"> {{ $post->author_name ?? $post->username }}</a>
+                            <a href="" rel="author"> {{ $post->author->fullname ?? $post->author->username }}</a>
                         </span><span class="author-position">, {{ ($role = $post->author->roles()->first()) ? $role->display_name : '' }}</span>
                         <div class="author-description">
-                            Gamer since Wolfenstein 3D days. Games journalist since 2002. Best job in the world! Follow me on <a href="https://twitter.com/BonfireThemes">Twitter</a>, I'm good fun :)                        
+                            {{ $post->author->biography ?? '^.^' }}
                         </div>
                     </div>
                     <!-- END AUTHOR DESCRIPTION -->

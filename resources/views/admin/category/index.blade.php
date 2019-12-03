@@ -29,7 +29,7 @@
 					<td class="name">{{ $category->name }}</td>
 					<td class="slug">{{ $category->slug }}</td>
 					<td class="parent" data-parent-id="{{ $category->parent_id }}">{{ $category->parent_name }}</td>
-					<td class="register">{{ $category->created_at }}</td>
+					<td class="register">{{ $category->created_at_text }}</td>
 					<td class="active">
 						@if($category->active)
 						<span class="badge badge-success" data-active="1">Active</span>

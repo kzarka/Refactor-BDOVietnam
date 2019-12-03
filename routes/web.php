@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get('/', 'MainController@index')->name('home');
 
-Route::get('/view/{category}/{post}', 'Post\PostController@view');
+Route::get('/view/{category}/{post}', 'Post\PostController@view')->middleware('view.post.filter');
 
 Route::get('/category/{category?}', 'Category\CategoryController@index');
 

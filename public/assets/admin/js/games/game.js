@@ -251,7 +251,7 @@ function parseTableRow(data) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\games\game.js */"./resources/assets/admin/games/game.js");
+module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\games\game.js */"./resources/assets/admin/games/game.js");
 
 
 /***/ })

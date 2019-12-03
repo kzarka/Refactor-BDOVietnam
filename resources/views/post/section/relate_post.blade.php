@@ -30,7 +30,7 @@
                             <!-- BEGIN COMMENT COUNT (if post has comments) -->
                             <!-- END COMMENT COUNT (if post has comments) -->
                             <h3>{{ $related_post->title }}</h3>
-                            <div class="related-author-time">By {{ $related_post->author->fullname ?? $related_post->author->username }} // 3 years ago</div>
+                            <div class="related-author-time">By {{ $related_post->author->fullname ?? $related_post->author->username }} // {{ $related_post->create_from }}</div>
                         </div>
                     </a>
                     

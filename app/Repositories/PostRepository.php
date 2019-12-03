@@ -144,10 +144,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     public function findBySlugOrId($slug)
     {
         try {
+            $builder = $this->postsBuilder();
+            $builder = $this->publicApproveFiler($builder);
             if(is_numeric($slug)) {
-                return $this->postsBuilder()->where('id', $slug);
+                return $builder->postsBuilder()->where('id', $slug);
             }
-            return $this->postsBuilder()->where('slug', $slug)->with('comments')->first();
+            return $builder->where('slug', $slug)->with('comments')->first();
         } catch (\Exception $e) {
             return false;
         }

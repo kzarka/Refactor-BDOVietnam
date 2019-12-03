@@ -31,3 +31,5 @@
 
 	define('THUMBNAIL_WIDTH', 150);
 	define('THUMBNAIL_HEIGHT', 150);
+	
+	define('STORAGE_MEDIA_DISK', 'public');

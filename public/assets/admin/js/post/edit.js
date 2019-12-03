@@ -117,9 +117,19 @@ $(document).ready(function () {
     $('form.preview').find('[name=title]').val($('form.validate').find('[name=title]').val());
     $('form.preview').submit();
   });
+  $('form.validate').validate({
+    rules: {
+      images: {
+        extension: "jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF",
+        maxsize: 2097152
+      }
+    }
+  });
   initSlug();
   initToggleState();
   setTimeout(autoSave, 60000); // Start auto save after 1 minute
+
+  initSelectImage();
 });
 
 function initSlug() {
@@ -146,10 +156,17 @@ function initFormSave() {
   form = $('form.validate').validate({
     submitHandler: function submitHandler(form, event) {
       event.preventDefault();
+      var values = $("form.validate").serializeArray();
+      values = values.concat($('form.validate textarea[name=content]').map(function () {
+        return {
+          "name": this.name,
+          "value": CKEDITOR.instances.content.getData()
+        };
+      }).get());
       $.ajax({
         url: $(form).attr('action'),
         type: $(form).attr('method'),
-        data: $(form).serializeArray(),
+        data: values,
         success: function success(response) {
           if (response.status === 'SUCCESS') {
             notifySuccess('Saved!');
@@ -177,6 +194,39 @@ function autoSave() {
   setInterval(triggerSave, 30000); // auto save every 5 minutes
 }
 
+function initSelectImage() {
+  $('.add-image').on('click', function () {
+    $('input[name=images]').trigger('click');
+  });
+  $('input[name=images]').change(function () {
+    readURL(this);
+  });
+  $('.close-icon').on('click', function () {
+    $('#p_remove_image').modal('show');
+  });
+  $('#confirm_remove').on('click', function () {
+    $('input[name=images]').val('');
+    $('.cover-image-button.images').addClass('hidden');
+  });
+  $('.photo-frame').on('click', function () {
+    $('#p_preview_image').find('img').attr('src', $(this).find('img').attr('src'));
+    $('#p_preview_image').modal('show');
+  });
+}
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $('.cover-image-button.images').removeClass('hidden');
+      $('.cover-image-button.images').find('img').attr('src', e.target.result);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
 /***/ }),
 
 /***/ 5:
@@ -186,7 +236,7 @@ function autoSave() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\post\edit.js */"./resources/assets/admin/post/edit.js");
+module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\post\edit.js */"./resources/assets/admin/post/edit.js");
 
 
 /***/ })

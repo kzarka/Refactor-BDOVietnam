@@ -54,7 +54,7 @@
 					<td class="comment"><span class="badge badge-danger" data-active="0">{{ $user->comments }}</span></td>
 					<td>
 						<div class="small text-muted">Last login</div>
-						<strong>10 sec ago</strong>
+						<strong>{{ $user->last_login_from }}</strong>
 					</td>
 					<td>
 						<a class="btn btn-success edit" href="{{ route('admin.user.edit', $user->id) }}" title="Edit this user">
