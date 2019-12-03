@@ -3,7 +3,7 @@ jQuery(function() {
     /* toggle menu when clicked on the menu button or close button */
     jQuery(".menu-button-wrapper, .close-button").on('click', function(e) {
         /* hide accordion menu */
-        jQuery('.by-bonfire-wrapper, .by-bonfire-bg-line').toggleClass('menu-active');
+        jQuery('.powerup-wrapper, .powerup-bg-line').toggleClass('menu-active');
         /* hide menu button active colors */
         jQuery('.menu-button-wrapper').toggleClass('menu-button-active');
         e.stopPropagation()
@@ -11,11 +11,11 @@ jQuery(function() {
     /* hide menu when clicked outside of it */
     jQuery(window).on('click touchend', function(e) {
         /* hide accordion menu */
-        jQuery('.by-bonfire-wrapper, .by-bonfire-bg-line').removeClass('menu-active');
+        jQuery('.powerup-wrapper, .powerup-bg-line').removeClass('menu-active');
         /* hide menu button active colors */
         jQuery('.menu-button-wrapper').removeClass('menu-button-active');
     });  
-    jQuery('.by-bonfire-wrapper, .menu-button-wrapper, .close-button').on('click touchend', function(e) {
+    jQuery('.powerup-wrapper, .menu-button-wrapper, .close-button').on('click touchend', function(e) {
         e.stopPropagation();
     });
 });
