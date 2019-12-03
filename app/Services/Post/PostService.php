@@ -38,4 +38,14 @@ class PostService implements PostServiceInterface
 	{
 		return $this->postRepos->getRelatePost($postId, $catId);
 	}
+
+	public function findGetImages($id)
+	{
+		$record = $this->postRepos->findBySlugOrId($id);
+		if($record) {
+			$record->banner_image = $record->getFirstMediaUrl(POST_BANNER_COLLECTION);
+        	$record->thumbnail = $record->getFirstThumbnailUrl(POST_BANNER_COLLECTION);
+		}
+        return $record;
+	}
 }

@@ -38,5 +38,5 @@ interface ShouldMedia
 
     public function deleteFile($filePath);
 
-    public function deleteDirectory($uniq_path);
+    public function deleteDirectory($uniq_path, $collection, $conversion);
 }

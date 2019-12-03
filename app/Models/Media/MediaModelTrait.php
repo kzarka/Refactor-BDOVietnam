@@ -8,6 +8,11 @@ use Intervention\Image\Image;
 
 trait MediaModelTrait
 {
+    public function getConversions($type, $property = 'path')
+    {
+        return config('library.conversion.'. $type . '.' . $property);
+    }
+
     public function getFirstMedia($collection = null)
     {
         return $this->queryMedias($collection)->first();
@@ -18,9 +23,10 @@ trait MediaModelTrait
      * @param null $collection
      * @return mixed
      */
-    public function getFirstMediaPath($collection = null)
+    public function getFirstMediaPath($collection = null, $conversion = 'default')
     {
-        return $this->queryMedias($collection)->pluck('file_path')->first();
+        $conversion = $this->getConversions($conversion);
+        return $this->queryMedias($collection, $conversion)->pluck('file_path')->first();
     }
 
     /**
@@ -29,9 +35,10 @@ trait MediaModelTrait
      * @return mixed
      */
 
-    public function getMediaPaths($collection = null)
+    public function getMediaPaths($collection = null, $conversion = 'default')
     {
-        return $this->queryMedias($collection)->pluck('file_path');
+        $conversion = $this->getConversions($conversion);
+        return $this->queryMedias($collection, $conversion)->pluck('file_path');
     }
 
     /**
@@ -39,9 +46,10 @@ trait MediaModelTrait
      * @param null $collection
      * @return mixed
      */
-    public function getMediaUrls($collection = null)
+    public function getMediaUrls($collection = null, $conversion = 'default')
     {
-        return $this->getMediaPaths($collection)->map(function ($filePath) {
+        $conversion = $this->getConversions($conversion);
+        return $this->getMediaPaths($collection, $conversion)->map(function ($filePath) {
             return $this->getUrlByPath($filePath);
         });
     }
@@ -51,12 +59,33 @@ trait MediaModelTrait
      * @param null $collection
      * @return mixed|null
      */
-    public function getFirstMediaUrl($collection = null)
+    public function getFirstMediaUrl($collection = null, $conversion = 'default')
     {
-        if ($filePath = $this->getFirstMediaPath($collection)) {
+        $conversion = $this->getConversions($conversion);
+        if ($filePath = $this->getFirstMediaPath($collection, $conversion)) {
             return $this->getUrlByPath($filePath);
         }
-        return null;
+        return isset(self::$mediaConfigs['fall_back']) ? self::$mediaConfigs['fall_back'] : null;
+    }
+
+    /**
+     * get first media from list medias urls
+     * @param null $collection
+     * @return mixed|null
+     */
+    public function getFirstThumbnailUrl($collection = null)
+    {
+        return $this->getFirstMediaUrl($collection, $this->getConversions('thumbnail'));
+    }
+
+    /**
+     * get first media from list medias urls
+     * @param null $collection
+     * @return mixed|null
+     */
+    public function getFirstSmallThumbnailUrl($collection = null)
+    {
+        return $this->getFirstMediaUrl($collection, $conversion = $this->getConversions('small_thumbnail'));
     }
 
     /**
@@ -136,13 +165,13 @@ trait MediaModelTrait
     public function addMediaFromImage(Image $fileToSave, $collection = null, $filename = null)
     {
         try {
-            $this->addMediaCollectionFromImage($fileToSave, $collection, $filename);
+            $this->addMediaCollectionFromImage($fileToSave, $collection, MEDIA_CONVERSION_DEFAULT, $filename);
             if (isset(self::$mediaConfigs['conversions'][$collection])) {
                 $conversions = self::$mediaConfigs['conversions'][$collection];
                 if (is_array($conversions)) {
-                    foreach ($conversions as $additionCollection => $conversion) {
-                        $width = isset($conversion['width']) ? $conversion['width'] : null;
-                        $height = isset($conversion['height']) ? $conversion['height'] : null;
+                    foreach ($conversions as $type) {
+                        $width = $this->getConversions($type, 'width');
+                        $height = $this->getConversions($type, 'height');
                         if ($width && $height) {
                             $newFileToSave = (clone $fileToSave);
                             $newFileToSave->resize($width, $height);
@@ -152,7 +181,8 @@ trait MediaModelTrait
                                 $constraint->aspectRatio();
                             });
                         }
-                        $this->addMediaCollectionFromImage($newFileToSave, $additionCollection, $filename);
+                        $conversionPath = $this->getConversions($type, 'path');
+                        $this->addMediaCollectionFromImage($newFileToSave, $collection, $conversionPath, $filename);
                     }
                 }
             }
@@ -163,7 +193,7 @@ trait MediaModelTrait
         }
     }
 
-    public function addMediaCollectionFromImage(Image $fileToSave, $collection = null, $filename = null)
+    public function addMediaCollectionFromImage(Image $fileToSave, $collection = null, $conversion, $filename = null)
     {
         $mediaTable = self::$mediaConfigs['table'];
         $foreignKey = self::$mediaConfigs['foreign_key'];
@@ -174,20 +204,21 @@ trait MediaModelTrait
             $filenameExt = $fileToSave->mime() ? explode('/', $fileToSave->mime())[1] : null;
             $filename = $filenameHash . (empty($filenameExt) ? null : '.' . $filenameExt);
         }
-        $pathToStore = "$pathPrefix/$collection/$uniqPath";
+        $pathToStore = "$pathPrefix/$collection/$conversion/$uniqPath";
         try {
             \DB::beginTransaction();
             \DB::table($mediaTable)->insert([
                 $foreignKey => $this->id,
                 'uniq_path' => $uniqPath,
                 'collection' => $collection,
+                'conversion' => $conversion,
                 'name' => $filename,
                 'created_at' => Carbon::now()
             ]);
-            Storage::disk(STORAGE_MEDIA_DISK)->put($pathToStore . '/' . $filename, $fileToSave->encode()->__toString());
+            Storage::disk(config('library.disk_name'))->put($pathToStore . '/' . $filename, $fileToSave->encode()->__toString());
             \DB::commit();
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            \Log::info($e->getMessage());
             \DB::rollback();
         }
     }
@@ -217,13 +248,12 @@ trait MediaModelTrait
         if ($collection) {
             $rm = $rm->where(['collection' => $collection]);
         }
-
         /**  Delete file in local */
-        foreach ($rm->get(['uniq_path']) as $uniq_path) {
+        foreach ($rm->get() as $item) {
             try {
-                $this->deleteDirectory($uniq_path->uniq_path);
+                $this->deleteDirectory($item->uniq_path, $item->collection, $item->conversion);
             } catch (\Exception $e) {
-
+                \Log::info($e->getMessage());
             }
         }
 
@@ -237,13 +267,15 @@ trait MediaModelTrait
      */
     public function removeMediaByUniqPath($uniq_path)
     {
-        // Delete directory in storage local
-        $this->deleteDirectory($uniq_path);
-
-        return \DB::table(self::$mediaConfigs['table'])->where([
+        $rm = \DB::table(self::$mediaConfigs['table'])->where([
             self::$mediaConfigs['foreign_key'] => $this->id,
             'uniq_path' => $uniq_path
-        ])->delete();
+        ]);
+        // Delete directory in storage local
+        if($rm) {
+            $this->deleteDirectory(self::$mediaConfigs['path_prefix'] . '/' . $rm->collection . '/'. $uniq_path);
+        }
+        $rm->delete();
     }
 
     /**
@@ -253,7 +285,7 @@ trait MediaModelTrait
      */
     public function getUrlByPath($filePath)
     {
-        return \Storage::disk(STORAGE_MEDIA_DISK)->url(self::$mediaConfigs['path_prefix'] . '/' . $filePath);
+        return \Storage::disk(config('library.disk_name'))->url(self::$mediaConfigs['path_prefix'] . '/' . $filePath);
     }
 
     /**
@@ -261,12 +293,12 @@ trait MediaModelTrait
      * @param null $collection
      * @return mixed
      */
-    public function queryMedias($collection = null)
+    public function queryMedias($collection = null, $conversion)
     {
         $mediaTable = self::$mediaConfigs['table'];
         $ownerKey = self::$mediaConfigs['owner_key'];
         $foreignKey = self::$mediaConfigs['foreign_key'];
-        $builder = $this->select(\DB::raw("CONCAT(if($mediaTable.collection is null,'',$mediaTable.collection), '/', $mediaTable.uniq_path, '/', $mediaTable.name) AS file_path"), 'fixed_url', 'collection')->join(
+        $builder = $this->select(\DB::raw("CONCAT(if($mediaTable.collection is null,'',$mediaTable.collection), '/', " . "'" . $conversion ."', '/', $mediaTable.uniq_path, '/', $mediaTable.name) AS file_path"), 'fixed_url', 'collection')->join(
             $mediaTable,
             $this->table . '.' . $ownerKey,
             '=',
@@ -274,6 +306,7 @@ trait MediaModelTrait
         )->where($foreignKey, $this->id);
         if ($collection) {
             $builder = $builder->where("$mediaTable.collection", $collection);
+            $builder = $builder->where("$mediaTable.conversion", $conversion);
         }
         return $builder;
     }
@@ -286,7 +319,7 @@ trait MediaModelTrait
      */
     public function deleteFile($filePath)
     {
-        return \Storage::disk(STORAGE_MEDIA_DISK)->delete(self::$mediaConfigs['path_prefix'] . '/' . $filePath);
+        return \Storage::disk(config('library.disk_name'))->delete(self::$mediaConfigs['path_prefix'] . '/' . $filePath);
     }
 
     /**
@@ -294,8 +327,13 @@ trait MediaModelTrait
      * @param $uniq_path
      * @return mixed
      */
-    public function deleteDirectory($uniq_path)
+    public function deleteDirectory($uniq_path, $collection, $conversion)
     {
-        return \Storage::disk(STORAGE_MEDIA_DISK)->deleteDirectory(self::$mediaConfigs['path_prefix'] . '/' . $uniq_path);
+        try{
+            return \Storage::disk(config('library.disk_name'))->deleteDirectory(self::$mediaConfigs['path_prefix'] . '/' . $collection . '/'. $conversion . '/'. $uniq_path);
+        } catch(\Exception $e) {
+            \Log::info($e->getMessage());
+        }
+        
     }
 }

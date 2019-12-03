@@ -24,7 +24,7 @@
         @include('admin.partials.header.notification')
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <img class="img-avatar" src="{{ auth()->user()->getFirstMediaUrl(USER_MEDIA_COLLECTION, THUMB_CONVERSION) }}" alt="admin@bootstrapmaster.com">
+                <img class="img-avatar" src="{{ auth()->user()->getUserAvatarSmallThumbnail() }}" alt="admin@bootstrapmaster.com">
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header text-center">

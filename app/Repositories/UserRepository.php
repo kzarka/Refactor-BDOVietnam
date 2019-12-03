@@ -52,9 +52,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 		    $record = $this->model->findOrFail($id);
 			$record->update($request->all());
 			if($request->hasFile('avatar') && $request->file('avatar')->isValid()){
-				$record->clearMediaCollection(USER_MEDIA_COLLECTION);
+				$record->removeMedias(USER_AVATAR_COLLECTION_DEFAULT);
 				$fileName = 'user_' . md5($record->id) . time() . '.' . $request->file('avatar')->extension();
-	            $record->addMediaFromRequest('avatar')->setFileName($fileName)->toMediaCollection(USER_MEDIA_COLLECTION);
+	            $record->addMediaFromFileUpload($request->file('avatar'), USER_AVATAR_COLLECTION_DEFAULT, $fileName);
 	        }
             if(isset($data['roles']) && is_array($data['roles'])) {
             	$record->roles()->detach();
@@ -122,9 +122,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 		    }
 			$record->update($data);
 			if($request->hasFile('avatar') && $request->file('avatar')->isValid()){
-				$record->clearMediaCollection(USER_MEDIA_COLLECTION);
+				$record->removeMedias();
 				$fileName = 'user_' . md5($record->id) . time() . '.' . $request->file('avatar')->extension();
-	            $record->addMediaFromRequest('avatar')->setFileName($fileName)->toMediaCollection(USER_MEDIA_COLLECTION);
+	            $record->addMediaFromFileUpload($request->file('avatar'), USER_AVATAR_COLLECTION, $fileName);
 	        }
 		    \DB::commit();
 		    return true;

@@ -12,10 +12,11 @@
 	<div class="form-group">
 		<label for="excert">Ảnh</label><br>
 			<div class="images-upload">
-				<div class="cover-image-button images hidden">
+				@php $image = isset($post->banner_image) ? $post->banner_image : null; @endphp
+				<div class="cover-image-button images {{ ($image) ? '' : 'hidden' }}">
 					<span class="close-icon"></span>
 					<div class="photo-frame">
-						<img src="">
+						<img src="{{ $image ?? '' }}">
 					</div>
 				</div>
 				<button class="btn btn-success add-image" type="button">Thêm</button>

@@ -24,12 +24,19 @@
 
 	define('STATUS_PINNED', 1);
 
-	define('USER_MEDIA_COLLECTION', 'users_avatar');
-	define('POST_MEDIA_COLLECTION', 'article_images');
-
-	define('THUMB_CONVERSION', 'thumbnail');
-
 	define('THUMBNAIL_WIDTH', 150);
 	define('THUMBNAIL_HEIGHT', 150);
 	
-	define('STORAGE_MEDIA_DISK', 'public');
+	define('USER_AVATAR_COLLECTION', 'avatar');
+	define('USER_AVATAR_COLLECTION_THUMB', 'avatar_thumb');
+	define('USER_AVATAR_COLLECTION_THUMB_SMALL', 'avatar_small_thumb');
+
+	define('POST_BANNER_COLLECTION', 'banner');
+	define('POST_BANNER_COLLECTION_THUMB', 'banner_thumb');
+	define('POST_BANNER_COLLECTION_THUMB_SMALL', 'banner_small_thumb');
+
+	define('MEDIA_CONVERSION_DEFAULT', 'default');
+	define('MEDIA_CONVERSION_THUMB', 'thumbnails');
+	define('MEDIA_CONVERSION_THUMB_SMALL', 'small_thumbs');
+
+

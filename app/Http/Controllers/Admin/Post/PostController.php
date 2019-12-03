@@ -36,7 +36,7 @@ class PostController extends BaseController
     }
 
     public function edit(Request $request, $id) {
-        $post = $this->postRepos->find($id);
+        $post = $this->postService->findGetImages($id);
         if(!$post || !$post->canModify()) {
             $this->saveSessionErrorMessage('You cant edit this post');
             return redirect()->route('admin.post.index');
@@ -54,7 +54,7 @@ class PostController extends BaseController
     public function update(PostInputRequest $request, $id)
     {
         try {
-            $result = $this->postRepos->updateByAdmin($request->all(), $id);
+            $result = $this->postRepos->updateByAdmin($request, $id);
             return $this->respondWithSuccess($result);
         } catch (Exception $e) {
             return $this->respondWithError([], $e->getMessage());
@@ -63,7 +63,7 @@ class PostController extends BaseController
 
     public function store(PostInputRequest $request)
     {
-        $result = $this->postRepos->createByAdmin($request->all());
+        $result = $this->postRepos->createByAdmin($request);
         if($result){
             $this->saveSessionSuccessMessage('Updated!');
             return redirect()->route('admin.post.index');

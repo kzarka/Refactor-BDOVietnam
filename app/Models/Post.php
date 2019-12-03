@@ -3,30 +3,22 @@
 namespace App\Models;
 
 use App\Models\BaseModel;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use App\Models\Media\ShouldMedia;
+use App\Models\Media\MediaModelTrait;
 
-class Post extends BaseModel implements HasMedia
+class Post extends BaseModel implements ShouldMedia
 {
-    use HasMediaTrait;
+    use MediaModelTrait;
 
 	protected $table = "posts";
 
     public static $mediaConfigs = [
-        'table' => 'review_imgs',
-        'path_prefix' => 'reviews/images',
+        'table' => 'post_images',
+        'path_prefix' => 'posts/images',
         'owner_key' => 'id',
-        'foreign_key' => 'review_id',
+        'foreign_key' => 'post_id',
         'conversions' => [
-            'MEDIA_REVIEW_COLLECTION_DEFAULT' => [
-                'MEDIA_REVIEW_COLLECTION_THUMB' => [
-                    'width' => 500,
-                ],
-                'MEDIA_REVIEW_COLLECTION_THUMB_SMALL' => [
-                    'width' => 200,
-                ],
-            ]
+            POST_BANNER_COLLECTION => ['thumbnail', 'small_thumbnail'],
         ]
     ];
 
@@ -48,15 +40,6 @@ class Post extends BaseModel implements HasMedia
     public function scopeApproved($query)
     {
         return $query->where('approved', STATUS_ACTIVE);
-    }
-
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion(THUMB_CONVERSION)
-              ->width(150)
-              ->height(150)
-              ->sharpen(10)
-              ->performOnCollections('images', 'downloads');
     }
 
     public function author() {
@@ -114,23 +97,21 @@ class Post extends BaseModel implements HasMedia
     }
     
     /**
-     * get dish media url by review and dish
-     * @param Review $review
      * @return mixed|null
      */
-    public function getDishMediaUrl()
+    public function getMediaUrl()
     {
-        $dishMediaUrl = $this->getFirstMediaUrl('MEDIA_REVIEW_COLLECTION_DEFAULT');
-        $dishMediaThumbUrl = $this->getFirstMediaUrl('MEDIA_REVIEW_COLLECTION_THUMB');
-        $dishMediaThumbSmallUrl = $this->getFirstMediaUrl('MEDIA_REVIEW_COLLECTION_THUMB_SMALL');
-        if ($dishMediaUrl || $dishMediaThumbUrl || $dishMediaThumbSmallUrl) {
+        $originImageUrl = $this->getFirstMediaUrl(POST_BANNER_COLLECTION);
+        $imageThumbUrl = $this->getFirstThumbnailUrl(POST_BANNER_COLLECTION);
+        $imageThumbSmallUrl = $this->getFirstSmallThumbnailUrl(POST_BANNER_COLLECTION);
+        if ($originImageUrl || $imageThumbUrl || $imageThumbSmallUrl) {
             return [
-                'collection' => 'MEDIA_DISH_COLLECTION_REVIEW',
-                'default' => $dishMediaUrl,
-                'thumb' => $dishMediaThumbUrl,
-                'thumb_small' => $dishMediaThumbSmallUrl,
+                'collection' => POST_BANNER_COLLECTION,
+                'default' => $originImageUrl,
+                'thumb' => $imageThumbUrl,
+                'thumb_small' => $imageThumbSmallUrl,
             ];
         }
-        return $this->dishMediaService->getDishMediaUrl($dish);
+        return [];
     }
 }

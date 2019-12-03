@@ -156,17 +156,15 @@ function initFormSave() {
   form = $('form.validate').validate({
     submitHandler: function submitHandler(form, event) {
       event.preventDefault();
-      var values = $("form.validate").serializeArray();
-      values = values.concat($('form.validate textarea[name=content]').map(function () {
-        return {
-          "name": this.name,
-          "value": CKEDITOR.instances.content.getData()
-        };
-      }).get());
+      var formData = new FormData(form);
+      formData.append('content', CKEDITOR.instances.content.getData());
       $.ajax({
         url: $(form).attr('action'),
         type: $(form).attr('method'),
-        data: values,
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
         success: function success(response) {
           if (response.status === 'SUCCESS') {
             notifySuccess('Saved!');
@@ -236,7 +234,7 @@ function readURL(input) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\post\edit.js */"./resources/assets/admin/post/edit.js");
+module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\post\edit.js */"./resources/assets/admin/post/edit.js");
 
 
 /***/ })

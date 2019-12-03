@@ -60,8 +60,9 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return $builder->with('comments', 'categories')->get();
     }
 
-    public function createByAdmin($data) {
+    public function createByAdmin($request) {
         $user = auth()->user();
+        $data = $request->all();
         $data['author_id'] = $user->id;
         if($user->authorizeRoles([ROLE_ADMIN, ROLE_MOD])) {
             $data['approved'] = STATUS_APPROVED;
@@ -73,16 +74,20 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         if(isset($data['category']) && is_array($data['category'])) {
             $record->categories()->attach($data['category']);
         }
+        if($request->hasFile('images') && $request->file('images')->isValid()){
+            $record->addMediaFromFileUpload($request->file('images'), POST_BANNER_COLLECTION);
+        }
         return $record;
     }
 
-    public function updateByAdmin($data, $id) {
+    public function updateByAdmin($request, $id) {
         \DB::beginTransaction();
         try {
             $record = $this->model->findOrFail($id);
             if(!$record->canModify()) return false;
             
             $user = auth()->user();
+            $data = $request->all();
             if(auth()->user()->authorizeRoles([ROLE_CTV])) {
                 $data['approved'] = STATUS_UNAPPROVED;
             }
@@ -92,7 +97,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             if(isset($data['category']) && is_array($data['category'])) {
                 $record->categories()->attach($data['category']);
             }
-            \Log::info($record);
+            if($request->hasFile('images') && $request->file('images')->isValid()){
+                \Log::info($request->file('images'));
+                $record->removeMedias(POST_BANNER_COLLECTION);
+                $record->addMediaFromFileUpload($request->file('images'), POST_BANNER_COLLECTION);
+            }
             \DB::commit();
             return $record;
         } catch (\Exception $e) {
@@ -147,10 +156,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             $builder = $this->postsBuilder();
             $builder = $this->publicApproveFiler($builder);
             if(is_numeric($slug)) {
-                return $builder->postsBuilder()->where('id', $slug);
+                return $builder->where('posts.id', $slug)->first();
             }
             return $builder->where('slug', $slug)->with('comments')->first();
         } catch (\Exception $e) {
+            \Log::info($e);
             return false;
         }
         

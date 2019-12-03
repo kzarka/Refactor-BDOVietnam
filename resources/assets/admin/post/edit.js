@@ -65,15 +65,15 @@ function initFormSave() {
     form = $('form.validate').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
-            var values = $("form.validate").serializeArray();
-            values = values.concat(
-                $('form.validate textarea[name=content]')
-                .map(function() {return {"name": this.name, "value": CKEDITOR.instances.content.getData()}}).get()
-            )
+            var formData = new FormData(form);
+            formData.append('content', CKEDITOR.instances.content.getData());
             $.ajax({
                 url: $(form).attr('action'),
                 type: $(form).attr('method'),
-                data: values,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
                 success: function(response) {
                     if (response.status === 'SUCCESS') {
                         notifySuccess('Saved!');

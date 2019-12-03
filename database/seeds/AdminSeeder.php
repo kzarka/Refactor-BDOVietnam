@@ -13,7 +13,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-    	DB::table('users')->truncate();
+    	DB::table('users')->delete();
         $admin = User::firstOrNew(
         	['username' => 'admin', 'first_name' => 'Admin', 'email' => 'admin@bdovietnam.com', 'password' => bcrypt(ENV('DEFAULT_ADMIN_PASSWORD'))]
         );

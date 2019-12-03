@@ -111,6 +111,10 @@ img.preview {
 }
 
 .photo-frame {
+  display: inline-block;
+}
+
+.images-upload .photo-frame {
   border: 1px solid #e4e7ea;
   border-radius: 10px;
 }

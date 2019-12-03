@@ -7,14 +7,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use App\Models\Role;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
+use App\Models\Media\ShouldMedia;
+use App\Models\Media\MediaModelTrait;
 use Carbon\Carbon;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements ShouldMedia
 {
-    use Notifiable, HasMediaTrait;
+    use Notifiable, MediaModelTrait;
 
     public function scopeActive($query)
     {
@@ -28,6 +27,17 @@ class User extends Authenticatable implements HasMedia
      */
     protected $fillable = [
         'first_name', 'last_name', 'username', 'email', 'password', 'status', 'biography', 'active', 'banned_until', 'last_login'
+    ];
+
+    public static $mediaConfigs = [
+        'table' => 'user_images',
+        'path_prefix' => 'users/images',
+        'owner_key' => 'id',
+        'foreign_key' => 'user_id',
+        'fall_back' => '/assets/images/user/default.png',
+        'conversions' => [
+            USER_AVATAR_COLLECTION => ['thumbnail', 'small_thumbnail']
+        ]
     ];
 
     /**
@@ -114,24 +124,32 @@ class User extends Authenticatable implements HasMedia
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion(THUMB_CONVERSION)
-              ->width(THUMBNAIL_WIDTH)
-              ->height(THUMBNAIL_HEIGHT)
-              ->sharpen(10)
-              ->performOnCollections(USER_MEDIA_COLLECTION);
-    }
-
-    public function registerMediaCollections()
-    {
-        $this->addMediaCollection(USER_MEDIA_COLLECTION)
-            ->useFallbackUrl('/assets/images/default_user.png')
-            ->useFallbackPath(public_path('/assets/images/default_user.png'));
-    }
-
     public function getLastLoginFromAttribute($value) 
     {
         return Carbon::parse($this->last_login)->diffForHumans();
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getMediaUrl()
+    {
+        $dishMediaUrl = $this->getFirstMediaUrl(USER_AVATAR_COLLECTION);
+        $dishMediaThumbUrl = $this->getFirstMediaUrl(USER_AVATAR_COLLECTION);
+        $dishMediaThumbSmallUrl = $this->getFirstMediaUrl(USER_AVATAR_COLLECTION);
+        if ($dishMediaUrl || $dishMediaThumbUrl || $dishMediaThumbSmallUrl) {
+            return [
+                'collection' => USER_AVATAR_COLLECTION,
+                'default' => $dishMediaUrl,
+                'thumb' => $dishMediaThumbUrl,
+                'thumb_small' => $dishMediaThumbSmallUrl,
+            ];
+        }
+        return $this->dishMediaService->getDishMediaUrl($dish);
+    }
+
+    public function getUserAvatarSmallThumbnail()
+    {
+        return $this->getFirstMediaUrl(USER_AVATAR_COLLECTION, MEDIA_CONVERSION_THUMB_SMALL);
     }
 }
