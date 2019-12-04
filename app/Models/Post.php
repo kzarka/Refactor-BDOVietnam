@@ -52,6 +52,10 @@ class Post extends BaseModel implements ShouldMedia
         return $this->belongsToMany('App\Models\Category', 'posts_categories', 'post_id', 'cat_id');
     }
 
+    public function tags() {
+        return $this->belongsToMany('App\Models\Tag', 'posts_tags', 'post_id', 'tag_id');
+    }
+
     public function comments() {
         return $this->hasMany('App\Models\Comment', 'post_id');
     }
@@ -93,7 +97,7 @@ class Post extends BaseModel implements ShouldMedia
     public function getUrlAttribute($value) {
 
         $category = $this->categories()->first();
-        return url('') . '/' . DEFAULT_URL_PREFIX . '/' . ($category ? $category->slug : DEFAULT_CATEGORY) . '/' . $this->slug . '.html';
+        return url('') . '/' . DEFAULT_POST_URL_PREFIX . '/' . ($category ? $category->slug : DEFAULT_CATEGORY) . '/' . $this->slug . '.html';
     }
     
     /**

@@ -1,7 +1,15 @@
-<title>@yield('title')</title>
+<title>@yield('title') {{ $sys_vars['title_subfix'] }}</title>
 <!-- Header Meta -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
+<meta name="description" content="{{ (isset($post) && isset($post->excert)) ? $post->excert : $sys_vars['description'] }}">
+<meta name="author" content="{{ (isset($post)) ? $post->author->fullname : $sys_vars['author'] }}">
+<meta name="keyword" content="{{ (isset($post) && $post->tags()->count()) ? join(',', $post->tags()->pluck('name')->toArray()) : $sys_vars['keyword'] }}">
+<meta property="og:url"                content="{{ url()->current() }}" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="{{ app()->view->getSections()['title'] }} {{ $sys_vars['title_subfix'] }}" />
+<meta property="og:description"        content="{{ (isset($post) && isset($post->excert)) ? $post->excert : $sys_vars['description'] }}" />
+<meta property="og:image"              content="{{ (isset($post) && isset($post->banner_image)) ? $post->banner_image : (url('') . $sys_vars['default_image']) }}" />
 @stack('before-style')
 <style type="text/css">
 img.wp-smiley,

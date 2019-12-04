@@ -78,7 +78,7 @@
 		                <div class="post-excerpt">
 		                    <!-- BEGIN TIME + DATE -->
 		                    <span class="post-date">
-		                        3:39 pm, 31st March 2017:
+		                        {{ $post->created_at_text_full }}:
 		                    </span>
 		                    <!-- END TIME + DATE -->
 		                    <!-- BEGIN EXCERPT -->

@@ -46,6 +46,7 @@ class PostController extends BaseController
      */
     public function view($category, $post)
     {
+        dd(auth()->user()->notifications);
         $postSlug = isset($post) ? explode(".", $post)[0] : null;
         if(isset(explode(".", $post)[1]) && !in_array(explode(".", $post)[1], ['html', 'htm'])) {
             abort(404);

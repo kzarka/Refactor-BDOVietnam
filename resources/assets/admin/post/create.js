@@ -28,6 +28,13 @@ $(document).ready(function() {
 		}
 	});
 
+	$("input[name=tags]").tagsinput({
+		splitOn: ',',
+		cancelConfirmKeysOnEmpty: false
+	});
+
+	$('[data-toggle="tooltip"]').tooltip();
+
 	initSlug();
 	initToggleState();
 	initSelectImage();

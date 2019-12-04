@@ -35,6 +35,13 @@ $(document).ready(function() {
         }
     });
 
+    $("input[name=tags]").tagsinput({
+        splitOn: ',',
+        cancelConfirmKeysOnEmpty: false
+    });
+
+    $('[data-toggle="tooltip"]').tooltip();
+
     initSlug();
     initToggleState();
     setTimeout(autoSave, 60000); // Start auto save after 1 minute

@@ -9,6 +9,6 @@ class PostTag extends BaseModel
 	protected $table = "posts_tags";
 
     protected $fillable = [
-        'name'
+        'post_id', 'tag_id'
     ];
 }

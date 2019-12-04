@@ -118,6 +118,11 @@ $(document).ready(function () {
       }
     }
   });
+  $("input[name=tags]").tagsinput({
+    splitOn: ',',
+    cancelConfirmKeysOnEmpty: false
+  });
+  $('[data-toggle="tooltip"]').tooltip();
   initSlug();
   initToggleState();
   initSelectImage();
@@ -181,7 +186,7 @@ function readURL(input) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\post\create.js */"./resources/assets/admin/post/create.js");
+module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\post\create.js */"./resources/assets/admin/post/create.js");
 
 
 /***/ })

@@ -4,6 +4,7 @@
 
 @push('after_styles')
 <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -71,5 +72,6 @@
 </script>
 <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.js') }}"></script>
 <script src="{{ asset('assets/admin/js/post/edit.js') }}"></script>
 @endpush

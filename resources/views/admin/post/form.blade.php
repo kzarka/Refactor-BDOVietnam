@@ -34,7 +34,6 @@
 		<label for="excert">Mô Tả</label>
 		<textarea class="form-control" name="excert" placeholder="Excert"></textarea>
 	</div>
-
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group ">
@@ -73,10 +72,6 @@
 					@endforeach
 				</select>
 			</div>
-			<div class="form-group">
-				<label for="city">Thumbnail</label>
-				<input class="form-control" id="thumbnail" type="text" name="thumbnail" placeholder="Nhập link thumbnail" value="{{ old('thumbnail') ?? (isset($post->thumbnail) ? $post->thumbnail : '') }}">
-			</div>
 			<div class="form-group col-sm-4 is-submitted">
 				<label for="postal-code">Public</label><br>
 				<label class="switch switch-label switch-pill switch-success">
@@ -86,6 +81,10 @@
 				</label>
 			</div>
 		</div>
+	</div>
+	<div class="form-group">
+		<label for="city">Gắn thẻ</label> <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tối thiểu 2 ký tự. Tag quá ngắn hoặc quá dài sẽ bị lược bỏ"></i>
+		<input type="text" class="form-control" name="tags" value="{{ isset($post) ? join(',', $post->tags()->pluck('name')->toArray()) : '' }}">
 	</div>
 </form>
 

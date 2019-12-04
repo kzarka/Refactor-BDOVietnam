@@ -18,6 +18,7 @@ class AppRepositoryProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Contracts\PostRepositoryInterface::class, \App\Repositories\PostRepository::class);
         $this->app->bind(\App\Repositories\Contracts\UserRepositoryInterface::class, \App\Repositories\UserRepository::class);
         $this->app->bind(\App\Repositories\Contracts\CommentRepositoryInterface::class, \App\Repositories\CommentRepository::class);
+        $this->app->bind(\App\Repositories\Contracts\TagRepositoryInterface::class, \App\Repositories\TagRepository::class);
     }
 
     /**

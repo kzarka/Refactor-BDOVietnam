@@ -131,7 +131,7 @@ jQuery.validator.setDefaults({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\validator.js */"./resources/assets/admin/validator.js");
+module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\validator.js */"./resources/assets/admin/validator.js");
 
 
 /***/ })

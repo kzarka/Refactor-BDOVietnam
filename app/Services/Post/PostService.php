@@ -26,8 +26,7 @@ class PostService implements PostServiceInterface
 
 	public function getNewestPost($catId = null, $perPage = 10)
 	{
-		return $this->postRepos->getNewestPost($catId, $perPage);
-	}
+		return $this->postRepos->getNewestPost($catId, $perPage);	}
 
 	public function getTopPost($catId = null, $perPage = 10)
 	{

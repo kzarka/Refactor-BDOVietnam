@@ -7,24 +7,18 @@
                 </a>
             </li>
             <li class="nav-title">Settings</li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="nav-icon icon-lock"></i> Roles
-                </a>
-            </li>
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-note"></i> Post
+                    <i class="nav-icon icon-note"></i> Bài viết
                 </a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.index') }}">
-                        <i class="nav-icon icon-note"></i> My Posts</a>
+                        <i class="nav-icon icon-note"></i> Bài viết</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.create') }}">
-                        <i class="nav-icon icon-note"></i> Create Post</a>
+                        <i class="nav-icon icon-note"></i> Tạo bài viết</a>
                     </li>
                 </ul>
             </li>
@@ -32,17 +26,17 @@
             <li class="nav-title">Extras</li>
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-note"></i> Manager Post
+                    <i class="nav-icon icon-note"></i> Quản lý Post
                 </a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.approve') }}">
-                            <i class="nav-icon icon-note"></i> Approve Post @if($unapproved_post_count)<span class="badge badge-danger" title="{{ $unapproved_post_count }} post(s) need to be approve">{{ $unapproved_post_count }}</span>@endif
+                            <i class="nav-icon icon-note"></i> Phê duyệt @if($unapproved_post_count)<span class="badge badge-danger" title="{{ $unapproved_post_count }} post(s) need to be approve">{{ $unapproved_post_count }}</span>@endif
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.manage') }}">
-                            <i class="nav-icon icon-note"></i> Manage
+                            <i class="nav-icon icon-note"></i> Quản lý
                         </a>
                     </li>
                 </ul>
@@ -64,6 +58,18 @@
                 <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <i class="nav-icon icon-user"></i> Users
                 </a>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon icon-note"></i> Settings
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.setting.sys_var') }}">
+                            <i class="nav-icon icon-user"></i> System Variable
+                        </a>
+                    </li>
+                </ul>
             </li>
             @endif
         </ul>

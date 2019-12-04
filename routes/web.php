@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('logout', 'Auth\LoginController@logout');
+
 Auth::routes();
 
 Route::get('/', 'MainController@index')->name('home');
@@ -18,5 +20,7 @@ Route::get('/', 'MainController@index')->name('home');
 Route::get('/view/{category}/{post}', 'Post\PostController@view')->middleware('view.post.filter');
 
 Route::get('/category/{category?}', 'Category\CategoryController@index');
+
+Route::get('/tags/{tag}', 'Tag\TagController@index');
 
 Route::resource('comment', 'Comment\CommentController');

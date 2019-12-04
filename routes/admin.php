@@ -42,3 +42,7 @@ Route::namespace('User')->group(function () {
 
 	Route::resource('user', 'UserController');
 });
+
+Route::namespace('Setting')->group(function () {
+	Route::match(['get', 'post'], 'setting/sys_var', 'SystemVarController@update')->name('setting.sys_var');
+});

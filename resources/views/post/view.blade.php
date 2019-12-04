@@ -77,7 +77,7 @@
                 <div class="post-author">
                     <!-- BEGIN AUTHOR AVATAR -->
                     <a href="" rel="author">
-                        <img alt="" src="{{ $post->author->avatar ?? asset('assets/images/default_user.png') }}" class="avatar avatar-74 photo" height="74" width="74">
+                        <img alt="" src="{{ $post->author->avatar ?? asset('assets/images/user/default.png') }}" class="avatar avatar-74 photo" height="74" width="74">
                     </a>
                     <!-- END AUTHOR AVATAR -->
                     <!-- BEGIN AUTHOR DESCRIPTION -->
@@ -98,7 +98,16 @@
                 <!-- END TINY DIVIDER -->
                 <!-- BEGIN POST TAGS -->
                 <div class="post-tag">
-                    Tagged: <a href="" rel="tag">Black Desert</a><span>, </span>
+                    Tagged: 
+                    @if($post_tags = $post->tags)
+                    @php 
+                    $numItems = count($post_tags);
+                    $i = 0;
+                    @endphp
+                    @foreach($post_tags as $post_tag)
+                    <a href="{{ $post_tag->url }}" rel="tag">{{ $post_tag->name }}</a>@if(++$i != $numItems)<span>, </span>@endif
+                    @endforeach
+                    @endif
                 </div>
                 <!-- END POST TAGS -->
             </div>
@@ -117,6 +126,5 @@
 @endsection
 
 @push('after_scripts')
-<script type='text/javascript' src="{{ asset('assets/js/comment-reply.js') }}"></script>
 <script type='text/javascript' src="{{ asset('assets/js/post/post.js') }}"></script>
 @endpush

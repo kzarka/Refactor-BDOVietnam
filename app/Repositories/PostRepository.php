@@ -4,18 +4,26 @@ namespace App\Repositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Repositories\Contracts\PostRepositoryInterface;
+use App\Repositories\Contracts\TagRepositoryInterface;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Eloquent\BaseRepository;
 use App\Models\Post;
+use Illuminate\Container\Container as Application;
 
 class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
+    protected $tagRepos;
+
+    public function __construct(TagRepositoryInterface $tagRepos, Application $app) {
+        $this->tagRepos = $tagRepos;
+        parent::__construct($app);
+    }
 	public function model()
     {
         return Post::class;
     }
 
-    public function postsBuilder($catId = null, $userId = null) {
+    public function postsBuilder($catId = null, $userId = null, $tagId = null) {
     	$builder = $this->model->select(
             'posts.*',
     		'users.username as username',
@@ -32,6 +40,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     	if($userId) {
     		$builder->whereRaw('posts.author_id = ' . $userId);
     	}
+        if($tagId) {
+            $builder->join('posts_tags as post_tag', function($join) {
+                $join->on('post_tag.post_id', '=', 'posts.id');
+            })
+            ->whereRaw('post_tag.tag_id = ' . $tagId);
+        }
 
     	return $builder;
     }
@@ -48,8 +62,13 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return $builder;
     }
 
-    public function getListPagination($public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST,  $userId = null, $catId = null, $perPage = 10) {
-        $builder = $this->postsBuilder($catId, $userId);
+    public function getBuilderAvailable($catId = null, $userId = null, $tagId = null) {
+        $builder = $this->postsBuilder($catId, $userId, $tagId);
+        return $this->publicApproveFiler($builder);
+    }
+
+    public function getListPagination($public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST,  $userId = null, $catId = null, $tagId = null, $perPage = 10) {
+        $builder = $this->postsBuilder($catId, $userId, $tagId);
         $builder = $this->publicApproveFiler($builder, $public, $approved);
         return $builder->with('comments', 'categories')->paginate($perPage);
     }
@@ -73,6 +92,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         $record = $this->model->create($data);
         if(isset($data['category']) && is_array($data['category'])) {
             $record->categories()->attach($data['category']);
+        }
+
+        if(isset($data['tags'])) {
+            $tags = $this->tagRepos->insertGetData($data['tags']);
+            $record->tags()->attach($tags);
         }
         if($request->hasFile('images') && $request->file('images')->isValid()){
             $record->addMediaFromFileUpload($request->file('images'), POST_BANNER_COLLECTION);
@@ -101,6 +125,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
                 \Log::info($request->file('images'));
                 $record->removeMedias(POST_BANNER_COLLECTION);
                 $record->addMediaFromFileUpload($request->file('images'), POST_BANNER_COLLECTION);
+            }
+            $record->tags()->detach();
+            if(isset($data['tags'])) {
+                $tags = $this->tagRepos->insertGetData($data['tags']);
+                $record->tags()->attach($tags);
             }
             \DB::commit();
             return $record;
@@ -142,23 +171,24 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
     public function getNewestPost($catId = null, $perPage = 10)
     {
-        return $this->postsBuilder($catId)->with('categories')->with('comments')->orderBy('updated_at', 'DESC')->paginate($perPage);
+        $records = $this->getBuilderAvailable($catId)->with('categories')->with('comments')->orderBy('updated_at', 'DESC')->paginate($perPage);
+        return $this->getImages($records);
     }
 
     public function getTopPost($catId = null, $perPage = 10)
     {
-        return $this->postsBuilder($catId)->with('categories')->with('comments')->orderBy('view_count', 'DESC')->paginate($perPage);
+        $records = $this->getBuilderAvailable()->with('categories')->with('comments')->orderBy('view_count', 'DESC')->paginate($perPage);
+        return $this->getImages($records);
     }
 
     public function findBySlugOrId($slug)
     {
         try {
-            $builder = $this->postsBuilder();
-            $builder = $this->publicApproveFiler($builder);
+            $builder = $this->getBuilderAvailable();
             if(is_numeric($slug)) {
-                return $builder->where('posts.id', $slug)->first();
+                return $builder->where('posts.id', $slug)->with('comments')->with('tags')->first();
             }
-            return $builder->where('slug', $slug)->with('comments')->first();
+            return $builder->where('slug', $slug)->with('comments')->with('tags')->first();
         } catch (\Exception $e) {
             \Log::info($e);
             return false;
@@ -169,8 +199,17 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     public function getRelatePost($postId, $catId)
     {
         if($catId) {
-            return $this->postsBuilder($catId)->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
+            return $this->getBuilderAvailable($catId)->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
         }
-        return $this->postsBuilder()->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
+        return $this->getBuilderAvailable()->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
+    }
+
+    public function getImages($records) {
+        $records->map(function($record) {
+            $record->banner_image = $record->getFirstMediaUrl(POST_BANNER_COLLECTION);
+            $record->thumbnail = $record->getFirstThumbnailUrl(POST_BANNER_COLLECTION);
+            return $record;
+        });
+        return $records;
     }
 }

@@ -20,7 +20,9 @@
 
 	define('DEFAULT_CATEGORY', 'articles');
 	define('CATEGORY_PATH', 'category');
-	define('DEFAULT_URL_PREFIX', 'view');
+	define('DEFAULT_POST_URL_PREFIX', 'view');
+
+	define('DEFAULT_TAG_URL_PREFIX', 'tags');
 
 	define('STATUS_PINNED', 1);
 
@@ -38,5 +40,7 @@
 	define('MEDIA_CONVERSION_DEFAULT', 'default');
 	define('MEDIA_CONVERSION_THUMB', 'thumbnails');
 	define('MEDIA_CONVERSION_THUMB_SMALL', 'small_thumbs');
+
+	
 
 

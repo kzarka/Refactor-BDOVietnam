@@ -11,7 +11,7 @@
 	<form method="post" action="{{ route('login') }}">
 		{!! csrf_field() !!}
 		<label class="login" for="username"><b>TÊN ĐĂNG NHẬP</b></label>
-	    <input type="text" class="" name="login" placeholder="Tên đăng nhập...">
+	    <input type="text" class="" name="login" placeholder="Tên đăng nhập..." value="{{ old('login') }}">
 	    @if ($errors->has('username'))
             <label class="error" for="name">{{ $errors->first('username') }}</label>
         @endif
@@ -20,7 +20,7 @@
 	    @if ($errors->has('password'))
             <label class="error" for="name">{{ $errors->first('password') }}</label>
         @endif
-	    <button class="btn btn-submit" type="submit">Login</button>
+	    <button class="btn btn-submit" type="submit">Đăng nhập</button>
 	</form>
 </div>
 @endsection

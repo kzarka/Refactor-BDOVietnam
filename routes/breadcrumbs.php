@@ -16,27 +16,27 @@ Breadcrumbs::for('admin.game.index', function ($trail) {
 
 Breadcrumbs::for('admin.post.index', function ($trail) {
     $trail->parent('admin.dashboard');
-    $trail->push('Bài Viết Của Tôi', route('admin.post.index'));
+    $trail->push('Bài viết của tôi', route('admin.post.index'));
 });
 
 Breadcrumbs::for('admin.post.create', function ($trail) {
     $trail->parent('admin.post.index');
-    $trail->push('Tạo Post', route('admin.post.create'));
+    $trail->push('Tạo post', route('admin.post.create'));
 });
 
 Breadcrumbs::for('admin.post.edit', function ($trail, $post) {
     $trail->parent('admin.post.index');
-    $trail->push('Chỉnh Sửa: ' . $post->title, route('admin.post.edit', $post->id));
+    $trail->push('Chỉnh sửa: ' . $post->title, route('admin.post.edit', $post->id));
 });
 
 Breadcrumbs::for('admin.post.approve', function ($trail) {
     $trail->parent('admin.post.index');
-    $trail->push('Phê Duyệt', route('admin.post.approve'));
+    $trail->push('Phê duyệt', route('admin.post.approve'));
 });
 
 Breadcrumbs::for('admin.post.manage', function ($trail) {
     $trail->parent('admin.post.index');
-    $trail->push('Quản Lý', route('admin.post.manage'));
+    $trail->push('Quản lý', route('admin.post.manage'));
 });
 
 Breadcrumbs::for('admin.user.index', function ($trail) {
@@ -46,7 +46,7 @@ Breadcrumbs::for('admin.user.index', function ($trail) {
 
 Breadcrumbs::for('admin.user.edit', function ($trail) {
     $trail->parent('admin.user.index');
-    $trail->push('Cập Nhật User', route('admin.user.index'));
+    $trail->push('Cập nhật user', route('admin.user.index'));
 });
 
 Breadcrumbs::for('admin.user.profile', function ($trail) {
@@ -56,5 +56,10 @@ Breadcrumbs::for('admin.user.profile', function ($trail) {
 
 Breadcrumbs::for('admin.user.self_update', function ($trail) {
     $trail->parent('admin.user.profile');
-    $trail->push('Cập Nhật Profile', route('admin.user.self_update'));
+    $trail->push('Cập nhật profile', route('admin.user.self_update'));
+});
+
+Breadcrumbs::for('admin.setting.sys_var', function ($trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('System Variable', route('admin.setting.sys_var'));
 });

@@ -11,7 +11,7 @@
                     <div class="message">
                         <div class="py-3 mr-3 float-left">
                             <div class="avatar">
-                                <img class="img-avatar" src="{{ asset('assets/images/default_user.png') }}" alt="admin@bootstrapmaster.com">
+                                <img class="img-avatar" src="{{ asset('assets/images/user/default.png') }}" alt="admin@bootstrapmaster.com">
                                 <span class="avatar-status badge-warning"></span>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                     <div class="message">
                         <div class="py-3 mr-3 float-left">
                             <div class="avatar">
-                                <img class="img-avatar" src="{{ asset('assets/images/default_user.png') }}" alt="admin@bootstrapmaster.com">
+                                <img class="img-avatar" src="{{ asset('assets/images/user/default.png') }}" alt="admin@bootstrapmaster.com">
                                 <span class="avatar-status badge-info"></span>
                             </div>
                         </div>

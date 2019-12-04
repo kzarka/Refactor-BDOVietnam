@@ -6,9 +6,12 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Tag;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Carbon\Translator;
+use App\Models\SystemVariable;
+use App\Observers\CommentObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        $this->registerObservers();
         try {
             Translator::get('vi')->setTranslations([
                 'months' => ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
@@ -42,14 +45,30 @@ class AppServiceProvider extends ServiceProvider
                 'meridiem' => ['AM', 'PM'],
             ]);
             Carbon::setLocale(app()->getLocale());
+            $sys_vars_record = SystemVariable::all();
+            $sys_vars = [];
+            foreach ($sys_vars_record as $var) {
+                $sys_vars[$var->name] = $var->value;
+            }
             $recent_posts = Post::with('categories')->with('comments')->public()->where('approved', STATUS_APPROVED)->orderBy('created_at', 'DESC')->take(3)->get();
             $categories = Category::with('children')->active()->where('parent_id', 0)->orWhereNull('parent_id')->get();
             $recent_comments = Comment::with('post', 'author')->take(2)->orderBy('created_at', 'DESC')->get();
+            $top_tags = Tag::select('tags.*', \DB::raw("COUNT(posts_tags.post_id) as post_count"))
+                ->join('posts_tags', 'tags.id', '=', 'posts_tags.tag_id')
+                ->join('posts', 'posts.id', '=', 'posts_tags.post_id')
+                ->groupBy('tags.id')
+                ->take(10)->orderBy('post_count', 'DESC')->get();
             View::share('header_categories', $categories);
             View::share('recent_posts', $recent_posts);
             View::share('recent_comments', $recent_comments);
+            View::share('sys_vars', $sys_vars);
+            View::share('top_tags', $top_tags);
         } catch (\Illuminate\Database\QueryException $e) {
-            
+            \Log::info($e);
         }
+    }
+
+    public function registerObservers() {
+        Comment::observe(CommentObserver::class);
     }
 }

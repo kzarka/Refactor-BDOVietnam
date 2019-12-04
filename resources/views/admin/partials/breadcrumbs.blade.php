@@ -14,7 +14,7 @@
             <a class="btn" href="{{ route('admin.dashboard') }}">
                 <i class="icon-graph"></i>  Dashboard</a>
             <a class="btn" href="#">
-                <i class="icon-settings"></i>  Settings</a>
+                <i class="icon-settings"></i> Cài đặt</a>
         </div>
     </li>
 </ol>

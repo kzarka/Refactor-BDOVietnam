@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Home Page')
+@section('title', 'Trang Chủ')
 
 @section('content')
 <!-- BEGIN INDEX TOP CONTENT (only on the front page, hide when paged) -->
