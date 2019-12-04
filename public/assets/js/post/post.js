@@ -143,7 +143,7 @@ function initReplyAction() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\post\post.js */"./resources/assets/post/post.js");
+module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\post\post.js */"./resources/assets/post/post.js");
 
 
 /***/ })

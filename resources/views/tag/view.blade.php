@@ -40,7 +40,7 @@
 	            	@endif
 	            	<!-- END COMMENT COUNT (if post has comments) -->
 	        		<!-- BEGIN FEATURED IMAGE + ICONS -->        
-	        		<div class="featured-image" style="background-image:url({{ $post->banner ?? asset('assets/images/default_banner.jpg') }});">
+	        		<div class="featured-image" style="background-image:url({{ $post->banner_image ?? asset('assets/images/default_banner.jpg') }});">
 	            		<!-- BEGIN CATEGORY MARKERS -->
 	            		<div class="category-markers-wrapper">
 	                        <div class="video-post-marker"></div>

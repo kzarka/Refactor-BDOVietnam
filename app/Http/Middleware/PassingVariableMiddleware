@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Middleware;
+use Illuminate\Support\Facades\Auth;
+use App\Services\NotificationService;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use Illuminate\Support\Facades\View;
+use Closure;
+
+class PassingVariableMiddleware
+{
+    protected $userRepos, $notiService;
+    public function __construct(UserRepositoryInterface $userRepos, NotificationService $notiService) {
+        $this->postRepos = $postRepos;
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        
+    }
+}

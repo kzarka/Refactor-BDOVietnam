@@ -16,8 +16,14 @@ class PostService implements PostServiceInterface
 		$this->postRepos = $postRepos;
 	}
 
-	public function getListPagination($public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST, $userId = null, $catId = null, $perPage = 10) {
-		return $this->postRepos->getListPagination($public, $approved, $userId, $catId, $perPage);
+	public function getListPagination($public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST, $userId = null, $catId = null, $tagId = null, $perPage = 10) {
+		$records = $this->postRepos->getListPagination($public, $approved, $userId, $catId, $tagId, $perPage);
+		$records->getCollection()->map(function($record) {
+			$record->banner_image = $record->getFirstMediaUrl(POST_BANNER_COLLECTION);
+            $record->thumbnail = $record->getFirstThumbnailUrl(POST_BANNER_COLLECTION);
+            return $record;
+		});
+		return $records;
 	}
 
 	public function getList($public = true, $approved = true) {

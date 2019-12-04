@@ -40,6 +40,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     	if($userId) {
     		$builder->whereRaw('posts.author_id = ' . $userId);
     	}
+        \Log::info($userId);
         if($tagId) {
             $builder->join('posts_tags as post_tag', function($join) {
                 $join->on('post_tag.post_id', '=', 'posts.id');

@@ -34,7 +34,7 @@ $(document).ready(function() {
 	var notify = $('input.notify').val();
 	var type = $('input.notify').data('type');
 	window.notify(null, notify, type);
-	
+	loadNotification(1);
 });
 
 window.notify = function(title = null, notify = null, type = null) {
@@ -76,5 +76,42 @@ window.notifyError = function(content = null, title = 'Error') {
 	window.notify(title, content, 'error');
 }
 
+function loadNotification(page) {
+	$.ajax({
+        url: NOTIFICATION_URL + '?page=' + page,
+        type: 'GET',
+        success: function(response) {
+            if (response.status === 'SUCCESS') {
+                parseNotification(response.data);
+            } else if(response.status === 'ERROR') {
+            	console.log('error');
+            }
+        },
+        error: function (xhr, status, error) {
 
+	    }
+    });
+}
+
+function parseNotification(data) {
+	var insertBefore = $('.dropdown-menu.notification').find('.dropdown-item.load-more');
+	var rows = $('.dropdown-menu.notification').find('.dropdown-item.item');
+	var row = rows.first().clone();
+	for(var i = 0; i < data.length; i++) {
+		if(rows.length == 1) {
+			rows.remove();
+		}
+		row.find('.from').html(data[i].from);
+		row.find('.to').html(data[i].to);
+		row.find('.sentence').html(data[i].sentence);
+		row.find('.time').html(data[i].time);
+		row.clone().insertBefore(insertBefore);
+	}
+}
+
+function loadMoreNotification() {
+	$('.dropdown-menu.notification').on('click', '.dropdown-item.load-more', function() {
+
+	});
+}
 

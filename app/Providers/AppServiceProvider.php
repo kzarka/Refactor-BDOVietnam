@@ -51,6 +51,11 @@ class AppServiceProvider extends ServiceProvider
                 $sys_vars[$var->name] = $var->value;
             }
             $recent_posts = Post::with('categories')->with('comments')->public()->where('approved', STATUS_APPROVED)->orderBy('created_at', 'DESC')->take(3)->get();
+            $recent_posts->map(function($record) {
+                $record->banner_image = $record->getFirstMediaUrl(POST_BANNER_COLLECTION);
+                $record->thumbnail = $record->getFirstThumbnailUrl(POST_BANNER_COLLECTION);
+                return $record;
+            });
             $categories = Category::with('children')->active()->where('parent_id', 0)->orWhereNull('parent_id')->get();
             $recent_comments = Comment::with('post', 'author')->take(2)->orderBy('created_at', 'DESC')->get();
             $top_tags = Tag::select('tags.*', \DB::raw("COUNT(posts_tags.post_id) as post_count"))

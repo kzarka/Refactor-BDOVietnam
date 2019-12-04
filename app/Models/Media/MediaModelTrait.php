@@ -25,7 +25,6 @@ trait MediaModelTrait
      */
     public function getFirstMediaPath($collection = null, $conversion = 'default')
     {
-        $conversion = $this->getConversions($conversion);
         return $this->queryMedias($collection, $conversion)->pluck('file_path')->first();
     }
 
@@ -37,7 +36,6 @@ trait MediaModelTrait
 
     public function getMediaPaths($collection = null, $conversion = 'default')
     {
-        $conversion = $this->getConversions($conversion);
         return $this->queryMedias($collection, $conversion)->pluck('file_path');
     }
 
@@ -48,7 +46,6 @@ trait MediaModelTrait
      */
     public function getMediaUrls($collection = null, $conversion = 'default')
     {
-        $conversion = $this->getConversions($conversion);
         return $this->getMediaPaths($collection, $conversion)->map(function ($filePath) {
             return $this->getUrlByPath($filePath);
         });
@@ -61,7 +58,6 @@ trait MediaModelTrait
      */
     public function getFirstMediaUrl($collection = null, $conversion = 'default')
     {
-        $conversion = $this->getConversions($conversion);
         if ($filePath = $this->getFirstMediaPath($collection, $conversion)) {
             return $this->getUrlByPath($filePath);
         }

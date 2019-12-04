@@ -41,6 +41,6 @@
 	define('MEDIA_CONVERSION_THUMB', 'thumbnails');
 	define('MEDIA_CONVERSION_THUMB_SMALL', 'small_thumbs');
 
-	
+	define('POST_COMMENT', 'POST_COMMENT');
 
 

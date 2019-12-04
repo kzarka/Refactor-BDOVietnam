@@ -1,4 +1,7 @@
 @stack('before-scripts')
+<script type="text/javascript">
+	const NOTIFICATION_URL = '{!! route('admin.user.notification') !!}';
+</script>
 <!-- CoreUI and necessary plugins-->
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/jquery/jquery.validate.min.js') }}"></script>

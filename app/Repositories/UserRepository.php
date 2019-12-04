@@ -139,4 +139,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 	{
 		return $this->model->with('comments')->where('id', $id)->first();
 	}
+
+	public function getNoficationPagination($userId)
+	{
+		$item = \DB::table('notifications')->select('*')->where('notifiable_id', '=', $userId)->paginate(5);
+		$ids = $item->getCollection()->pluck('id')->where('read_at', null)->toArray();
+		\Log::info($item->getCollection());
+		$this->model->select('*')->from('notifications')->whereIn('id', $ids)->update(['read_at' => Carbon::now()]);
+		return $item;
+	}
 }

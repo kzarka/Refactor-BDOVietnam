@@ -8,15 +8,18 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\Role;
+use App\Services\NotificationService;
+
 
 class UserController extends BaseController
 {
-	protected $userService, $userRepos;
+	protected $userService, $userRepos, $notiService;
 
-	public function __construct(UserServiceInterface $userService, UserRepositoryInterface $userRepos)
+	public function __construct(UserServiceInterface $userService, UserRepositoryInterface $userRepos, NotificationService $notiService)
     {
         $this->userService = $userService;
         $this->userRepos = $userRepos;
+        $this->notiService = $notiService;
         parent::__construct();
     }
 
@@ -144,5 +147,14 @@ class UserController extends BaseController
         return view('admin.user.profile', [
             'user' => $user
         ]); 
+    }
+
+    public function getNofication(Request $request)
+    {
+        $page = $request->get('page');
+        $userId = $request->user()->id;
+        $notiPagination = $this->userRepos->getNoficationPagination($userId);
+        $result = $this->notiService->renderContent($notiPagination->getCollection());
+        return $this->respondWithSuccess($result);
     }
 }

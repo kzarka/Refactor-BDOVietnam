@@ -40,6 +40,8 @@ Route::namespace('User')->group(function () {
 
 	Route::post('user/lift/{id}', 'UserController@lift')->name('user.lift')->middleware('admin');
 
+	Route::get('user/notification', 'UserController@getNofication')->name('user.notification');
+
 	Route::resource('user', 'UserController');
 });
 
