@@ -96,7 +96,7 @@
             <!-- BEGIN SEARCH -->
             <div class="menu-search-wrapper">
                 <div class="search-wrapper">
-                    <form method="get" id="menu-searchform" action="http://bonfirethemes.com/powerup/one/">
+                    <form method="get" id="menu-searchform" action="">
                     <input type="text" class="field" name="s" id="menu-s" placeholder="Search..." />
                     </form>
                 </div>

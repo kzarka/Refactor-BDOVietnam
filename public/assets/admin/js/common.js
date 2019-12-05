@@ -227,7 +227,7 @@ function loadMoreNotification() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Refactor-BDOVietnam\resources\assets\admin\common.js */"./resources/assets/admin/common.js");
+module.exports = __webpack_require__(/*! C:\Project\blog\resources\assets\admin\common.js */"./resources/assets/admin/common.js");
 
 
 /***/ })

@@ -24,6 +24,7 @@ class NotificationService
 		$renderItems = collect();
 		foreach($notifications as $notification) {
 			$data = json_decode($notification->data, true);
+			if(!isset($data['type'])) continue;
 			switch ($data['type']) {
 			 	case POST_COMMENT:
 			 		$renderItems->push($this->renderNewCommentNotification($data, !!$notification->read_at));

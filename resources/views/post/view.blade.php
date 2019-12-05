@@ -2,34 +2,35 @@
 
 @section('title', $post->title)
 
+@section('body_class', 'wide')
 @section('content')
 <div class="single-wrapper">
     <div class="single-wrapper-inner">
 
         <!-- BEGIN FEATURED IMAGE -->
-        <div class="featured-image">
-            <!-- BEGIN FEATURED IMAGE -->
-            <a href="{{ $post->url }}">
-                <img width="720" height="405" src="{{ $post->banner_image }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" sizes="(max-width: 720px) 100vw, 720px">
-            </a>
-            <!-- END FEATURED IMAGE -->
-        </div>
+        <!-- <div class="featured-image"> -->
+        <!-- </div> -->
         <!-- END FEATURED IMAGE -->
         
         <!-- BEGIN CUSTOM FIELD FOR EMBEDDABLE CONTENT -->
         <div class="featuredembed-container"></div>
         <!-- END CUSTOM FIELD FOR EMBEDDABLE CONTENT -->
-        
-        <!-- BEGIN SHORTCODE OUTSIDE THE LOOP -->
-        <div class="shortcode-wrapper"></div>
-        <!-- END SHORTCODE OUTSIDE THE LOOP -->
 
         <!-- BEGIN CONTENT -->
         <div class="entry-content-wrapper">
             <div class="entry-content">
+
+                <!-- BEGIN TITLE -->
+                <div class="entry-title">
+                    <a href="{{ $post->url }}" title="Permalink to {{ $post->title }}" rel="bookmark">
+                        <h1>{{ $post->title }}</h1>
+                    </a>
+                </div>
+                <!-- END TITLE -->
+
                 <!-- BEGIN DATE -->
                 <div class="post-date">
-                    {{ $post->created_at_text }}<span>|</span><i class="fa fa-eye"></i> {{ $post->view_count }} lượt xem<span>|</span>
+                {{ $post->author->fullname ?? $post->author->username }}<span>|</span> {{ $post->created_at_date_first }}<span>|</span><i class="fa fa-eye"></i> {{ $post->view_count }} lượt xem<span>|</span>
                 </div>
                 <!-- END DATE -->
 
@@ -50,15 +51,7 @@
                 <!-- END POST CAT -->
 
                 <!-- BEGIN CONTENT  -->
-                <article id="post-265" class="post-265 post type-post status-publish format-standard has-post-thumbnail hentry category-featured category-images category-news category-video tag-bonfire-themes tag-powerup tag-wordpress">
-                    <!-- BEGIN TITLE -->
-                    <div class="entry-title">
-                        <a href="{{ $post->url }}" title="Permalink to {{ $post->title }}" rel="bookmark">
-                            <h1>{{ $post->title }}</h1>
-                        </a>
-                    </div>
-                    <!-- END TITLE -->
-        
+                <article class="post type-post status-publish format-standard has-post-thumbnail hentry category-featured category-images category-news ">
                     <!-- BEGIN CONTENT -->
                      {!! $post->content !!}
                     <!-- END CONTENT -->
@@ -98,7 +91,7 @@
                 <!-- END TINY DIVIDER -->
                 <!-- BEGIN POST TAGS -->
                 <div class="post-tag">
-                    Tagged: 
+                    Tag: 
                     @if($post_tags = $post->tags)
                     @php 
                     $numItems = count($post_tags);

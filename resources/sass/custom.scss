@@ -121,3 +121,15 @@ label.error {
 .logged #cancel-comment-reply-link {
     bottom: 45px !important;
 }
+
+body.wide {
+    .content-wrapper {
+        max-width: 1250px;
+        margin: 30px auto 100px auto
+    }
+
+    .single-wrapper .entry-title h1, .single-wrapper .entry-title a {
+        font-size: 26px;
+        margin-bottom: 1px;
+    }
+}

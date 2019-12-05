@@ -4,7 +4,7 @@
     @include('partials.head')
 </head>
 
-<body class="@yield('body-class', 'home blog')">
+<body class="@yield('body_class', 'home blog')">
 
 <!-- BEGIN TOP ANCHOR -->
 <div class="top-anchor"></div>

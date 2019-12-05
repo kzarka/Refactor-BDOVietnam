@@ -18,7 +18,7 @@
                         <div class="comment-entry">
                             <p>{{ $comment->comment }}</p>
                             <div class="comment-author-wrapper">
-                                <img alt="" src="{{ asset('assets/images/default_user.png') }}" class="avatar avatar-60 photo" height="60" width="60">                        
+                                <img alt="" src="{{ asset('assets/images/user/default.png') }}" class="avatar avatar-60 photo" height="60" width="60">                        
                                 <div class="comment-author-inner">
                                     <span class="comment-author">{{ ($author) ? ($author->fullname ?? $author->username) : $comment->name }}</span>
                                     <span class="comm-divider">|</span>
@@ -40,7 +40,7 @@
                                     <p>{{ $child->comment }}</p>
                                     
                                     <div class="comment-author-wrapper">
-                                        <img alt="" src="{{ asset('assets/images/default_user.png') }}" class="avatar avatar-60 photo" height="60" width="60">
+                                        <img alt="" src="{{ asset('assets/images/user/default.png') }}" class="avatar avatar-60 photo" height="60" width="60">
                                         <div class="comment-author-inner">
                                             <span class="comment-author">{{ $child_author_name }}</span>
                                             <span class="comm-divider">|</span>
@@ -60,7 +60,7 @@
                         <div class="comment-entry">
                             <p>{{ $comment->comment }}</p>
                             <div class="comment-author-wrapper">
-                                <img alt="" src="{{ asset('assets/images/default_user.png') }}" class="avatar avatar-60 photo" height="60" width="60">                        
+                                <img alt="" src="{{ asset('assets/images/user/default.png') }}" class="avatar avatar-60 photo" height="60" width="60">                        
                                 <div class="comment-author-inner">
                                     <span class="comment-author">{{ ($author) ? ($author->fullname ?? $author->username) : $comment->name }}</span>
                                     <span class="comm-divider">|</span>
