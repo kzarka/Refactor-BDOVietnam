@@ -21,6 +21,8 @@
             <label class="error" for="name">{{ $errors->first('password') }}</label>
         @endif
 	    <button class="btn btn-submit" type="submit">Đăng nhập</button>
+
+	    <span style="color: #fff;"> Chưa có tài khoản?</span> <a href="{{ route('register') }}">Đăng ký</a>!
 	</form>
 </div>
 @endsection

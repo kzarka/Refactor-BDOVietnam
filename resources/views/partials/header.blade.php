@@ -71,7 +71,7 @@
     <!-- BEGIN QUICKLINK + SEARCH -->
     <div class="header-search-quicklink-wrapper">
         <div class="header-quicklink">
-            <a href="">Cái gì đây!</a>
+            <a href="{{ route('login') }}">Đăng Nhập</a>
         </div>
         <div class="header-search-wrapper">
             <div class="search-wrapper">
