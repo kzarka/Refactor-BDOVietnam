@@ -29,7 +29,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 	    $builder = $this->model->select(
 			'users.*',
 			\DB::raw("({$commentCountBuilder->toSql()}) as comments"),
-			\DB::raw("({$postCountBuilder->toSql()}) as posts"),
+			\DB::raw("({$postCountBuilder->toSql()}) as posts")
 		);
     	if(!$all) {
     		$builder->active();
