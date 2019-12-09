@@ -67,6 +67,9 @@
 @endpush
 
 @push('scripts')
+<script type="text/javascript">
+	const child_categories = {!! json_encode($child_categories) !!};
+</script>
 <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.js') }}"></script>

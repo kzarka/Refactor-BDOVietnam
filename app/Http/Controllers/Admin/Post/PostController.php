@@ -30,23 +30,30 @@ class PostController extends BaseController
     }
 
     public function create(Request $request) {
-        $games = $this->gameService->getList();
         $categories = $this->catService->getParentListWithChild();
-        return view('admin.post.create', ['games' => $games, 'categories' => $categories]);
+        $childCategories = collect();
+        foreach ($categories as $category) {
+            $childCategories->push($category->children()->pluck('id', 'name'));
+        }
+        return view('admin.post.create', ['child_categories' => $childCategories, 'categories' => $categories]);
     }
 
     public function edit(Request $request, $id) {
-        $post = $this->postService->findGetImages($id);
+        $post = $this->postService->findGetImages($id, true);
         if(!$post || !$post->canModify()) {
             $this->saveSessionErrorMessage('You cant edit this post');
             return redirect()->route('admin.post.index');
         }
         $games = $this->gameService->getList();
         $categories = $this->catService->getParentListWithChild();
+        $childCategories = collect();
+        foreach ($categories as $category) {
+            $childCategories->push($category->children()->pluck('id', 'name'));
+        }
         return view('admin.post.edit', [
             'post' => $post, 
             'categories' => $categories, 
-            'games' => $games,
+            'child_categories' => $childCategories,
             'route' => 'post.edit'
         ]);
     }

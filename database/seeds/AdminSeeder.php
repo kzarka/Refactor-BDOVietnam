@@ -13,7 +13,9 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-    	DB::table('users')->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $admin = User::firstOrNew(
         	['username' => 'admin', 'first_name' => 'Admin', 'email' => 'admin@bdovietnam.com', 'password' => bcrypt(ENV('DEFAULT_ADMIN_PASSWORD'))]
         );

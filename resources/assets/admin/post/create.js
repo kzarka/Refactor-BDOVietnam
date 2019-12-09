@@ -38,6 +38,7 @@ $(document).ready(function() {
 	initSlug();
 	initToggleState();
 	initSelectImage();
+	initSelectFormCategory();
 });
 
 function initSlug() {
@@ -91,4 +92,27 @@ function readURL(input) {
 	    }
 	    reader.readAsDataURL(input.files[0]);
 	}
+}
+
+function initSelectFormCategory() {
+	$('#parent_category').on('change', function() {
+		var parentId = $(this).val();
+		if(parentId == '' || parentId == null) {
+			$('#category').prop('disabled', true).html('');
+			return;
+		}
+		loadChildCategories(parentId);
+	});
+}
+
+function loadChildCategories(parentId) {
+	if(parentId <= 0) return;
+	var children = child_categories[parentId-1];
+	console.log(children);
+	$('#category').prop('disabled', false).html('');
+	var index = children.length;
+	$.each( children, function( value, id ) {
+	  	var row = '<option value="' + id +'">' + value + '</option>';
+	  	$('#category').append(row);
+	});
 }

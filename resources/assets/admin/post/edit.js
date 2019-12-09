@@ -2,6 +2,10 @@
 
 var validator = null;
 var form = null;
+var lastInputTime = new Date();
+const TIME_TILL_SAVE = 300000; // 5min
+const TIME_RE_CHECK = 10000; // 10s
+var intervalSave = null;
 
 $(document).ready(function() {
     initFormSave();
@@ -44,8 +48,9 @@ $(document).ready(function() {
 
     initSlug();
     initToggleState();
-    setTimeout(autoSave, 60000); // Start auto save after 1 minute
+    initAutoSave();
     initSelectImage();
+    initSelectFormCategory();
 });
 
 function initSlug() {
@@ -81,12 +86,14 @@ function initFormSave() {
                 cache: false,
                 contentType: false,
                 processData: false,
+                beforeSend: beforeSaving,
                 success: function(response) {
                     if (response.status === 'SUCCESS') {
                         notifySuccess('Saved!');
                     } else if(response.status === 'ERROR') {
                         notifyError(response.message);
                     }
+                    afterSaving();
                 },
                 error: function (xhr, status, error) {
                     var response = JSON.parse(xhr.responseText);
@@ -96,6 +103,7 @@ function initFormSave() {
                     } else {
                         $notifyError('System error.');
                     }
+                    afterSaving();
                 }
             });
             return false;
@@ -103,8 +111,37 @@ function initFormSave() {
     });
 }
 
+function setAutoSave() {
+    // from last input till next 5min, save
+    intervalSave = setInterval(function() {
+        var current = new Date();
+        console.log('Recheck');
+        var diff = Math.abs(current - lastInputTime);
+        if(diff >= TIME_TILL_SAVE) {
+            triggerSave();
+            clearInterval(intervalSave);
+        }
+    }, TIME_RE_CHECK); // check save every 10s
+}
+
+function initAutoSave() {
+    $('div.card').on('click', function() {
+        autoSave();
+    });
+
+    CKEDITOR.instances['content'].on('contentDom', function() {
+        this.document.on('click', function(event){
+            autoSave();
+        });
+    });
+}
+
 function autoSave() {
-    setInterval(triggerSave, 30000); // auto save every 5 minutes
+    lastInputTime = new Date();
+    if(intervalSave) {
+        clearInterval(intervalSave);
+    }
+    setAutoSave();
 }
 
 function initSelectImage() {
@@ -142,4 +179,48 @@ function readURL(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function initSelectFormCategory() {
+    
+    $('#parent_category').on('change', function() {
+        var parentId = $(this).val();
+        if(parentId == '' || parentId == null) {
+            $('#category').prop('disabled', true).html('');
+            return;
+        }
+        loadChildCategories(parentId);
+    });
+    initSelectedCategory();
+}
+
+function loadChildCategories(parentId, callback = null) {
+    if(parentId <= 0) return;
+    var children = child_categories[parentId-1];
+    $('#category').prop('disabled', false).html('');
+    var index = children.length;
+    $.each( children, function( value, id ) {
+        var row = '<option value="' + id +'">' + value + '</option>';
+        $('#category').append(row);
+    });
+    if(callback) {
+        callback();
+    }
+}
+
+function initSelectedCategory() {
+    var parentId = $('#parent_category').val();
+    loadChildCategories(parentId, function() {
+        $('#category').val(selected_categories).trigger('change');
+    });
+}
+
+function beforeSaving() {
+    $('button.save').prop('disabled', true);
+    $('button.save').html('<i class="fa fa-spinner fa-spin"></i> Lưu');
+}
+
+function afterSaving() {
+    $('button.save').prop('disabled', false);
+    $('button.save').html('Lưu');
 }

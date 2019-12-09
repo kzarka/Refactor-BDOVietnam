@@ -44,9 +44,12 @@ class PostService implements PostServiceInterface
 		return $this->postRepos->getRelatePost($postId, $catId);
 	}
 
-	public function findGetImages($id)
+	public function findGetImages($id, $all = false)
 	{
 		$record = $this->postRepos->findBySlugOrId($id);
+		if($all) {
+			$record = $this->postRepos->find($id);
+		}
 		if($record) {
 			$record->banner_image = $record->getFirstMediaUrl(POST_BANNER_COLLECTION);
         	$record->thumbnail = $record->getFirstThumbnailUrl(POST_BANNER_COLLECTION);

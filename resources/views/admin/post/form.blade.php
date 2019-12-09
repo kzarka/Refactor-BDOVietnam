@@ -6,7 +6,7 @@
 	<div class="form-group">
 		<input class="form-control required" id="title" name="title" type="text" placeholder="Nhập tiêu đề" value="{{ old('title') ?? (isset($post->title) ? $post->title : '') }}">
 		@if ($errors->has('title'))
-            <label id="name-error" class="error" for="title">{{ $errors->first('title') }}</label>
+            <label id="title-error" class="error is-invalid" for="title">{{ $errors->first('title') }}</label>
         @endif
 	</div>
 	<div class="form-group">
@@ -27,7 +27,7 @@
 		<label for="content">Nội Dung</label>
 		<textarea class="form-control required" name="content">{{ old('content') ?? (isset($post->content) ? $post->content : '') }}</textarea>
 		@if ($errors->has('content'))
-            <label id="name-error" class="error" for="comment">{{ $errors->first('content') }}</label>
+            <label id="content-error" class="error is-invalid" for="content">{{ $errors->first('content') }}</label>
         @endif
 	</div>
 	<div class="form-group">
@@ -36,25 +36,18 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6">
-			<div class="form-group ">
-				<label for="postal-code">Slug</label>
-				<input class="form-control required" id="" name="slug" type="text" placeholder="Slug" value="{{ old('slug') ?? (isset($post->slug) ? $post->slug : '') }}">
-				@if ($errors->has('slug'))
-		            <label id="name-error" class="error" for="slug">{{ $errors->first('slug') }}</label>
-		        @endif
+			<div class="form-group">
+				<label for="city">Chuyên Mục</label>
+				<select class="form-control" id="parent_category" name="category[]" placeholder="Chọn category">
+					<option value="">Chọn chuyên mục</option>
+					@foreach($categories as $category)
+					<option value="{{ $category->id }}">{{ $category->name }}</option>
+					@endforeach
+				</select>
 			</div>
 			<div class="form-group">
-				<label for="street">Chuyên Mục</label>
-				<select multiple="" name="category[]" id="category" class="form-control">
-					@foreach($categories as $category)
-					@if($children = $category->children)
-					<optgroup label="{{ $category->name }}">
-						@foreach($children as $child)
-						<option value="{{ $child->id }}">{{ $child->name }}</option>
-						@endforeach
-					</optgroup>
-					@endif
-					@endforeach
+				<label for="street">Chuyên Mục Con</label>
+				<select multiple="" name="category[]" id="category" class="form-control" placeholder="Chọn chuyên mục con" disabled>
               	</select>
 			</div>
 			<div class="form-group">
@@ -63,14 +56,12 @@
 			</div>
 		</div>
 		<div class="col-sm-6">
-			<div class="form-group">
-				<label for="city">Game</label>
-				<select class="form-control" id="game" name="game" placeholder="Chọn game">
-					<option value="">Select game</option>
-					@foreach($games as $game)
-					<option value="{{ $game->id }}" selected>{{ $game->name }}</option>
-					@endforeach
-				</select>
+			<div class="form-group ">
+				<label for="postal-code">Slug</label>
+				<input class="form-control required" id="" name="slug" type="text" placeholder="Slug được tạo tự động" value="{{ old('slug') ?? (isset($post->slug) ? $post->slug : '') }}">
+				@if ($errors->has('slug'))
+		            <label id="slug-error" class="error is-invalid" for="slug">{{ $errors->first('slug') }}</label>
+		        @endif
 			</div>
 			<div class="form-group col-sm-4 is-submitted">
 				<label for="postal-code">Public</label><br>
