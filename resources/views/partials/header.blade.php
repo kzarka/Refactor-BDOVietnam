@@ -70,9 +70,18 @@
     
     <!-- BEGIN QUICKLINK + SEARCH -->
     <div class="header-search-quicklink-wrapper">
+        @if(auth()->guest())
         <div class="header-quicklink">
             <a href="{{ route('login') }}">Đăng Nhập</a>
         </div>
+        @elseif(auth()->check())
+        <div class="header-quicklink">
+            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+        </div>
+        <div class="header-quicklink">
+            <a href="{{ route('logout') }}">Đăng xuất</a>
+        </div>
+        @endif
         <div class="header-search-wrapper">
             <div class="search-wrapper">
                 <form method="get" id="searchform" action="">

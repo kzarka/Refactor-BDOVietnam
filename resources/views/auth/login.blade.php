@@ -16,7 +16,7 @@
             <label class="error" for="name">{{ $errors->first('username') }}</label>
         @endif
 	    <label class="login" for="password"><b>MẬT KHẨU</b></label>
-	    <input type="text" class="" name="password" placeholder="Password...">
+	    <input type="password" class="" name="password" placeholder="Password...">
 	    @if ($errors->has('password'))
             <label class="error" for="name">{{ $errors->first('password') }}</label>
         @endif
