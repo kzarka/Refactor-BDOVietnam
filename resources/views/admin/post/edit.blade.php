@@ -12,7 +12,7 @@
 	<div class="col-xl-10 col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<strong>Form</strong>
+				<strong>Form <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nếu có thay đổi bài viết sẽ tự động lưu lại sau 5 phút"></i></strong>
 				<div class="pull-right">
 					<button class="btn btn-success preview mr-2" type="button">Preview</button>
 					<button class="btn btn-primary save" type="button">
