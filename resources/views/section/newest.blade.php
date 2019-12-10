@@ -16,7 +16,6 @@
             <!-- Sample Post -->                                     
              @forelse($newests as $newest)                                
             <div class="loop-index-wrapper">
-                @php $cat = $newest->categories()->first() @endphp
                 <a href="{{ $newest->url }}">
                     <div class="loop-index-inner">
                         <!-- BEGIN COMMENT COUNT (if post has comments) -->

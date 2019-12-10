@@ -200,9 +200,10 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     public function getRelatePost($postId, $catId)
     {
         if($catId) {
-            return $this->getBuilderAvailable($catId)->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
+            $records = $this->getBuilderAvailable($catId)->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
         }
-        return $this->getBuilderAvailable()->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
+        $records = $this->getBuilderAvailable()->where('posts.id', '<>', $postId)->with('categories')->with('comments')->inRandomOrder()->take(2)->get();
+        return $this->getImages($records);
     }
 
     public function getImages($records) {

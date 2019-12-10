@@ -14,7 +14,8 @@ class AddStartDateEndDateToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
         });
     }
 

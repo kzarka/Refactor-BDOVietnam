@@ -10,6 +10,7 @@
 <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/common.js') }}"></script>
 <script src="{{ asset('assets/plugins/popper.js/popper.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/pace-progress/js/pace.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>

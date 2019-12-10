@@ -5,6 +5,7 @@
 @push('after_styles')
 <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/plugins/jquery-ui-1.12.1/jquery-ui.min.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -80,4 +81,14 @@
 <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.js') }}"></script>
 <script src="{{ asset('assets/admin/js/post/edit.js') }}"></script>
+<script type="text/javascript">
+	$.extend($.datepicker, { afterShow: function(event) {
+		$.datepicker._getInst(event.target).dpDiv.css('z-index', 6);
+	}});
+	$("input[name=end_date]").datepicker({
+	    dateFormat: 'dd/mm/yy',
+	}).focus(function (event) {
+		$.datepicker.afterShow(event);
+	});
+</script>
 @endpush

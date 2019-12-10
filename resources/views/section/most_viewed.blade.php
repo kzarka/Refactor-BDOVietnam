@@ -13,9 +13,8 @@
             </div>
             <div class="loop-index-top-border"></div>
             <!-- Sample Post -->
-            @forelse($top_posts as $top_post)                                
+            @forelse($top_posts as $top_post)                  
             <div class="loop-index-wrapper">
-                @php $cat = $top_post->categories()->first() @endphp
                 <a href="{{ $top_post->url }}">
                     <div class="loop-index-inner">
                         <!-- BEGIN COMMENT COUNT (if post has comments) -->

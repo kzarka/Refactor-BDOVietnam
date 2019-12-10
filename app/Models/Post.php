@@ -23,7 +23,7 @@ class Post extends BaseModel implements ShouldMedia
     ];
 
     protected $fillable = [
-        'title', 'content', 'slug', 'excert', 'author_id', 'thumbnail', 'banner', 'public', 'approved'
+        'title', 'content', 'slug', 'excert', 'author_id', 'thumbnail', 'banner', 'public', 'approved', 'end_date'
     ];
 
     /**
@@ -122,5 +122,10 @@ class Post extends BaseModel implements ShouldMedia
             ];
         }
         return [];
+    }
+
+    public function getRemainDayAttribute() {
+        if(!$this->end_date) return null;
+        return Carbon::now()->diffInDays($this->end_date, false);
     }
 }
