@@ -3371,10 +3371,13 @@ div.loop-index-wrapper a { text-decoration:none; }
     text-decoration:underline;
 }
 .entry-content img {
-    width:100%;
+    /*width:100%;*/
     height:auto;
 }
-.entry-content p img { max-width:100%; }
+.entry-content p img {
+    max-width: 85%;
+    margin: 20px;
+}
 /* edit link */
 a.post-edit-link {
     color:#8F8BBE;
