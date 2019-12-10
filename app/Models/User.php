@@ -152,4 +152,9 @@ class User extends Authenticatable implements ShouldMedia
     {
         return $this->getFirstMediaUrl(USER_AVATAR_COLLECTION, MEDIA_CONVERSION_THUMB_SMALL);
     }
+
+    public function getUrlAttribute()
+    {
+        return url('') . '/' . DEFAULT_AUTHOR_URL_PREFIX . '/' . $this->username . '.html';
+    }
 }

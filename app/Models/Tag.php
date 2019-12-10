@@ -13,7 +13,7 @@ class Tag extends Model
     ];
 
     public function getUrlAttribute($value) {
-        return url('') . '/' . DEFAULT_TAG_URL_PREFIX . '/' . $this->slug . '/';
+        return url('') . '/' . DEFAULT_TAG_URL_PREFIX . '/' . $this->slug . '.html';
     }
 
     public function posts() {

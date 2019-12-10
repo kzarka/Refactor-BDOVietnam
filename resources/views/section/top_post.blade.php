@@ -23,8 +23,8 @@
         
                         <a href="{{ $top_posts[0]->url }}">
                             <!-- BEGIN CATEGORIES (except 'featured' and 'highlighted') -->
-                            @if($cat = $top_posts[0]->categories()->first())
-                            <div class="featured-category">{{ $cat->name }}</div>
+                            @if(isset($top_posts[0]->main_category_name))
+                            <div class="featured-category">{{ $top_posts[0]->main_category_name }}</div>
                             @endif
                             <!-- END CATEGORIES (except 'featured' and 'highlighted') -->
 
@@ -37,7 +37,7 @@
                                 @endif
                                 <!-- END COMMENT COUNT (if post has comments) -->
                                 <h2>{{ $top_posts[0]->title }}</h2>
-                                <div class="featured-author-time">By {{ $top_posts[0]->author_name }} // {{ $top_posts[0]->created_from }}</div>
+                                <div class="featured-author-time">Bởi {{ $top_posts[0]->author_name }} // {{ $top_posts[0]->created_from }}</div>
                             </div>
                         </a>
                     </div>
@@ -71,8 +71,8 @@
         
                     <a href="{{ $top_posts[1]->url }}">
                         <!-- BEGIN CATEGORIES (except 'featured' and 'highlighted') -->
-                        @if($cat = $top_posts[1]->categories()->first())
-                            <div class="featured-category">{{ $cat->name }}</div>
+                        @if(isset($top_posts[1]->main_category_name))
+                            <div class="featured-category">{{ $top_posts[1]->main_category_name }}</div>
                         @endif
                         <!-- END CATEGORIES (except 'featured' and 'highlighted') -->
 
@@ -85,7 +85,7 @@
                             @endif
                             <!-- END COMMENT COUNT (if post has comments) -->
                             <h2>{{ $top_posts[1]->title }}</h2>
-                            <div class="featured-author-time">By {{ $top_posts[1]->author_name }} // {{ $top_posts[0]->created_from }}</div>
+                            <div class="featured-author-time">Bởi {{ $top_posts[1]->author_name }} // {{ $top_posts[1]->created_from }}</div>
                         </div>
                     </a>
                 </div>
@@ -113,8 +113,8 @@
         
                     <a href="{{ $top_posts[2]->url }}">
                         <!-- BEGIN CATEGORIES (except 'featured' and 'highlighted') -->
-                        @if($cat = $top_posts[2]->categories()->first())
-                            <div class="featured-category">{{ $cat->name }}</div>
+                        @if(isset($top_posts[2]->main_category_name))
+                            <div class="featured-category">{{ $top_posts[2]->main_category_name }}</div>
                         @endif
                         <!-- END CATEGORIES (except 'featured' and 'highlighted') -->
 
@@ -127,7 +127,7 @@
                             @endif
                             <!-- END COMMENT COUNT (if post has comments) -->
                             <h2>{{ $top_posts[2]->title }}</h2>
-                            <div class="featured-author-time">By {{ $top_posts[2]->author_name }} // {{ $top_posts[0]->created_from }}</div>
+                            <div class="featured-author-time">Bởi {{ $top_posts[2]->author_name }} // {{ $top_posts[2]->created_from }}</div>
                         </div>
                     </a>
                 </div>

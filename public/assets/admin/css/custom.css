@@ -158,3 +158,8 @@ label.error {
   width: 100%;
 }
 
+.cke_contents {
+  border: solid 3px #2D2D2E;
+  background-color: #1C1C1D;
+}
+

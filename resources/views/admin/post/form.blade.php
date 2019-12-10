@@ -32,7 +32,7 @@
 	</div>
 	<div class="form-group">
 		<label for="excert">Mô Tả</label>
-		<textarea class="form-control" name="excert" placeholder="Excert"></textarea>
+		<textarea class="form-control" name="excert" placeholder="Excert">{{  old('content') ?? (isset($post->excert) ? $post->excert : '') }}</textarea>
 	</div>
 	<div class="row">
 		<div class="col-sm-6">

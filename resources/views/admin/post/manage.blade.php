@@ -33,7 +33,7 @@
 					<td class="category">
 						@php $categories = $post->categories; @endphp
 						@forelse($categories as $cat)
-						<span class="badge badge-danger"><a class="{{ route('admin.post.preview', $post->id) }}" {{ $cat->name }}</span>
+						<span class="badge badge-danger">{{ $cat->name }}</span>
 						@empty
 						@endforelse
 					</td>

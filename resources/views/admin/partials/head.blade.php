@@ -4,6 +4,12 @@
 <meta name="description" content="{{ $sys_vars['description'] }}">
 <meta name="author" content="{{ $sys_vars['author'] }}">
 <meta name="keyword" content="{{ $sys_vars['keyword'] }}">
+<meta property="og:url"          content="{{ url()->current() }}" />
+<meta property="og:type"         content="article" />
+<meta property="og:title"        content="{{ isset(app()->view->getSections()['title']) ? app()->view->getSections()['title'] : 'Undefined' }} {{ $sys_vars['title_subfix'] }}" />
+<meta property="og:description"  content="{{ $sys_vars['description'] }}" />
+<meta property="og:image"        content="{{ url('') . $sys_vars['default_image'] }}" />
+<meta property="og:article:author" content="{{ $sys_vars['author'] }}">
 <title>@yield('title') {{ $sys_vars['title_subfix'] }}</title>
 @stack('before_styles')
 <!-- Icons-->

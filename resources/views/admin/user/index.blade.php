@@ -50,8 +50,8 @@
 						<span class="badge badge-danger" data-active="0">Banner</span>
 						@endif
 					</td>
-					<td class="post"><span class="badge badge-danger" data-active="0">{{ $user->posts }}</span></td>
-					<td class="comment"><span class="badge badge-danger" data-active="0">{{ $user->comments }}</span></td>
+					<td class="post"><span class="badge badge-danger" data-active="0">{{ $user->posts()->count() }}</span></td>
+					<td class="comment"><span class="badge badge-danger" data-active="0">{{ $user->comments()->count() }}</span></td>
 					<td>
 						<div class="small text-muted">Last login</div>
 						<strong>{{ $user->last_login_from }}</strong>
@@ -60,7 +60,7 @@
 						<a class="btn btn-success edit" href="{{ route('admin.user.edit', $user->id) }}" title="Edit this user">
 							<i class="fa fa-edit"></i>
 						</a>
-						@if($user->authorizeRoles(ROLE_ADMIN))
+						@if(!$user->authorizeRoles(ROLE_ADMIN))
 						@if(!$user->banned_until || now()->greaterThan($user->banned_until))
 						<button class="btn btn-danger ban" type="button" title="Ban this user">
                             <i class="fa fa-legal"></i>

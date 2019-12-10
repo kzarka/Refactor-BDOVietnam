@@ -85,6 +85,5 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         } catch (\Exception $e) {
             return false;
         }
-        
     }
 }

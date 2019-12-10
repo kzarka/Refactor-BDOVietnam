@@ -15,8 +15,8 @@
         <!-- RECENT POST -->
         @include('partials.sidebar.recent_post')
         <!-- END RECENT POST -->
-        <div id="text-4" class="widget widget_text"><h4 class="widgettitle">Widgetized sidebar</h4>           
-            <div class="textwidget">Here we have a classic widgetized WordPress sidebar. Insert a calendar, latest posts, shortcodes, custom widgets from third-party plugins etc. You are only limited by your needs and imagination.</div>
+        <div id="text-4" class="widget widget_text"><h4 class="widgettitle">About me</h4>           
+            <div class="textwidget">I’m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can’t handle me at my worst, then you sure as hell don’t deserve me at my best</div>
         </div>      
     </div>
 </div>

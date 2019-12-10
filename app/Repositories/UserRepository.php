@@ -56,6 +56,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 				$fileName = 'user_' . md5($record->id) . time() . '.' . $request->file('avatar')->extension();
 	            $record->addMediaFromFileUpload($request->file('avatar'), USER_AVATAR_COLLECTION_DEFAULT, $fileName);
 	        }
+	        $data = $request->all();
             if(isset($data['roles']) && is_array($data['roles'])) {
             	$record->roles()->detach();
                 $record->roles()->attach($data['roles']);
@@ -147,5 +148,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 		\Log::info($item->getCollection());
 		$this->model->select('*')->from('notifications')->whereIn('id', $ids)->update(['read_at' => Carbon::now()]);
 		return $item;
+	}
+
+	public function findBySlugOrId($username) {
+		try {
+            if(is_numeric($username)) {
+                return $this->model->findOrFail($username);
+            }
+            return $this->model->where('username', $username)->first();
+        } catch (\Exception $e) {
+            return false;
+        }
 	}
 }

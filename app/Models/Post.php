@@ -64,8 +64,8 @@ class Post extends BaseModel implements ShouldMedia
         $user = auth()->user();
         if($user->authorizeRoles([ROLE_ADMIN])) return true;
         $author = $this->author;
-        if($author->haveRole(ROLE_ADMIN)) return false;
-        if($author->haveRole(ROLE_MOD) && $author->id !== $user->id) return false;
+        if($author->hasRole(ROLE_ADMIN)) return false;
+        if($author->hasRole(ROLE_MOD) && $author->id !== $user->id) return false;
         if($this->author_id == $user->id) return true;
         return false;
     }
@@ -82,8 +82,9 @@ class Post extends BaseModel implements ShouldMedia
         $user = auth()->user();
         if($user->authorizeRoles([ROLE_ADMIN])) return true;
         $author = $this->author;
-        if($author->haveRole(ROLE_ADMIN)) return false;
-        if($author->haveRole(ROLE_MOD) && $author->id !== $user->id) return false;
+        if($author->hasRole(ROLE_ADMIN)) return false;
+        if($author->hasRole(ROLE_MOD) && $author->id !== $user->id) return false;
+        if($user->hasRole(ROLE_MOD)) return true;
         if($this->author_id == $user->id) return true;
         return false;
     }
@@ -95,9 +96,13 @@ class Post extends BaseModel implements ShouldMedia
     }
 
     public function getUrlAttribute($value) {
-
-        $category = $this->categories()->first();
+        $category = $this->categories()->skip(1)->first() ?? $this->categories()->first();
         return url('') . '/' . DEFAULT_POST_URL_PREFIX . '/' . ($category ? $category->slug : DEFAULT_CATEGORY) . '/' . $this->slug . '.html';
+    }
+
+    public function getMainCategoryNameAttribute($value) {
+        $category = $this->categories()->skip(1)->first() ?? $this->categories()->first();
+        return $category ? $category->name : null;
     }
     
     /**

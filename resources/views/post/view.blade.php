@@ -30,7 +30,7 @@
 
                 <!-- BEGIN DATE -->
                 <div class="post-date">
-                {{ $post->author->fullname ?? $post->author->username }}<span>|</span> {{ $post->created_at_date_first }}<span>|</span><i class="fa fa-eye"></i> {{ $post->view_count }} lượt xem<span>|</span>
+                <a href="{{ $post->author->url }}">{{ $post->author->fullname ?? $post->author->username }}</a><span>|</span> {{ $post->created_at_date_first }}<span>|</span><i class="fa fa-eye"></i> {{ $post->view_count }} lượt xem<span>|</span>
                 </div>
                 <!-- END DATE -->
 
@@ -76,7 +76,7 @@
                     <!-- BEGIN AUTHOR DESCRIPTION -->
                     <div class="author-desc-wrapper">
                         <span class="author-name">
-                            <a href="" rel="author"> {{ $post->author->fullname ?? $post->author->username }}</a>
+                            <a href="{{ $post->author->url }}" rel="author"> <a href="{{ $post->author->url }}">{{ $post->author->fullname ?? $post->author->username }}</a>
                         </span><span class="author-position">, {{ ($role = $post->author->roles()->first()) ? $role->display_name : '' }}</span>
                         <div class="author-description">
                             {{ $post->author->biography ?? '^.^' }}

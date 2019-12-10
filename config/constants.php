@@ -24,6 +24,8 @@
 
 	define('DEFAULT_TAG_URL_PREFIX', 'tags');
 
+	define('DEFAULT_AUTHOR_URL_PREFIX', 'authors');
+
 	define('STATUS_PINNED', 1);
 
 	define('THUMBNAIL_WIDTH', 150);
@@ -42,5 +44,7 @@
 	define('MEDIA_CONVERSION_THUMB_SMALL', 'small_thumbs');
 
 	define('POST_COMMENT', 'POST_COMMENT');
+
+	
 
 
