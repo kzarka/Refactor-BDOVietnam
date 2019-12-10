@@ -124,7 +124,7 @@ label.error {
 
 body.wide {
     .content-wrapper {
-        max-width: 1180px;
+        max-width: 1130px;
         margin: 30px auto 100px auto
     }
 
@@ -139,6 +139,7 @@ body.wide {
     line-height: 1.4;
 
     table {
+        border-collapse: collapse;
         margin-bottom: 15px;
         border: 1px solid #e0e0e0;
     }
@@ -152,6 +153,13 @@ body.wide {
         font-size: 14px;
         font-weight: 600;
         border-bottom: solid 2px #669900;
+    }
+
+    table tr {
+        border-bottom: 1px solid #e0e0e0;
+    }
+    table td:not(:last-child) {
+        border-right: 1px solid #e0e0e0;
     }
 
     table td {

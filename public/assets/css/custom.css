@@ -120,7 +120,7 @@ label.error {
 }
 
 body.wide .content-wrapper {
-  max-width: 1180px;
+  max-width: 1130px;
   margin: 30px auto 100px auto;
 }
 
@@ -136,6 +136,7 @@ body.wide .single-wrapper .entry-title a {
 }
 
 .entry-content article table {
+  border-collapse: collapse;
   margin-bottom: 15px;
   border: 1px solid #e0e0e0;
 }
@@ -150,6 +151,14 @@ body.wide .single-wrapper .entry-title a {
   font-size: 14px;
   font-weight: 600;
   border-bottom: solid 2px #669900;
+}
+
+.entry-content article table tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.entry-content article table td:not(:last-child) {
+  border-right: 1px solid #e0e0e0;
 }
 
 .entry-content article table td {
