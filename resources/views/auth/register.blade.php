@@ -14,24 +14,24 @@
             @endif
         </div>
         <div class="form-group">
-            <label class="login" for="username"><b>Email</b></label>
+            <label class="login" for="email"><b>Email</b></label>
             <input type="text" class="" name="email" placeholder="Email..." value="{{ old('email') }}">
-            @if ($errors->has('username'))
-                <label class="error" for="email">{{ $errors->first('username') }}</label>
+            @if ($errors->has('email'))
+                <label class="error" for="email">{{ $errors->first('email') }}</label>
             @endif
         </div>
         <div class="form-group">
             <label class="login" for="password"><b>MẬT KHẨU</b></label>
             <input type="text" class="" name="password" placeholder="Password...">
             @if ($errors->has('password'))
-                <label class="error" for="name">{{ $errors->first('password') }}</label>
+                <label class="error" for="password_confirmation">{{ $errors->first('password') }}</label>
             @endif
         </div>
         <div class="form-group">
-            <label class="login" for="username"><b>NHẬP LẠI MẬT KHẨU</b></label>
+            <label class="login" for="password_confirmation"><b>NHẬP LẠI MẬT KHẨU</b></label>
             <input type="text" id="password-confirm" class="" name="password_confirmation" placeholder="Re-Password...">
-            @if ($errors->has('username'))
-                <label class="error" for="name">{{ $errors->first('username') }}</label>
+            @if ($errors->has('password_confirmation'))
+                <label class="error" for="password_confirmation">{{ $errors->first('password_confirmation') }}</label>
             @endif
         </div>
         <button class="btn btn-submit" type="submit">Đăng ký</button>

@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\BaseController;
 use App\Services\Contracts\UserServiceInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\UserRequest;
+use App\Http\Requests\UserInputRequest;
 use App\Models\Role;
 use App\Services\NotificationService;
 
@@ -45,7 +45,7 @@ class UserController extends BaseController
         return view('admin.user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
-    public function update(UserRequest $request, $id)
+    public function update(UserInputRequest $request, $id)
     {
         $result = $this->userRepos->updateByAdmin($request, $id);
         if($result){
@@ -56,7 +56,7 @@ class UserController extends BaseController
         return redirect()->route('admin.user.index');
     }
 
-    public function store(UserRequest $request)
+    public function store(UserInputRequest $request)
     {
         $result = $this->postRepos->createByAdmin($request->all());
         $roles = Role::all();
@@ -119,7 +119,7 @@ class UserController extends BaseController
         return redirect()->route('admin.user.index');
     }
 
-    public function selfUpdate(Request $request)
+    public function selfUpdate(UserInputRequest $request)
     {
         $user = $this->userService->findGetAvatar($request->user()->id);
         if($request->method() == 'GET') {
