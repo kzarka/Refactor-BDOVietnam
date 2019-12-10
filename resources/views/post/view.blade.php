@@ -77,7 +77,11 @@
                     <div class="author-desc-wrapper">
                         <span class="author-name">
                             <a href="{{ $post->author->url }}" rel="author"> <a href="{{ $post->author->url }}">{{ $post->author->fullname ?? $post->author->username }}</a>
-                        </span><span class="author-position">, {{ ($role = $post->author->roles()->first()) ? $role->display_name : '' }}</span>
+                        </span>
+                        <span class="author-position">, {{ ($role = $post->author->roles()->first()) ? $role->display_name : '' }}</span>
+                        @if($rank = $post->author->getRank())
+                        <span class="author-position"> ({{ $rank }})</span>
+                        @endif
                         <div class="author-description">
                             {{ $post->author->biography ?? '^.^' }}
                         </div>

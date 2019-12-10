@@ -113,7 +113,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             
             $user = auth()->user();
             $data = $request->all();
-            if(auth()->user()->authorizeRoles([ROLE_CTV])) {
+            if(!auth()->user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD])) {
                 $data['approved'] = STATUS_UNAPPROVED;
             }
             $record->update($data);

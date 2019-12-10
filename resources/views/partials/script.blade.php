@@ -6,4 +6,5 @@
 <script type='text/javascript' src="{{ asset('assets/plugins/photo-swipe/swiper.min.js') }}"></script>
 <script type='text/javascript' src="{{ asset('assets/js/misc.js') }}"></script>
 <script type='text/javascript' src="{{ asset('assets/plugins/jquery/jquery.scrollTo-min.js') }}"></script>
+<script type='text/javascript' src="{{ asset('assets/plugins/fancybox/jquery.fancybox-1.3.4.js') }}"></script>
 @stack('after_scripts')

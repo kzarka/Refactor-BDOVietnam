@@ -3375,8 +3375,7 @@ div.loop-index-wrapper a { text-decoration:none; }
     height:auto;
 }
 .entry-content p img {
-    max-width: 85%;
-    margin: 20px;
+    max-width: 100%;
 }
 /* edit link */
 a.post-edit-link {

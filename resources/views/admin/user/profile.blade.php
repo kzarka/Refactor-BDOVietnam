@@ -15,8 +15,7 @@
                 	<h3 class="media-heading">{{ $user->full_name }} <small>{{ $user->roles()->first()->display_name }}</small></h3>
                 	<span class="badge badge-danger">{{ $user->posts()->count() }} Bài Viết</span>
                     <span class="badge badge-warning">{{ $user->comments()->count() }} Bình Luận</span>
-                    <span class="badge badge-info">Rank 5</span>
-                    <span class="badge badge-success">Game Master</span>
+                    <span class="badge badge-success">{{ $user->getRank() }}</span>
                 </center>
                 <hr>
                 <center>

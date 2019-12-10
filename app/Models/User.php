@@ -157,4 +157,18 @@ class User extends Authenticatable implements ShouldMedia
     {
         return url('') . '/' . DEFAULT_AUTHOR_URL_PREFIX . '/' . $this->username . '.html';
     }
+
+    public function getRank()
+    {
+        $point = $this->posts()->get()->count();
+        $ranks = config('ranking');
+        $myRank = null;
+        foreach ($ranks as $rankPoint => $rank) {
+            if($point >= $rankPoint) {
+                $myRank = $rank;
+            } else {
+                return $myRank;
+            }
+        }
+    }
 }

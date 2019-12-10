@@ -28,7 +28,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header text-center">
-                    <strong>Settings</strong>
+                    <strong>{{ auth()->user()->fullname ?? auth()->user()->username }}</strong>
                 </div>
                 <a class="dropdown-item" href="{{ route('admin.user.profile', '') }}">
                     <i class="fa fa-user"></i> Profile
