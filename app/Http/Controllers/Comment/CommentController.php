@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Comment;
 use App\Http\Controllers\BaseController;
 use App\Services\Contracts\PostServiceInterface;
 use App\Repositories\Contracts\PostRepositoryInterface;
-use Illuminate\Http\Request;
+use App\Http\Requests\CommentInputRequest;
 use App\Repositories\Contracts\CommentRepositoryInterface;
 use App\Services\Contracts\CommentServiceInterface;
 
@@ -27,7 +27,7 @@ class CommentController extends BaseController
         parent::__construct();
     }
 
-    public function store(Request $request)
+    public function store(CommentInputRequest $request)
     {
         $postId = $request->get('post_id');
         $post = $this->postRepos->find($postId);

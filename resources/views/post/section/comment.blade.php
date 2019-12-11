@@ -116,6 +116,9 @@
                             <div id="email-wrapper"><input type="text" name="email" id="email" value="" placeholder="E-mail (ẩn)*" size="22" tabindex="3"></div>
                             <div id="url-wrapper"><input name="website" id="url" type="text" value="" placeholder="Website (tùy chọn)" size="22" tabindex="4"></div>
                             @endif
+                            @if ($errors->any())
+                                <label id="title-error" class="error is-invalid" for="title">{{ $errors->first() }}</label>
+                            @endif
                         </div>
                         <div class="form-submit @if(auth()->user()) logged @endif">
                             <button type="button" id="btn_submit" class="btn btn-submit submit" value="">Gửi</button>
