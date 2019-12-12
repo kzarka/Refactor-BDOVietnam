@@ -6,15 +6,15 @@
                     <i class="nav-icon icon-speedometer"></i> Dashboard
                 </a>
             </li>
-            <li class="nav-title">Settings</li>
+            <li class="nav-title">Manager</li>
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-note"></i> Bài viết
+                    <i class="fa fa-newspaper-o"></i> Bài viết
                 </a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.index') }}">
-                        <i class="nav-icon icon-note"></i> Bài viết</a>
+                        <i class="fa fa-book"></i> Bài viết</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.create') }}">
@@ -22,21 +22,25 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.comment.index') }}">
+                <i class="fa fa-comments"></i> Bình luận</a>
+            </li>
             @if(Auth::user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD]))
             <li class="nav-title">Extras</li>
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-note"></i> Quản lý Post
+                    <i class="fa fa-newspaper-o"></i> Quản lý Post
                 </a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.approve') }}">
-                            <i class="nav-icon icon-note"></i> Phê duyệt @if($unapproved_post_count)<span class="badge badge-danger" title="{{ $unapproved_post_count }} post(s) need to be approve">{{ $unapproved_post_count }}</span>@endif
+                            <i class="fa fa-flash"></i> Phê duyệt @if($unapproved_post_count)<span class="badge badge-danger" title="{{ $unapproved_post_count }} post(s) need to be approve">{{ $unapproved_post_count }}</span>@endif
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.post.manage') }}">
-                            <i class="nav-icon icon-note"></i> Quản lý
+                            <i class="fa fa-calendar-check-o"></i> Quản lý
                         </a>
                     </li>
                 </ul>
@@ -72,6 +76,7 @@
                 </ul>
             </li>
             @endif
+            @include('admin.partials.sidebar.system')
         </ul>
     </nav>
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>

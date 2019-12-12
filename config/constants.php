@@ -45,6 +45,13 @@
 
 	define('POST_COMMENT', 'POST_COMMENT');
 
+	define('CSS_STATUS', [
+		1 => 'success',
+		2 => 'info',
+		3 => 'warning',
+		4 => 'danger'
+	]);
+
 	
 
 

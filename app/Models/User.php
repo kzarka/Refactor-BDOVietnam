@@ -121,7 +121,11 @@ class User extends Authenticatable implements ShouldMedia
 
     public function getFullnameAttribute()
     {
-        return "{$this->first_name} {$this->last_name}";
+        $fullname =  "{$this->first_name} {$this->last_name}";
+        if($fullname == '') {
+            return $fullname;
+        }
+        return $this->username;
     }
 
     public function getLastLoginFromAttribute($value) 
