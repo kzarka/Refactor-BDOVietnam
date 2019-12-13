@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Admin\BaseController;
 use App\Services\Contracts\UserServiceInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\Log\ActivityLogRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserInputRequest;
 use App\Models\Role;
@@ -13,13 +14,14 @@ use App\Services\NotificationService;
 
 class UserController extends BaseController
 {
-	protected $userService, $userRepos, $notiService;
+	protected $userService, $userRepos, $notiService, $activityLog;
 
-	public function __construct(UserServiceInterface $userService, UserRepositoryInterface $userRepos, NotificationService $notiService)
+	public function __construct(UserServiceInterface $userService, UserRepositoryInterface $userRepos, NotificationService $notiService, ActivityLogRepositoryInterface $activityLog)
     {
         $this->userService = $userService;
         $this->userRepos = $userRepos;
         $this->notiService = $notiService;
+        $this->activityLog = $activityLog;
         parent::__construct();
     }
 
@@ -144,8 +146,10 @@ class UserController extends BaseController
             $this->saveSessionErrorMessage('Profile not found.');
             return redirect()->route('admin.dashboard');
         }
+        $activities = $this->activityLog->getListPagination($user->id);
         return view('admin.user.profile', [
-            'user' => $user
+            'user' => $user,
+            'activities' => $activities
         ]); 
     }
 

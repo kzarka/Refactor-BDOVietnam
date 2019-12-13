@@ -155,7 +155,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             if(is_numeric($username)) {
                 return $this->model->findOrFail($username);
             }
-            return $this->model->where('username', $username)->first();
+            return $this->model->where('username', $username)->with('comments')->first();
         } catch (\Exception $e) {
             return false;
         }

@@ -68,3 +68,8 @@ Breadcrumbs::for('admin.comment.index', function ($trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Bình luận', route('admin.comment.index'));
 });
+
+Breadcrumbs::for('admin.log.activity', function ($trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Log Activity', route('admin.log.activity'));
+});

@@ -14,6 +14,9 @@ if(isset($user)) {
 	@method('PUT')
 	@endif
 	@php if(isset($self)) $user = $self; @endphp
+	@if ($errors->any())
+        <label id="name-error" class="error" for="slug">{{ $errors->first() }}</label>
+    @endif
 	<div class="form-group">
 		<label for="city">Avatar</label><br>
 		<div class="photo-frame">
@@ -51,7 +54,7 @@ if(isset($user)) {
 		<div class="col-sm-6">
 			<div class="form-group">
 				<label for="street">Họ</label>
-				<input class="form-control required" id="" name="last_name" type="text" placeholder="last name" value="{{ old('last_name') ?? (isset($user->last_name) ? $user->last_name : '') }}">
+				<input class="form-control" id="" name="last_name" type="text" placeholder="last name" value="{{ old('last_name') ?? (isset($user->last_name) ? $user->last_name : '') }}">
 			</div>
 			@if(!$user->authorizeRoles(ROLE_ADMIN) && auth()->user()->authorizeRoles(ROLE_ADMIN))
 			<div class="form-group col-sm-4 is-submitted">

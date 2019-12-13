@@ -30,7 +30,7 @@
 						</div>
 					</td>
 					<td>
-						<div>{{ $user->fullname }}</div>
+						<div><a href="{{ $user->url_admin }}" target="_blank">{{ $user->fullname }}</a></div>
 						<div class="small text-muted">
 						<span>New</span> | Registered: {{ $user->created_at }}</div>
 					</td>

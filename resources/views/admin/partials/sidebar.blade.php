@@ -45,6 +45,17 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon fa fa-newspaper-o"></i> Logger
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.log.activity') }}">
+                        <i class="nav-icon fa fa-book"></i> Activity</a>
+                    </li>
+                </ul>
+            </li>
             @endif
             @if(Auth::user()->authorizeRoles([ROLE_ADMIN]))
             <!-- Super Power -->

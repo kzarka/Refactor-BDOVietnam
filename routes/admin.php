@@ -34,7 +34,7 @@ Route::namespace('Post')->group(function () {
 Route::namespace('User')->group(function () {
 	Route::match(['get', 'post'], 'user/profile/update', 'UserController@selfUpdate')->name('user.self_update');
 
-	Route::get('user/profile/{id?}', 'UserController@profile')->name('user.profile');
+	Route::get('profile/{id?}', 'UserController@profile')->name('user.profile');
 
 	Route::post('user/ban', 'UserController@ban')->name('user.ban')->middleware('admin');
 
@@ -51,4 +51,8 @@ Route::namespace('Setting')->group(function () {
 
 Route::namespace('Comment')->group(function () {
 	Route::resource('comment', 'CommentController');
+});
+
+Route::namespace('Log')->group(function () {
+	Route::get('log/activity', 'ActivityController@index')->name('log.activity');
 });

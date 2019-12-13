@@ -24,9 +24,10 @@ class UserInputRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->method() == 'GET') return [];
         return [
-            'username' => ['required', 'string', 'max:255', 'unique:users', 'alpha_dash'],
-            'email'    => 'required|email|max:200|unique:users,email' . ($this->id != null ? ",$this->id" : ''),
+            'username' => 'required|string|max:255|alpha_dash|unique:users,id' . ($this->id != null ? ",$this->id" : ''),
+            'email'    => 'required|email|max:200|unique:users,id' . ($this->id != null ? ",$this->id" : ''),
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }

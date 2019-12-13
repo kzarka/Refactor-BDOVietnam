@@ -7,11 +7,15 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Carbon\Translator;
 use App\Models\SystemVariable;
 use App\Observers\CommentObserver;
+use App\Observers\PostObserver;
+use App\Observers\UserObserver;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,5 +79,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function registerObservers() {
         Comment::observe(CommentObserver::class);
+        User::observe(UserObserver::class);
+        Post::observe(PostObserver::class);
     }
 }
