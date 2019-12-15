@@ -45,6 +45,21 @@
 
 	define('POST_COMMENT', 'POST_COMMENT');
 
+	define('CSS_STATUS', [
+		1 => 'success',
+		2 => 'info',
+		3 => 'warning',
+		4 => 'danger'
+	]);
+
+	define('ACTION_CREATED', 'created');
+	define('ACTION_UPDATED', 'updated');
+	define('ACTION_DELETED', 'deleted');
+	define('ACTION_BANNED', 'banned');
+	define('ACTION_APPROVED', 'approved');
+
+	define('USER_TYPE', 'App\Models\User');
+	define('POST_TYPE', 'App\Models\Post');
 	
 
 

@@ -4,15 +4,17 @@
 
 @section('body-class', 'error404')
 
-@section('content')	
-<h1 class="entry-title">
-    Oops, nothing to see here...
-</h1>
+@section('content')
 
-<div class="entry-content">
-	Looks like you discovered a page that does not exist anymore, or perhaps it never did.
+<div class="notfound_wrap">
+    <div class="notfound_msg">
+        <p class="img_area"></p>
+        <p class="text_area">
+        	<span class="text01">Trang bạn yêu cầu không tồn tại<br>Vui lòng thử lại</span>
+        </p>
+        <a class="button-404" href="{{ url('') }}">TRANG CHỦ</a>
+    </div>
 </div>
 
-<a class="button-404" href="/">GO TO FRONT PAGE</a>
 
 @endsection

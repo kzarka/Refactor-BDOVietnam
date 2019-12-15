@@ -66,6 +66,11 @@ class User extends Authenticatable implements ShouldMedia
     {
       return $this->belongsToMany(Role::class);
     }
+
+    public function entitys()
+    {
+        return $this->morphMany('App\Models\Log\ActivityLog', 'entity');
+    }
     
     /**
      * @param string|array $roles
@@ -119,9 +124,13 @@ class User extends Authenticatable implements ShouldMedia
         return true;
     }
 
-    public function getFullnameAttribute()
+    public function getFullNameAttribute()
     {
-        return "{$this->first_name} {$this->last_name}";
+        $fullname =  "{$this->first_name} {$this->last_name}";
+        if($fullname != '') {
+            return $fullname;
+        }
+        return $this->username;
     }
 
     public function getLastLoginFromAttribute($value) 
@@ -156,6 +165,10 @@ class User extends Authenticatable implements ShouldMedia
     public function getUrlAttribute()
     {
         return url('') . '/' . DEFAULT_AUTHOR_URL_PREFIX . '/' . $this->username . '.html';
+    }
+
+    public function getUrlAdminAttribute() {
+        return route('admin.user.profile') . '/' . $this->username;
     }
 
     public function getRank()

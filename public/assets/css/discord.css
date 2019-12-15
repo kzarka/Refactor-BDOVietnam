@@ -1,0 +1,13 @@
+.widget .discord .widget-body {
+    -ms-flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.2);
+    background-color: #202225;
+    background-image: url(/assets/images/discord/discord-bg-1.png),url(/assets/images/discord/discord-bg-2.png);
+    background-position: 0 100%,100% 100%;
+    background-repeat: no-repeat,no-repeat;
+    background-size: 200px 180px,110px 130px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2);
+    flex: 1;
+    padding: 20px;
+}

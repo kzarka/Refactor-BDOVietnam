@@ -16,8 +16,11 @@ class CommentService implements CommentServiceInterface
 		$this->commentRepos = $commentRepos;
 	}
 
-	public function getListPagination($public = true, $approved = true, $userId = null, $catId = null, $perPage = 10) {
-		return $this->commentRepos->getListPagination($public, $approved, $userId, $catId, $perPage);
+	public function getListPagination($perPage = 10) {
+		if(auth()->user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD])) {
+			return $this->commentRepos->getListPagination(null, $perPage);
+		}
+		return $this->commentRepos->getListPagination(auth()->user()->id, $perPage);
 	}
 
 	public function getList($public = true, $approved = true) {

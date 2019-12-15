@@ -26,9 +26,9 @@ class CommentInputRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['string', 'max:40', 'unique:users', 'alpha_dash'],
-            'website' => 'max:150',
-            'email'    => 'email|max:100|unique:users,email' . ($this->id != null ? ",$this->id" : ''),
+            'name' => ['nullable', 'string', 'max:40'],
+            'website' => 'nullable|max:150',
+            'email'    => 'nullable|email|max:100' . ($this->id != null ? ",$this->id" : ''),
             'comment' => ['required', 'max:300', new ContentHasUrl]
         ];
     }

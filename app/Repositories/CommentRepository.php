@@ -15,9 +15,9 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
         return Comment::class;
     }
 
-    public function getBuilder($postId, $parentOnly = false)
+    public function getBuilder($postId = null, $parentOnly = false)
     {
-    	$builder = $this->model->select('*');
+    	$builder = $this->model->select('comments.*');
     	if($postId) {
     		$builder->where('post_id', $postId);
     	}
@@ -30,13 +30,23 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
     public function create($data)
     {
     	try {
-    		\Log::info($data);
     		$this->model->create($data);
     		return true;
     	} catch(\Exception $e) {
     		\Log::info($e);
     		return false;
     	}
+    }
+
+    public function getListPagination($userId = null, $perPage = 10) {
+        
+        $builder = $this->getBuilder();
+        if($userId) {
+            $builder->join('posts', 'posts.id', '=', 'comments.post_id')
+            ->where('posts.author_id', $userId);
+        }
+
+        return $builder->with('post', 'author')->paginate($perPage);
     }
 
     public function getCommentsByPost($postId)

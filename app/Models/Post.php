@@ -60,6 +60,11 @@ class Post extends BaseModel implements ShouldMedia
         return $this->hasMany('App\Models\Comment', 'post_id');
     }
 
+    public function entitys()
+    {
+        return $this->morphMany('App\Models\Log\ActivityLog', 'entity');
+    }
+
     public function canModify() {
         $user = auth()->user();
         if($user->authorizeRoles([ROLE_ADMIN])) return true;

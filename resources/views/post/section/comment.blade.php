@@ -111,7 +111,7 @@
                             <div id="url-wrapper"></div>
                             @else
                             <div id="author-wrapper">
-                                <input type="text" name="author" id="author" value="" placeholder="Nickname*" size="22" tabindex="2">
+                                <input type="text" name="name" id="author" value="" placeholder="Nickname*" size="22" tabindex="2">
                             </div>
                             <div id="email-wrapper"><input type="text" name="email" id="email" value="" placeholder="E-mail (ẩn)*" size="22" tabindex="3"></div>
                             <div id="url-wrapper"><input name="website" id="url" type="text" value="" placeholder="Website (tùy chọn)" size="22" tabindex="4"></div>

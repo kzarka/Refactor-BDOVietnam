@@ -27,17 +27,20 @@
                 @endif
                 <hr>
                 <div class="recent-post">
+                    @forelse($activities as $activity)
                 	<div class="list-group-item list-group-item-accent-danger list-group-item-divider">
-						<div>New UI Project -<strong>deadline</strong></div>
+						<div>{{ $activity->action_name }} -<strong> {{ $activity->verb }} {{ isset($activity->myself) ? $activity->myself : '' }}</strong></div>
 						<small class="text-muted mr-3">
-						<i class="icon-calendar"></i>&nbsp; 10 - 11pm</small>
+						<i class="icon-calendar"></i>&nbsp; {{ $activity->update_from }}</small>
 						<small class="text-muted">
-							<i class="icon-home"></i>&nbsp; creativeLabs HQ
+							<i class="icon-home"></i>&nbsp; HN
 						</small>
 						<div class="avatars-stack mt-2">
 							<div class="avatar avatar-xs"></div>
 						</div>
 					</div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
 		</div> <!-- /container -->  

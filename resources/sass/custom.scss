@@ -128,15 +128,16 @@ body.wide {
         margin: 30px auto 100px auto
     }
 
-    .single-wrapper .entry-title h1, .single-wrapper .entry-title a {
+    .single-wrapper .entry-title h1, .single-wrapper .entry-title {
         font-size: 26px;
         margin-bottom: 1px;
     }
 }
 
 .entry-content article {
-    font-family: Arial, sans-serif;
-    line-height: 1.4;
+    color: #CFCDCD;
+    font-family: Whitney,'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
+    line-height: 1.6;
 
     table {
         border-collapse: collapse;
@@ -174,4 +175,67 @@ body.wide {
     padding: 0 15px;
     margin: 1.5em 0 .6em;
     text-transform: uppercase;
+}
+
+.entry-content {
+    h1, h2, h3, h4, h5, h6 {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        font-weight: 400;
+        margin-top: 0;
+    }
+}
+
+.notfound_wrap .img_area {
+    height: 400px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.notfound_wrap .notfound_msg {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.notfound_wrap .img_area:before {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: url(/assets/images/notfound.png) top center no-repeat;
+    background-size: 995px 400px;
+}
+
+@media screen and (max-width: 1024px) {
+    .notfound_wrap .img_area:before {
+        background: url(/assets/images/m_notfound.png) top center no-repeat;
+        background-size: cover;
+    }
+
+    .notfound_wrap .img_area {
+        max-width: 18.833rem;
+        width: 100%;
+        height: 11.875rem;
+        box-sizing: border-box;
+    }
+}
+
+.notfound_wrap .text_area .text01 {
+    display: block;
+    font-size: 19px;
+    color: #fff;
+    font-weight: bold;
+    line-height: 1.57;
+}
+
+.notfound_wrap .text_area .text02 {
+    display: block;
+    font-size: 16px;
+    color: #545454;
+    font-weight: normal;
+    line-height: 1.25;
+    margin-top: 30px;
+}
+
+.notfound_wrap {
+    text-align: center;
 }
