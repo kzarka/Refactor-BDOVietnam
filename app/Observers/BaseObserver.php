@@ -69,8 +69,8 @@ class BaseObserver
             ActivityLog::create([
                 'user_id'      => Auth::user()->id,
                 'action'       => $action,
-                'action_type' => $className,
-                'action_id'    => $model->id
+                'entity_type' => $className,
+                'entity_id'    => $model->id
             ]);
         }
     }
