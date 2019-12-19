@@ -26,3 +26,5 @@ Route::get('/' .DEFAULT_TAG_URL_PREFIX. '/{tag}', 'Tag\TagController@index');
 Route::get('/' .DEFAULT_AUTHOR_URL_PREFIX. '/{author}', 'User\AuthorController@index');
 
 Route::resource('comment', 'Comment\CommentController');
+
+Route::get('/search', 'MainController@search')->name('search');

@@ -27,4 +27,5 @@ mix.js('resources/assets/js/app.js', 'public/assets/js')
 	.js('resources/assets/post/post.js', 'public/assets/js/post/')
 
     .sass('resources/sass/admin/custom.scss', 'public/assets/admin/css')
+    .sass('resources/sass/admin/ckeditor.scss', 'public/assets/admin/css')
     .sass('resources/sass/custom.scss', 'public/assets/css');

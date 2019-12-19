@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Models\BaseModel;
 use App\Models\Media\ShouldMedia;
 use App\Models\Media\MediaModelTrait;
+use App\Models\Traits\FullTextSearch;
 
 class Post extends BaseModel implements ShouldMedia
 {
-    use MediaModelTrait;
+    use MediaModelTrait, FullTextSearch;
 
 	protected $table = "posts";
 
@@ -24,6 +25,11 @@ class Post extends BaseModel implements ShouldMedia
 
     protected $fillable = [
         'title', 'content', 'slug', 'excert', 'author_id', 'thumbnail', 'banner', 'public', 'approved', 'end_date'
+    ];
+
+    protected $searchable = [
+        'title',
+        'content'
     ];
 
     /**

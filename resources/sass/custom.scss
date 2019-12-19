@@ -1,3 +1,27 @@
+.entry-content article {
+    @import 'editor';
+}
+
+.entry-content {
+    h1, h2, h3, h4, h5, h6 {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        font-weight: 400;
+        margin-top: 0;
+    }
+}
+
+body.wide {
+    .content-wrapper {
+        max-width: 1130px;
+        margin: 30px auto 100px auto
+    }
+
+    .single-wrapper .entry-title h1, .single-wrapper .entry-title {
+        font-size: 24px;
+        margin-bottom: 1px;
+    }
+}
+
 input {
     width: 100%;
     height: 100%;
@@ -120,69 +144,6 @@ label.error {
 
 .logged #cancel-comment-reply-link {
     bottom: 45px !important;
-}
-
-body.wide {
-    .content-wrapper {
-        max-width: 1130px;
-        margin: 30px auto 100px auto
-    }
-
-    .single-wrapper .entry-title h1, .single-wrapper .entry-title {
-        font-size: 26px;
-        margin-bottom: 1px;
-    }
-}
-
-.entry-content article {
-    color: #CFCDCD;
-    font-family: Whitney,'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
-    line-height: 1.6;
-
-    table {
-        border-collapse: collapse;
-        margin-bottom: 15px;
-        border: 1px solid #e0e0e0;
-    }
-
-    table th, table thead td {
-        border-right: none;
-        text-align: left;
-        padding: 10px 15px;
-        color: #fff;
-        vertical-align: top;
-        font-size: 14px;
-        font-weight: 600;
-        border-bottom: solid 2px #669900;
-    }
-
-    table tr {
-        border-bottom: 1px solid #e0e0e0;
-    }
-    table td:not(:last-child) {
-        border-right: 1px solid #e0e0e0;
-    }
-
-    table td {
-        padding: 10px 15px;
-        vertical-align: top;
-    }
-}
-
-.entry-content article h2 {
-    font-size: 1.35rem;
-    border-left: 5px solid #fff;
-    padding: 0 15px;
-    margin: 1.5em 0 .6em;
-    text-transform: uppercase;
-}
-
-.entry-content {
-    h1, h2, h3, h4, h5, h6 {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-        font-weight: 400;
-        margin-top: 0;
-    }
 }
 
 .notfound_wrap .img_area {

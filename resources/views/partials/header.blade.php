@@ -84,8 +84,8 @@
         @endif
         <div class="header-search-wrapper">
             <div class="search-wrapper">
-                <form method="get" id="searchform" action="">
-                    <input type="text" name="s" id="s" placeholder="Search...">
+                <form method="get" id="searchform" action="{{ route('search') }}">
+                    <input type="text" name="q" id="s" placeholder="Tìm kiếm...">
                     <div class="search-button-wrapper"><input type="submit" id="searchsubmit" value="" /></div>
                 </form>
             </div>
@@ -105,8 +105,8 @@
             <!-- BEGIN SEARCH -->
             <div class="menu-search-wrapper">
                 <div class="search-wrapper">
-                    <form method="get" id="menu-searchform" action="">
-                    <input type="text" class="field" name="s" id="menu-s" placeholder="Search..." />
+                    <form method="get" id="menu-searchform" action="{{ route('search') }}">
+                    <input type="text" class="field" name="q" id="" placeholder="Tìm kiếm..." />
                     </form>
                 </div>
             </div>

@@ -23,7 +23,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return Post::class;
     }
 
-    public function postsBuilder($catId = null, $userId = null, $tagId = null) {
+    public function postsBuilder($catId = null, $userId = null, $tagId = null, $keyword = null) {
     	$builder = $this->model->select(
             'posts.*',
     		'users.username as username',
@@ -40,7 +40,6 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     	if($userId) {
     		$builder->whereRaw('posts.author_id = ' . $userId);
     	}
-        \Log::info($userId);
         if($tagId) {
             $builder->join('posts_tags as post_tag', function($join) {
                 $join->on('post_tag.post_id', '=', 'posts.id');
@@ -48,6 +47,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             ->whereRaw('post_tag.tag_id = ' . $tagId);
         }
 
+        if($keyword) {
+            //$builder->whereRaw("posts.title LIKE '${keyword}'")
+            //->orWhereRaw("posts.content LIKE '${keyword}'");
+            $builder->search($keyword, 'posts');
+        }
+        \Log::info($builder->toSql());
     	return $builder;
     }
 
@@ -68,8 +73,8 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return $this->publicApproveFiler($builder);
     }
 
-    public function getListPagination($public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST,  $userId = null, $catId = null, $tagId = null, $perPage = 10) {
-        $builder = $this->postsBuilder($catId, $userId, $tagId);
+    public function getListPagination($public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST,  $userId = null, $catId = null, $tagId = null, $keyword = null, $perPage = 10) {
+        $builder = $this->postsBuilder($catId, $userId, $tagId, $keyword);
         $builder = $this->publicApproveFiler($builder, $public, $approved);
         return $builder->with('comments', 'categories')->paginate($perPage);
     }

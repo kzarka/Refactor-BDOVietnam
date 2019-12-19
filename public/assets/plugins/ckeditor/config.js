@@ -9,4 +9,5 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 	 config.skin = 'prestige';
 	 config.extraPlugins = 'pre';
+	 config.contentsCss = '/assets/admin/css/ckeditor.css';
 };
