@@ -24,19 +24,22 @@ class TagController extends BaseController
         parent::__construct();
     }
 
-    public function index($tag)
-    {
-        $tagSlug = $tag;
-        if(!$tagSlug) {
-            abort(404);
-            return;
+    public function index($tag = null) {
+        if($tag) {
+            $tagSlug = $tag;
+            if(!$tagSlug) {
+                abort(404);
+                return;
+            }
+            $tag = $this->tagRepos->findBySlugOrId($tagSlug);
+            if(!$tag) {
+                abort(404);
+                return;
+            }
+            $posts = $this->postService->getListPagination(WITH_PUBLIC_POST, ONLY_APPROVED_POST, null, null, $tag->id);
+            return view('tag.view', ['posts' => $posts, 'tag' => $tag]);
         }
-        $tag = $this->tagRepos->findBySlugOrId($tagSlug);
-        if(!$tag) {
-            abort(404);
-            return;
-        }
-        $posts = $this->postService->getListPagination(WITH_PUBLIC_POST, ONLY_APPROVED_POST, null, null, $tag->id);
-        return view('tag.view', ['posts' => $posts, 'tag' => $tag]);
+        $tags = $this->tagRepos->getAllTag();
+        return view('tag.index', ['tags' => $tags]);
     }
 }

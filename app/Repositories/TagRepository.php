@@ -15,6 +15,9 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface
         return Tag::class;
     }
 
+    public function getAllTag() {
+        return $this->model->select('*')->with('posts')->get();
+    }
     /**
 	 * @param String $tags
      */

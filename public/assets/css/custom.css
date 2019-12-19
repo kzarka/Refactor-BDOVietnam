@@ -246,3 +246,31 @@ label.error {
   text-align: center;
 }
 
+a.tag {
+  position: relative;
+  top: 0;
+  left: 0;
+  font-size: 12px !important;
+  font-weight: normal;
+  line-height: 12px;
+  color: #828285;
+  margin: 0 1px 5px 0;
+  padding: 8px 10px 7px 10px;
+  background-color: #212122;
+  border-bottom: none;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 1px;
+  transform: translateX(0) translateY(0);
+  transition: all 0.25s ease;
+}
+
+a.tag:hover {
+  color: #ECE3F7;
+  background-color: #8146C7;
+  text-decoration: none;
+  box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.2);
+  transform: translateX(-2px) translateY(-2px);
+  transition: all 0.2s ease;
+}
+

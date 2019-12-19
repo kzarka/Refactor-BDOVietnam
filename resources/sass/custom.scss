@@ -200,3 +200,43 @@ label.error {
 .notfound_wrap {
     text-align: center;
 }
+
+a.tag {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 12px !important;
+    font-weight: normal;
+    line-height: 12px;
+    color: #828285;
+    margin: 0 1px 5px 0;
+    padding: 8px 10px 7px 10px;
+    background-color: #212122;
+    border-bottom: none;
+    display: inline-block;
+    text-decoration: none;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    -webkit-transform: translateX(0) translateY(0);
+    -moz-transform: translateX(0) translateY(0);
+    transform: translateX(0) translateY(0);
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    transition: all .25s ease;
+}
+
+a.tag:hover {
+    color: #ECE3F7;
+    background-color: #8146C7;
+    text-decoration: none;
+    -webkit-box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.2);
+    box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.2);
+    -webkit-transform: translateX(-2px) translateY(-2px);
+    -moz-transform: translateX(-2px) translateY(-2px);
+    transform: translateX(-2px) translateY(-2px);
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    transition: all .2s ease;
+}
