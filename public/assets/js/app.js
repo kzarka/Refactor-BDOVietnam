@@ -130,17 +130,29 @@
 
 /***/ }),
 
+/***/ "./resources/sass/event/xmas.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/event/xmas.scss ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!***********************************************************************************************************************************************!*\
-  !*** multi ./resources/assets/js/app.js ./resources/sass/admin/custom.scss ./resources/sass/admin/ckeditor.scss ./resources/sass/custom.scss ***!
-  \***********************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/assets/js/app.js ./resources/sass/admin/custom.scss ./resources/sass/admin/ckeditor.scss ./resources/sass/custom.scss ./resources/sass/event/xmas.scss ***!
+  \********************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\Project\blog\resources\assets\js\app.js */"./resources/assets/js/app.js");
 __webpack_require__(/*! C:\Project\blog\resources\sass\admin\custom.scss */"./resources/sass/admin/custom.scss");
 __webpack_require__(/*! C:\Project\blog\resources\sass\admin\ckeditor.scss */"./resources/sass/admin/ckeditor.scss");
-module.exports = __webpack_require__(/*! C:\Project\blog\resources\sass\custom.scss */"./resources/sass/custom.scss");
+__webpack_require__(/*! C:\Project\blog\resources\sass\custom.scss */"./resources/sass/custom.scss");
+module.exports = __webpack_require__(/*! C:\Project\blog\resources\sass\event\xmas.scss */"./resources/sass/event/xmas.scss");
 
 
 /***/ })

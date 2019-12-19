@@ -28,4 +28,5 @@ mix.js('resources/assets/js/app.js', 'public/assets/js')
 
     .sass('resources/sass/admin/custom.scss', 'public/assets/admin/css')
     .sass('resources/sass/admin/ckeditor.scss', 'public/assets/admin/css')
-    .sass('resources/sass/custom.scss', 'public/assets/css');
+    .sass('resources/sass/custom.scss', 'public/assets/css')
+    .sass('resources/sass/event/xmas.scss', 'public/assets/css/event');

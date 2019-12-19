@@ -10,7 +10,8 @@
     "/assets/admin/js/validator.js": "/assets/admin/js/validator.js",
     "/assets/js/app.js": "/assets/js/app.js",
     "/assets/admin/css/custom.css": "/assets/admin/css/custom.css",
+    "/assets/admin/css/ckeditor.css": "/assets/admin/css/ckeditor.css",
     "/assets/css/custom.css": "/assets/css/custom.css",
-    "/assets/js/post/post.js": "/assets/js/post/post.js",
-    "/assets/admin/css/ckeditor.css": "/assets/admin/css/ckeditor.css"
+    "/assets/css/event/xmas.css": "/assets/css/event/xmas.css",
+    "/assets/js/post/post.js": "/assets/js/post/post.js"
 }

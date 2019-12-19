@@ -19,4 +19,5 @@
 <link rel="stylesheet" href="{{ asset('assets/powerup/head.css') }}" type="text/css" media="all" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" type="text/css" media="all" />
 <link rel="stylesheet" href="{{ asset('assets/plugins/fancybox/jquery.fancybox-1.3.4.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{ asset('assets/css/event/xmas.css') }}" type="text/css" media="all" />
 @stack('after-style')

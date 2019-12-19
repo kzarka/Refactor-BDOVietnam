@@ -66,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
                 ->join('posts_tags', 'tags.id', '=', 'posts_tags.tag_id')
                 ->join('posts', 'posts.id', '=', 'posts_tags.post_id')
                 ->groupBy('tags.id')
-                ->take(10)->orderBy('post_count', 'DESC')->get();
+                ->take(15)->orderBy('post_count', 'DESC')->get();
             View::share('header_categories', $categories);
             View::share('recent_posts', $recent_posts);
             View::share('recent_comments', $recent_comments);
