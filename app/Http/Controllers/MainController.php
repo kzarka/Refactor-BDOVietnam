@@ -25,6 +25,9 @@ class MainController extends BaseController
     public function search(Request $request)
     {
         $keyword = $request->get('q');
+        if(strlen($keyword) < 3) {
+            return view('search', ['results' => []]);
+        }
         $results = $this->postService->getListPagination(WITH_PUBLIC_POST, ONLY_APPROVED_POST, null, null, null, $keyword);
         return view('search', ['results' => $results]);
     }
