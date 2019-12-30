@@ -1,0 +1,93 @@
+.toc {
+    display: table;
+    padding: 7px;
+    margin-bottom: 10px;
+}
+.toc, .mw-warning, .toccolours {
+    border: 1px solid #2D2D2E;
+    background-color: #1C1C1D;
+    padding: 5px;
+    font-size: 95%;
+}
+.toc .toctitle {
+    text-align: center;
+}
+.toc .toctitle {
+    direction: ltr;
+}
+
+.toc h2 {
+    font-size: 100% !important;
+    border-left: none !important;
+    padding: 0px !important;
+    text-transform: uppercase;
+    display: inline;
+    border: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.toc ul {
+    list-style-type: none;
+    list-style-image: none;
+    margin-left: 0;
+    padding: 0;
+    text-align: left;
+}
+.toc ul {
+    margin: 0.3em 0;
+}
+
+.toctogglecheckbox:checked + .toctitle .toctogglelabel:after {
+    content: 'xem';
+}
+
+.toctogglecheckbox:not(:checked) + .toctitle .toctogglelabel:after {
+    content: 'ẩn';
+}
+
+.toctogglespan {
+    font-size: 94%;
+}
+.toc .toctitle {
+    text-align: center;
+}
+
+.toc .toctitle {
+    direction: ltr;
+}
+
+:not(:checked) > .toctogglespan:before {
+    content: ' [';
+}
+
+:not(:checked) > .toctogglespan:after {
+    content: ']';
+}
+
+.toctogglecheckbox:checked ~ ul {
+    display: none;
+}
+
+.toctogglelabel {
+    cursor: pointer;
+    color: #D8C25D;
+}
+
+.mw-content-ltr .tocnumber {
+    padding-left: 0;
+    padding-right: 0.5em;
+}
+.tocnumber {
+    padding-left: 0;
+    padding-right: 0.5em;
+    color: #CFCDCD;
+}
+.tocnumber, .toctext {
+    display: table-cell;
+    text-decoration: inherit;
+}
+
+.toc ul ul {
+    margin: 0 0 0 2em;
+}

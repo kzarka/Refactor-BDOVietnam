@@ -3,6 +3,11 @@
 @section('title', $post->title)
 
 @section('body_class', 'wide')
+
+@push('after-style')
+<link rel="stylesheet" href="{{ asset('assets/css/toc.css') }}" type="text/css" media="all" />
+@endpush
+
 @section('content')
 <div class="single-wrapper">
     <div class="single-wrapper-inner">
