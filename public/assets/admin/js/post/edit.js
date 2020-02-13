@@ -193,7 +193,7 @@ function initFormSave() {
             notifyError('Some fields is not valid');
             parseFormError(response.errors);
           } else {
-            $notifyError('System error.');
+            notifyError('System error.');
           }
 
           afterSaving();

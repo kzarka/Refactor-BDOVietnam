@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Prettus\Repository\Eloquent\BaseRepository;
 use App\Models\Post;
 use Illuminate\Container\Container as Application;
+use Carbon\Carbon;
 
 class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
@@ -52,8 +53,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             //->orWhereRaw("posts.content LIKE '${keyword}'");
             $builder->search($keyword, 'posts');
         }
-        \Log::info($builder->toSql());
-    	return $builder;
+    	return $builder->available();
     }
 
     public function publicApproveFiler($builder, $public = WITH_PUBLIC_POST, $approved = ONLY_APPROVED_POST) {
@@ -88,6 +88,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     public function createByAdmin($request) {
         $user = auth()->user();
         $data = $request->all();
+        $data['end_date'] = $this->parseDate($data['end_date']);
         $data['author_id'] = $user->id;
         if($user->authorizeRoles([ROLE_ADMIN, ROLE_MOD])) {
             $data['approved'] = STATUS_APPROVED;
@@ -118,6 +119,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             
             $user = auth()->user();
             $data = $request->all();
+            $data['end_date'] = $this->parseDate($data['end_date']);
             if(!auth()->user()->authorizeRoles([ROLE_ADMIN, ROLE_MOD])) {
                 $data['approved'] = STATUS_UNAPPROVED;
             }
@@ -177,7 +179,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
     public function getNewestPost($catId = null, $perPage = 10)
     {
-        $records = $this->getBuilderAvailable($catId)->with('categories')->with('comments')->orderBy('updated_at', 'DESC')->paginate($perPage);
+        $records = $this->getBuilderAvailable($catId)->with('categories')->with('comments')->orderBy('created_at', 'DESC')->paginate($perPage);
         return $this->getImages($records);
     }
 
@@ -218,5 +220,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             return $record;
         });
         return $records;
+    }
+
+    public function parseDate ($date)
+    {
+        if($date == '0000-00-00 00:00:00' || !$date) return null;
+        return Carbon::parse($date)->format('Y-m-d H:i:s');
     }
 }

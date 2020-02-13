@@ -43,6 +43,13 @@ class Post extends BaseModel implements ShouldMedia
         return $query->where('public', STATUS_ACTIVE);
     }
 
+    public function scopeAvailable($query)
+    {
+        $date = new \DateTime;
+        $formatted_date = $date->format('Y-m-d H:i:s');
+        return $query->where('end_date', '>=', $formatted_date)->orWhereNull('end_date');
+    }
+
     public function scopeApproved($query)
     {
         return $query->where('approved', STATUS_ACTIVE);

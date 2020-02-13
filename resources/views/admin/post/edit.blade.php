@@ -86,7 +86,7 @@
 		$.datepicker._getInst(event.target).dpDiv.css('z-index', 6);
 	}});
 	$("input[name=end_date]").datepicker({
-	    dateFormat: 'dd/mm/yy',
+	    dateFormat: 'yy-mm-dd',
 	}).focus(function (event) {
 		$.datepicker.afterShow(event);
 	});
