@@ -3,7 +3,7 @@
         <!-- BEGIN LOOP (large featured story) -->
             <div class="featured-stories-wrapper featured-large">
                 @if($top_posts && isset($top_posts[0]))
-                <div class="featured-stories-inner" style="background-image:url({{ $top_posts[0]->banner_image ?? asset('assets/images/default_banner.jpg') }});">
+                <div class="featured-stories-inner" style="background-image:url({{ $top_posts[0]->banner_image ?? asset('assets/images/default_banner_large.png') }});">
                     <div class="featured-stories-bg-gradient">
 
                         <!-- BEGIN CATEGORY MARKERS -->
@@ -52,7 +52,7 @@
     <!-- BEGIN LOOP (small featured stories) -->
         <div class="featured-stories-wrapper">
             @if($top_posts && isset($top_posts[1]))
-            <div class="featured-stories-inner" style="background-image:url({{ $top_posts[1]->banner_image ?? asset('assets/images/default_banner.jpg') }});">
+            <div class="featured-stories-inner" style="background-image:url({{ $top_posts[1]->banner_image ?? asset('assets/images/default_banner_large.jpg') }});">
                 <div class="featured-stories-bg-gradient">
 
                     <!-- BEGIN CATEGORY MARKERS -->
@@ -94,7 +94,7 @@
         </div>
         <div class="featured-stories-wrapper">
             @if($top_posts && isset($top_posts[2]))
-            <div class="featured-stories-inner" style="background-image:url({{ $top_posts[2]->banner_image ?? asset('assets/images/default_banner.jpg') }});">
+            <div class="featured-stories-inner" style="background-image:url({{ $top_posts[2]->banner_image ?? asset('assets/images/default_banner_large.jpg') }});">
                 <div class="featured-stories-bg-gradient">
 
                     <!-- BEGIN CATEGORY MARKERS -->
