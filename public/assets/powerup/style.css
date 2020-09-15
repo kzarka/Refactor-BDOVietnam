@@ -3045,6 +3045,8 @@ div.loop-index-wrapper a { text-decoration:none; }
     min-height:100px;
     margin:0;
     padding:0;
+    object-position: 50% 50%;
+    object-fit: cover;
 }
 /* if no featured image */
 .widget_recent_entries .no-feat-img {
