@@ -213,6 +213,15 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return $this->getImages($records);
     }
 
+    /**
+     * Get random Top Post
+     */
+    public function getRandomTop($count = 3)
+    {
+        $records = $this->getBuilderAvailable()->with('categories')->with('comments')->inRandomOrder()->take($count)->get();
+        return $this->getImages($records);
+    }
+
     public function getImages($records) {
         $records->map(function($record) {
             $record->banner_image = $record->getFirstMediaUrl(POST_BANNER_COLLECTION);

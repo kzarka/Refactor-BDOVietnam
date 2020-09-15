@@ -17,7 +17,7 @@ class MainController extends BaseController
     }
     public function index()
     {
-    	$topPost = $this->postService->getTopPost(null, 5);
+    	$topPost = $this->postService->getRandomTop();
     	$newests = $this->postService->getNewestPost(null, 5);
         return view('index', ['top_posts' => $topPost, 'newests' => $newests]);
     }

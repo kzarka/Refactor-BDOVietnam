@@ -56,4 +56,12 @@ class PostService implements PostServiceInterface
 		}
         return $record;
 	}
+
+	/**
+	 * Get random top
+	 */
+	public function getRandomTop()
+	{
+		return $this->postRepos->getRandomTop();
+	}
 }
